@@ -84,6 +84,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(

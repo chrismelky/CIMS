@@ -1,0 +1,28 @@
+{
+  "churchApp": {
+    "memberContribution": {
+      "home": {
+        "title": "Member Contributions",
+        "createLabel": "Create a new Member Contribution",
+        "createOrEditLabel": "Create or edit a Member Contribution",
+        "notFound": "No Member Contributions found"
+      },
+      "created": "A new Member Contribution is created with identifier {{ param }}",
+      "updated": "A Member Contribution is updated with identifier {{ param }}",
+      "deleted": "A Member Contribution is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Member Contribution {{ id }}?"
+      },
+      "detail": {
+        "title": "Member Contribution"
+      },
+      "paymentDate": "Payment Date",
+      "amount": "Amount",
+      "member": "Member",
+      "church": "Church",
+      "paymentMethod": "Payment Method",
+      "promise": "Promise",
+      "type": "Type"
+    }
+  }
+}

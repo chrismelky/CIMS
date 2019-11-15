@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="rite">
+            <h2><span jhiTranslate="churchApp.rite.detail.title">Rite</span> {{rite.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.rite.code">Code</span></dt>
+                <dd>
+                    <span>{{rite.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.rite.name">Name</span></dt>
+                <dd>
+                    <span>{{rite.name}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/rite', rite.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

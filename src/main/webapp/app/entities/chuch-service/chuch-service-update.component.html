@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="church-chuch-service-heading" jhiTranslate="churchApp.chuchService.home.createOrEditLabel">Create or edit a Chuch Service</h2>
+            <div>
+                <church-alert-error></church-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.description" for="field_description">Description</label>
+                    <textarea class="form-control" name="description" id="field_description"
+                              formControlName="description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.day" for="field_day">Day</label>
+                    <select class="form-control" name="day" formControlName="day" id="field_day">
+                        <option value="Monday">{{'churchApp.WeekDay.Monday' | translate}}</option>
+                        <option value="Tuesday">{{'churchApp.WeekDay.Tuesday' | translate}}</option>
+                        <option value="Wednesday">{{'churchApp.WeekDay.Wednesday' | translate}}</option>
+                        <option value="Thursday">{{'churchApp.WeekDay.Thursday' | translate}}</option>
+                        <option value="Friday">{{'churchApp.WeekDay.Friday' | translate}}</option>
+                        <option value="Saturday">{{'churchApp.WeekDay.Saturday' | translate}}</option>
+                        <option value="Sunday">{{'churchApp.WeekDay.Sunday' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.startTime" for="field_startTime">Start Time</label>
+                    <input type="text" class="form-control" name="startTime" id="field_startTime"
+                           formControlName="startTime"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.endTime" for="field_endTime">End Time</label>
+                    <input type="text" class="form-control" name="endTime" id="field_endTime"
+                           formControlName="endTime"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.chuchService.church" for="field_church">Church</label>
+                    <select class="form-control" id="field_church" name="church" formControlName="church">
+                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('church').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

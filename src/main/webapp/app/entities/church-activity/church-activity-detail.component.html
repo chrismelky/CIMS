@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="churchActivity">
+            <h2><span jhiTranslate="churchApp.churchActivity.detail.title">Church Activity</span> {{churchActivity.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.churchActivity.name">Name</span></dt>
+                <dd>
+                    <span>{{churchActivity.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchActivity.location">Location</span></dt>
+                <dd>
+                    <span>{{churchActivity.location}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchActivity.estamateBudget">Estamate Budget</span></dt>
+                <dd>
+                    <span>{{churchActivity.estamateBudget}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchActivity.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{churchActivity.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchActivity.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{churchActivity.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchActivity.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="churchActivity.church">
+                        <a [routerLink]="['/church', churchActivity.church?.id, 'view']">{{churchActivity.church?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/church-activity', churchActivity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

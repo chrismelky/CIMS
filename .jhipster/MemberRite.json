@@ -1,0 +1,47 @@
+{
+    "name": "MemberRite",
+    "fields": [
+        {
+            "fieldName": "dateReceived",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "rite",
+            "otherEntityRelationshipName": "memberRite",
+            "relationshipValidateRules": "required",
+            "relationshipName": "rite",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "memberRites",
+            "relationshipName": "member",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "memberRite",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20191103090733",
+    "entityTableName": "member_rite",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

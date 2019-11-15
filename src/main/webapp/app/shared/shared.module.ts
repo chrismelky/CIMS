@@ -6,23 +6,28 @@ import { ChurchAlertErrorComponent } from './alert/alert-error.component';
 import { ChurchLoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
+import { JhMaterialModule } from 'app/shared/jh-material.module';
+import { UserMemberComponent } from './user-member/user-member.component';
 @NgModule({
-  imports: [ChurchSharedLibsModule],
+  imports: [JhMaterialModule, ChurchSharedLibsModule],
   declarations: [
     FindLanguageFromKeyPipe,
     ChurchAlertComponent,
     ChurchAlertErrorComponent,
     ChurchLoginModalComponent,
-    HasAnyAuthorityDirective
+    HasAnyAuthorityDirective,
+    UserMemberComponent
   ],
   entryComponents: [ChurchLoginModalComponent],
   exports: [
+    JhMaterialModule,
     ChurchSharedLibsModule,
     FindLanguageFromKeyPipe,
     ChurchAlertComponent,
     ChurchAlertErrorComponent,
     ChurchLoginModalComponent,
-    HasAnyAuthorityDirective
+    HasAnyAuthorityDirective,
+    UserMemberComponent
   ]
 })
 export class ChurchSharedModule {}

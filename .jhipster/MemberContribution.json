@@ -1,0 +1,66 @@
+{
+    "name": "MemberContribution",
+    "fields": [
+        {
+            "fieldName": "paymentDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "memberContribution",
+            "relationshipValidateRules": "required",
+            "relationshipName": "member",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "memberContribution",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "paymentMethod",
+            "otherEntityRelationshipName": "memberContribution",
+            "relationshipValidateRules": "required",
+            "relationshipName": "paymentMethod",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "memberPromise",
+            "otherEntityRelationshipName": "memberContribution",
+            "relationshipName": "promise",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "contributionType",
+            "otherEntityRelationshipName": "memberContribution",
+            "relationshipName": "type",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20191103090736",
+    "entityTableName": "member_contribution",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

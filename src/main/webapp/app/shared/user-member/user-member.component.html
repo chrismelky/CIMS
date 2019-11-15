@@ -1,0 +1,20 @@
+<div fxFlexLayout="column">
+    <div fxFlexLayout="row">
+        <mat-form-field fxFlex>
+            <input matInput #rn />
+        </mat-form-field>
+        <button type="button" fxFlex="30px" mat-icon-button (click)="getMemberByRn(rn.value)">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    <div *ngIf="member" fxFlexLayout="row">
+        {{member.church?.name}}
+        <button type="button" mat-icon-button (click)="setMember()">
+            <mat-icon></mat-icon>
+        </button>
+    </div>
+    <div *ngIf="existingMember">
+        {{existingMember.church?.name}}
+    </div>
+
+</div>

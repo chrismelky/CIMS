@@ -27,6 +27,7 @@ export class AuthServerProvider {
       if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
         const jwt = bearerToken.slice(7, bearerToken.length);
         this.storeAuthenticationToken(jwt, credentials.rememberMe);
+        this.storeAuthenticatedUser(resp.body.user);
         return jwt;
       }
     }
@@ -42,10 +43,15 @@ export class AuthServerProvider {
     }
   }
 
+  storeAuthenticatedUser(user) {
+    this.$localStorage.store('user', user);
+  }
+
   logout(): Observable<any> {
     return new Observable(observer => {
       this.$localStorage.clear('authenticationToken');
       this.$sessionStorage.clear('authenticationToken');
+      this.$localStorage.clear('user');
       observer.complete();
     });
   }

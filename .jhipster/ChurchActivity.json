@@ -1,0 +1,51 @@
+{
+    "name": "ChurchActivity",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "location",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "estamateBudget",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "startDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "churchActivity",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20191103090727",
+    "entityTableName": "church_activity",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

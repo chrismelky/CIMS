@@ -1,0 +1,27 @@
+{
+  "churchApp": {
+    "chuchService": {
+      "home": {
+        "title": "Chuch Services",
+        "createLabel": "Create a new Chuch Service",
+        "createOrEditLabel": "Create or edit a Chuch Service",
+        "notFound": "No Chuch Services found"
+      },
+      "created": "A new Chuch Service is created with identifier {{ param }}",
+      "updated": "A Chuch Service is updated with identifier {{ param }}",
+      "deleted": "A Chuch Service is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Chuch Service {{ id }}?"
+      },
+      "detail": {
+        "title": "Chuch Service"
+      },
+      "name": "Name",
+      "description": "Description",
+      "day": "Day",
+      "startTime": "Start Time",
+      "endTime": "End Time",
+      "church": "Church"
+    }
+  }
+}

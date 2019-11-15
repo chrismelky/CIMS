@@ -1,0 +1,28 @@
+{
+  "churchApp": {
+    "memberPromise": {
+      "home": {
+        "title": "Member Promises",
+        "createLabel": "Create a new Member Promise",
+        "createOrEditLabel": "Create or edit a Member Promise",
+        "notFound": "No Member Promises found"
+      },
+      "created": "A new Member Promise is created with identifier {{ param }}",
+      "updated": "A Member Promise is updated with identifier {{ param }}",
+      "deleted": "A Member Promise is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Member Promise {{ id }}?"
+      },
+      "detail": {
+        "title": "Member Promise"
+      },
+      "promiseDate": "Promise Date",
+      "amount": "Amount",
+      "otherPromise": "Other Promise",
+      "fulfillmentDate": "Fulfillment Date",
+      "isFulfilled": "Is Fulfilled",
+      "member": "Member",
+      "churchActivity": "Church Activity"
+    }
+  }
+}

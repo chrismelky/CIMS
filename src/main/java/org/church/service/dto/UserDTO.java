@@ -3,6 +3,8 @@ package org.church.service.dto;
 import org.church.config.Constants;
 
 import org.church.domain.Authority;
+import org.church.domain.Church;
+import org.church.domain.Member;
 import org.church.domain.User;
 
 import javax.validation.constraints.Email;
@@ -53,6 +55,16 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private Member member;
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -70,6 +82,7 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.member = user.getMember();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());

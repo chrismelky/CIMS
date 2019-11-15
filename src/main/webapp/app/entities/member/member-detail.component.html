@@ -1,0 +1,91 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="member">
+            <h2><span jhiTranslate="churchApp.member.detail.title">Member</span> {{member.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.member.firstName">First Name</span></dt>
+                <dd>
+                    <span>{{member.firstName}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.lastName">Last Name</span></dt>
+                <dd>
+                    <span>{{member.lastName}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.middleName">Middle Name</span></dt>
+                <dd>
+                    <span>{{member.middleName}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.gender">Gender</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'churchApp.Gender.' + member.gender}}">{{member.gender}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.phoneNumber">Phone Number</span></dt>
+                <dd>
+                    <span>{{member.phoneNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.email">Email</span></dt>
+                <dd>
+                    <span>{{member.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.dateOfBirth">Date Of Bith</span></dt>
+                <dd>
+                    <span>{{member.dateOfBirth}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.placeOfBirth">Place Of Bith</span></dt>
+                <dd>
+                    <span>{{member.placeOfBirth}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.maritalStatus">Marital Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'churchApp.MaritalStatus.' + member.maritalStatus}}">{{member.maritalStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.work">Work</span></dt>
+                <dd>
+                    <span>{{member.work}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.placeOfWork">Place Of Work</span></dt>
+                <dd>
+                    <span>{{member.placeOfWork}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.isActive">Is Active</span></dt>
+                <dd>
+                    <span>{{member.isActive}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.isDeceased">Is Deceased</span></dt>
+                <dd>
+                    <span>{{member.isDeceased}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.deceasedDate">Deceased Date</span></dt>
+                <dd>
+                    <span>{{member.deceasedDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="member.church">
+                        <a [routerLink]="['/church', member.church?.id, 'view']">{{member.church?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.member.churchCommunities">Church Communities</span></dt>
+                <dd>
+                    <span *ngFor="let churchCommunities of member.churchCommunities; let last = last">
+                        <a [routerLink]="['/church-community', churchCommunities?.id, 'view' ]">{{churchCommunities.id}}</a>{{last ? '' : ', '}}
+                    </span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/member', member.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

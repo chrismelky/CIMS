@@ -1,0 +1,90 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="churchApp.churchCommunity.home.title">Church Communities</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-church-community" [routerLink]="['/church-community/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="churchApp.churchCommunity.home.createLabel">
+            Create a new Church Community
+            </span>
+        </button>
+    </h2>
+    <church-alert-error></church-alert-error>
+    <church-alert></church-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="churchCommunities?.length === 0">
+        <span jhiTranslate="churchApp.churchCommunity.home.notFound">No churchCommunities found</span>
+    </div>
+    <div class="table-responsive" *ngIf="churchCommunities?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="name"><span jhiTranslate="churchApp.churchCommunity.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="church.id"><span jhiTranslate="churchApp.churchCommunity.church">Church</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="chairPerson.firstName"><span jhiTranslate="churchApp.churchCommunity.chairPerson">Chair Person</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="secretary.firstName"><span jhiTranslate="churchApp.churchCommunity.secretary">Secretary</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="treasurer.firstName"><span jhiTranslate="churchApp.churchCommunity.treasurer">Treasurer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let churchCommunity of churchCommunities ;trackBy: trackId">
+                <td><a [routerLink]="['/church-community', churchCommunity.id, 'view' ]">{{churchCommunity.id}}</a></td>
+                <td>{{churchCommunity.name}}</td>
+                <td>
+                    <div *ngIf="churchCommunity.church">
+                        <a [routerLink]="['/church', churchCommunity.church?.id, 'view' ]" >{{churchCommunity.church?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="churchCommunity.chairPerson">
+                        <a [routerLink]="['/member', churchCommunity.chairPerson?.id, 'view' ]" >{{churchCommunity.chairPerson?.firstName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="churchCommunity.secretary">
+                        <a [routerLink]="['/member', churchCommunity.secretary?.id, 'view' ]" >{{churchCommunity.secretary?.firstName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="churchCommunity.treasurer">
+                        <a [routerLink]="['/member', churchCommunity.treasurer?.id, 'view' ]" >{{churchCommunity.treasurer?.firstName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/church-community', churchCommunity.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/church-community', churchCommunity.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/church-community', { outlets: { popup: churchCommunity.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="churchCommunities?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

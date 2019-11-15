@@ -1,0 +1,56 @@
+{
+    "name": "MemberPromise",
+    "fields": [
+        {
+            "fieldName": "promiseDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "otherPromise",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fulfillmentDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "isFulfilled",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "memberPromise",
+            "relationshipValidateRules": "required",
+            "relationshipName": "member",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "churchActivity",
+            "otherEntityRelationshipName": "memberPromise",
+            "relationshipValidateRules": "required",
+            "relationshipName": "churchActivity",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20191103090734",
+    "entityTableName": "member_promise",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

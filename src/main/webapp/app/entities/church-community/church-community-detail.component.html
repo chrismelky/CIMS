@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="churchCommunity">
+            <h2><span jhiTranslate="churchApp.churchCommunity.detail.title">Church Community</span> {{churchCommunity.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.churchCommunity.name">Name</span></dt>
+                <dd>
+                    <span>{{churchCommunity.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchCommunity.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="churchCommunity.church">
+                        <a [routerLink]="['/church', churchCommunity.church?.id, 'view']">{{churchCommunity.church?.id}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchCommunity.chairPerson">Chair Person</span></dt>
+                <dd>
+                    <div *ngIf="churchCommunity.chairPerson">
+                        <a [routerLink]="['/member', churchCommunity.chairPerson?.id, 'view']">{{churchCommunity.chairPerson?.firstName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchCommunity.secretary">Secretary</span></dt>
+                <dd>
+                    <div *ngIf="churchCommunity.secretary">
+                        <a [routerLink]="['/member', churchCommunity.secretary?.id, 'view']">{{churchCommunity.secretary?.firstName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.churchCommunity.treasurer">Treasurer</span></dt>
+                <dd>
+                    <div *ngIf="churchCommunity.treasurer">
+                        <a [routerLink]="['/member', churchCommunity.treasurer?.id, 'view']">{{churchCommunity.treasurer?.firstName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/church-community', churchCommunity.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

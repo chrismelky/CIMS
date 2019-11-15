@@ -1,0 +1,55 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="memberPromise">
+            <h2><span jhiTranslate="churchApp.memberPromise.detail.title">Member Promise</span> {{memberPromise.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.memberPromise.promiseDate">Promise Date</span></dt>
+                <dd>
+                    <span>{{memberPromise.promiseDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.amount">Amount</span></dt>
+                <dd>
+                    <span>{{memberPromise.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.otherPromise">Other Promise</span></dt>
+                <dd>
+                    <span>{{memberPromise.otherPromise}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.fulfillmentDate">Fulfillment Date</span></dt>
+                <dd>
+                    <span>{{memberPromise.fulfillmentDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.isFulfilled">Is Fulfilled</span></dt>
+                <dd>
+                    <span>{{memberPromise.isFulfilled}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.member">Member</span></dt>
+                <dd>
+                    <div *ngIf="memberPromise.member">
+                        <a [routerLink]="['/member', memberPromise.member?.id, 'view']">{{memberPromise.member?.firstName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.churchActivity">Church Activity</span></dt>
+                <dd>
+                    <div *ngIf="memberPromise.churchActivity">
+                        <a [routerLink]="['/church-activity', memberPromise.churchActivity?.id, 'view']">{{memberPromise.churchActivity?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/member-promise', memberPromise.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

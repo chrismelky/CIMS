@@ -1,0 +1,117 @@
+{
+    "name": "Member",
+    "fields": [
+        {
+            "fieldName": "firstName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "middleName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "maxlength"
+            ],
+            "fieldValidateRulesMaxlength": 100
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "Gender",
+            "fieldValues": "Male,Female"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateOfBith",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "placeOfBith",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "maritalStatus",
+            "fieldType": "MaritalStatus",
+            "fieldValues": "Single,Married,Devoced"
+        },
+        {
+            "fieldName": "work",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "placeOfWork",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "isActive",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "isDeceased",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "deceasedDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "memberRelative",
+            "otherEntityRelationshipName": "member",
+            "relationshipName": "relatives"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "member",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "churchCommunity",
+            "otherEntityRelationshipName": "members",
+            "relationshipName": "churchCommunities",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "memberRite",
+            "otherEntityRelationshipName": "member",
+            "relationshipName": "memberRites"
+        }
+    ],
+    "changelogDate": "20191103090731",
+    "entityTableName": "member",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

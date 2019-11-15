@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="memberRelative">
+            <h2><span jhiTranslate="churchApp.memberRelative.detail.title">Member Relative</span> {{memberRelative.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.memberRelative.relativeType">Relative Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'churchApp.RelativeType.' + memberRelative.relativeType}}">{{memberRelative.relativeType}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberRelative.relativeFullName">Relative Full Name</span></dt>
+                <dd>
+                    <span>{{memberRelative.relativeFullName}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberRelative.relativePhoneNumber">Relative Phone Number</span></dt>
+                <dd>
+                    <span>{{memberRelative.relativePhoneNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberRelative.member">Member</span></dt>
+                <dd>
+                    <div *ngIf="memberRelative.member">
+                        <a [routerLink]="['/member', memberRelative.member?.id, 'view']">{{memberRelative.member?.firstName}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/member-relative', memberRelative.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

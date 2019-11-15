@@ -1,0 +1,37 @@
+{
+    "name": "MemberRelative",
+    "fields": [
+        {
+            "fieldName": "relativeType",
+            "fieldType": "RelativeType",
+            "fieldValues": "FATHER,MOTHER,SON,DAUGHTER"
+        },
+        {
+            "fieldName": "relativeFullName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "relativePhoneNumber",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "relatives",
+            "relationshipName": "member",
+            "otherEntityField": "firstName"
+        }
+    ],
+    "changelogDate": "20191103090735",
+    "entityTableName": "member_relative",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

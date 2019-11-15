@@ -2,13 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRouteSnapshot, NavigationEnd, NavigationError } from '@angular/router';
 
 import { JhiLanguageHelper } from 'app/core/language/language.helper';
+import { AccountService } from 'app/core/auth/account.service';
+import { VERSION } from 'app/app.constants';
+import { LocalStorageService } from 'ngx-webstorage';
+import { User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'church-main',
   templateUrl: './main.component.html'
 })
 export class ChurchMainComponent implements OnInit {
-  constructor(private jhiLanguageHelper: JhiLanguageHelper, private router: Router) {}
+  version: string;
+  user: User;
+
+  constructor(
+    private jhiLanguageHelper: JhiLanguageHelper,
+    private router: Router,
+    private accountService: AccountService,
+    private $localStorage: LocalStorageService
+  ) {
+    this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+  }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
     let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'churchApp';
@@ -19,6 +33,7 @@ export class ChurchMainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = this.$localStorage.retrieve('user');
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));
@@ -27,5 +42,9 @@ export class ChurchMainComponent implements OnInit {
         this.router.navigate(['/404']);
       }
     });
+  }
+
+  isAuthenticated() {
+    return this.accountService.isAuthenticated();
   }
 }

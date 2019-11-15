@@ -1,0 +1,61 @@
+{
+    "name": "ChurchCommunity",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "churchCommunity",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "churchCommunity",
+            "relationshipName": "chairPerson",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "churchCommunity",
+            "relationshipName": "secretary",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "churchCommunity",
+            "relationshipName": "treasurer",
+            "otherEntityField": "firstName"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityName": "member",
+            "otherEntityRelationshipName": "churchCommunities",
+            "relationshipName": "members",
+            "otherEntityField": "id",
+            "ownerSide": false
+        }
+    ],
+    "changelogDate": "20191103090725",
+    "entityTableName": "church_community",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

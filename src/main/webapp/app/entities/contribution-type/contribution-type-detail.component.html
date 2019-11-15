@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="contributionType">
+            <h2><span jhiTranslate="churchApp.contributionType.detail.title">Contribution Type</span> {{contributionType.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.contributionType.code">Code</span></dt>
+                <dd>
+                    <span>{{contributionType.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.contributionType.name">Name</span></dt>
+                <dd>
+                    <span>{{contributionType.name}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/contribution-type', contributionType.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

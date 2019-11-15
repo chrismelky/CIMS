@@ -1,0 +1,11 @@
+id;promise_date;amount;other_promise;fulfillment_date;is_fulfilled;member_id;church_activity_id
+1;2019-11-02;77188;Baby Credit Card Account Nevada;2019-11-02;false;1;1
+2;2019-11-02;34569;Chips National Idaho;2019-11-02;false;2;2
+3;2019-11-02;28792;Savings Account Customer Granite;2019-11-03;true;3;3
+4;2019-11-03;1811;HDD Security Virginia;2019-11-02;true;4;4
+5;2019-11-02;2302;deposit quantify maximize;2019-11-03;false;5;5
+6;2019-11-03;73644;Configuration;2019-11-02;true;6;6
+7;2019-11-02;12281;Visionary;2019-11-03;true;7;7
+8;2019-11-03;12466;National FTP Czech Republic;2019-11-02;true;8;8
+9;2019-11-02;37930;navigate;2019-11-03;true;9;9
+10;2019-11-02;463;leading-edge synergize;2019-11-02;true;10;10

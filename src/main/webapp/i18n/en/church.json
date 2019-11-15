@@ -1,0 +1,31 @@
+{
+  "churchApp": {
+    "church": {
+      "home": {
+        "title": "Churches",
+        "createLabel": "Create a new Church",
+        "createOrEditLabel": "Create or edit a Church",
+        "notFound": "No Churches found"
+      },
+      "created": "A new Church is created with identifier {{ param }}",
+      "updated": "A Church is updated with identifier {{ param }}",
+      "deleted": "A Church is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Church {{ id }}?"
+      },
+      "detail": {
+        "title": "Church"
+      },
+      "name": "Name",
+      "email": "Email",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "fax": "Fax",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "otherDetails": "Other Details",
+      "parent": "Parent",
+      "type": "Type"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="church">
+            <h2><span jhiTranslate="churchApp.church.detail.title">Church</span> {{church.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.church.name">Name</span></dt>
+                <dd>
+                    <span>{{church.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.email">Email</span></dt>
+                <dd>
+                    <span>{{church.email}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.phoneNumber">Phone Number</span></dt>
+                <dd>
+                    <span>{{church.phoneNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.address">Address</span></dt>
+                <dd>
+                    <span>{{church.address}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.fax">Fax</span></dt>
+                <dd>
+                    <span>{{church.fax}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.latitude">Latitude</span></dt>
+                <dd>
+                    <span>{{church.latitude}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.longitude">Longitude</span></dt>
+                <dd>
+                    <span>{{church.longitude}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.otherDetails">Other Details</span></dt>
+                <dd>
+                    <span>{{church.otherDetails}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.parent">Parent</span></dt>
+                <dd>
+                    <div *ngIf="church.parent">
+                        <a [routerLink]="['/church', church.parent?.id, 'view']">{{church.parent?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.church.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="church.type">
+                        <a [routerLink]="['/church-type', church.type?.id, 'view']">{{church.type?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/church', church.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

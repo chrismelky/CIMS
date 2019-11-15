@@ -107,6 +107,12 @@
                         <option *ngFor="let authority of authorities" [value]="authority">{{authority}}</option>
                     </select>
                 </div>
+                <div>
+                    <church-user-member
+                        [existingMember]="editForm.get(['member'])?.value"
+                        (onMemberChange)="setMember($event)">
+                    </church-user-member>
+                </div>
             </div>
             <div>
                 <button type="button" class="btn btn-secondary" (click)="previousState()">

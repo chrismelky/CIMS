@@ -1,0 +1,152 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="church-member-heading" jhiTranslate="churchApp.member.home.createOrEditLabel">Create or edit a Member</h2>
+            <div>
+                <church-alert-error></church-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.firstName" for="field_firstName">First Name</label>
+                    <input type="text" class="form-control" name="firstName" id="field_firstName"
+                           formControlName="firstName"/>
+                    <div *ngIf="editForm.get('firstName').invalid && (editForm.get('firstName').dirty || editForm.get('firstName').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstName').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('firstName').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.lastName" for="field_lastName">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" id="field_lastName"
+                           formControlName="lastName"/>
+                    <div *ngIf="editForm.get('lastName').invalid && (editForm.get('lastName').dirty || editForm.get('lastName').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastName').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('lastName').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.middleName" for="field_middleName">Middle Name</label>
+                    <input type="text" class="form-control" name="middleName" id="field_middleName"
+                           formControlName="middleName"/>
+                    <div *ngIf="editForm.get('middleName').invalid && (editForm.get('middleName').dirty || editForm.get('middleName').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('middleName').errors.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.gender" for="field_gender">Gender</label>
+                    <select class="form-control" name="gender" formControlName="gender" id="field_gender">
+                        <option value="Male">{{'churchApp.Gender.Male' | translate}}</option>
+                        <option value="Female">{{'churchApp.Gender.Female' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.phoneNumber" for="field_phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
+                           formControlName="phoneNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.email" for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email"
+                           formControlName="email"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.dateOfBirth" for="field_dateOfBirth">Date Of Bith</label>
+                    <div class="input-group">
+                        <input id="field_dateOfBirth" type="text" class="form-control" name="dateOfBirth" ngbDatepicker  #dateOfBirthDp="ngbDatepicker" formControlName="dateOfBirth"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.placeOfBirth" for="field_placeOfBirth">Place Of Bith</label>
+                    <input type="text" class="form-control" name="placeOfBirth" id="field_placeOfBirth"
+                           formControlName="placeOfBirth"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.maritalStatus" for="field_maritalStatus">Marital Status</label>
+                    <select class="form-control" name="maritalStatus" formControlName="maritalStatus" id="field_maritalStatus">
+                        <option value="Single">{{'churchApp.MaritalStatus.Single' | translate}}</option>
+                        <option value="Married">{{'churchApp.MaritalStatus.Married' | translate}}</option>
+                        <option value="Devoced">{{'churchApp.MaritalStatus.Devoced' | translate}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.work" for="field_work">Work</label>
+                    <input type="text" class="form-control" name="work" id="field_work"
+                           formControlName="work"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.placeOfWork" for="field_placeOfWork">Place Of Work</label>
+                    <input type="text" class="form-control" name="placeOfWork" id="field_placeOfWork"
+                           formControlName="placeOfWork"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.isActive" for="field_isActive">Is Active</label>
+                    <input type="checkbox" class="form-control" name="isActive" id="field_isActive"
+                           formControlName="isActive"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.isDeceased" for="field_isDeceased">Is Deceased</label>
+                    <input type="checkbox" class="form-control" name="isDeceased" id="field_isDeceased"
+                           formControlName="isDeceased"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.deceasedDate" for="field_deceasedDate">Deceased Date</label>
+                    <div class="input-group">
+                        <input id="field_deceasedDate" type="text" class="form-control" name="deceasedDate" ngbDatepicker  #deceasedDateDp="ngbDatepicker" formControlName="deceasedDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="deceasedDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.member.church" for="field_church">Church</label>
+                    <select class="form-control" id="field_church" name="church" formControlName="church">
+                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('church').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="churchApp.member.churchCommunities" for="field_churchCommunities">Church Communities</label>
+                    <select class="form-control" id="field_churchCommunities" multiple name="churchCommunities" formControlName="churchCommunities">
+                        <option [ngValue]="getSelected(editForm.get('churchCommunities').value, churchCommunityOption)" *ngFor="let churchCommunityOption of churchcommunities; trackBy: trackChurchCommunityById">{{churchCommunityOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

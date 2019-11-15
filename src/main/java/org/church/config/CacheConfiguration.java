@@ -42,6 +42,23 @@ public class CacheConfiguration {
             createCache(cm, org.church.domain.User.class.getName());
             createCache(cm, org.church.domain.Authority.class.getName());
             createCache(cm, org.church.domain.User.class.getName() + ".authorities");
+            createCache(cm, org.church.domain.ChurchType.class.getName());
+            createCache(cm, org.church.domain.ChurchCommunity.class.getName());
+            createCache(cm, org.church.domain.ChurchCommunity.class.getName() + ".members");
+            createCache(cm, org.church.domain.Church.class.getName());
+            createCache(cm, org.church.domain.ChurchActivity.class.getName());
+            createCache(cm, org.church.domain.ChuchService.class.getName());
+            createCache(cm, org.church.domain.PaymentMethod.class.getName());
+            createCache(cm, org.church.domain.ContributionType.class.getName());
+            createCache(cm, org.church.domain.Member.class.getName());
+            createCache(cm, org.church.domain.Member.class.getName() + ".relatives");
+            createCache(cm, org.church.domain.Member.class.getName() + ".churchCommunities");
+            createCache(cm, org.church.domain.Member.class.getName() + ".memberRites");
+            createCache(cm, org.church.domain.Rite.class.getName());
+            createCache(cm, org.church.domain.MemberRite.class.getName());
+            createCache(cm, org.church.domain.MemberPromise.class.getName());
+            createCache(cm, org.church.domain.MemberRelative.class.getName());
+            createCache(cm, org.church.domain.MemberContribution.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

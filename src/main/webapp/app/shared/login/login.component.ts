@@ -60,7 +60,7 @@ export class ChurchLoginModalComponent implements AfterViewInit {
             this.router.url.startsWith('/account/activate') ||
             this.router.url.startsWith('/account/reset/')
           ) {
-            this.router.navigate(['']);
+            this.router.navigate(['dashboard']);
           }
 
           this.eventManager.broadcast({
@@ -74,6 +74,8 @@ export class ChurchLoginModalComponent implements AfterViewInit {
           if (redirect) {
             this.stateStorageService.storeUrl(null);
             this.router.navigateByUrl(redirect);
+          } else {
+            this.router.navigate(['dashboard']);
           }
         },
         () => (this.authenticationError = true)

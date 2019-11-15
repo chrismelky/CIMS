@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="memberContribution">
+            <h2><span jhiTranslate="churchApp.memberContribution.detail.title">Member Contribution</span> {{memberContribution.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.memberContribution.paymentDate">Payment Date</span></dt>
+                <dd>
+                    <span>{{memberContribution.paymentDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.amount">Amount</span></dt>
+                <dd>
+                    <span>{{memberContribution.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.member">Member</span></dt>
+                <dd>
+                    <div *ngIf="memberContribution.member">
+                        <a [routerLink]="['/member', memberContribution.member?.id, 'view']">{{memberContribution.member?.firstName}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="memberContribution.church">
+                        <a [routerLink]="['/church', memberContribution.church?.id, 'view']">{{memberContribution.church?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.paymentMethod">Payment Method</span></dt>
+                <dd>
+                    <div *ngIf="memberContribution.paymentMethod">
+                        <a [routerLink]="['/payment-method', memberContribution.paymentMethod?.id, 'view']">{{memberContribution.paymentMethod?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.promise">Promise</span></dt>
+                <dd>
+                    <div *ngIf="memberContribution.promise">
+                        <a [routerLink]="['/member-promise', memberContribution.promise?.id, 'view']">{{memberContribution.promise?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberContribution.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="memberContribution.type">
+                        <a [routerLink]="['/contribution-type', memberContribution.type?.id, 'view']">{{memberContribution.type?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/member-contribution', memberContribution.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

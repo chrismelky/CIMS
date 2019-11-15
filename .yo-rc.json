@@ -37,6 +37,8 @@
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": ["en"],
-    "blueprints": []
+    "blueprints": [],
+    "herokuAppName": "church-db",
+    "herokuDeployType": "jar"
   }
 }

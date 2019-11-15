@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiLanguageHelper } from 'app/core/language/language.helper';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { Member } from 'app/shared/model/member.model';
 
 @Component({
   selector: 'church-user-mgmt-update',
@@ -24,7 +25,8 @@ export class UserManagementUpdateComponent implements OnInit {
     email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     activated: [true],
     langKey: [],
-    authorities: []
+    authorities: [],
+    member: []
   });
 
   constructor(
@@ -56,7 +58,8 @@ export class UserManagementUpdateComponent implements OnInit {
       email: user.email,
       activated: user.activated,
       langKey: user.langKey,
-      authorities: user.authorities
+      authorities: user.authorities,
+      member: user.member
     });
   }
 
@@ -82,6 +85,7 @@ export class UserManagementUpdateComponent implements OnInit {
     user.activated = this.editForm.get(['activated']).value;
     user.langKey = this.editForm.get(['langKey']).value;
     user.authorities = this.editForm.get(['authorities']).value;
+    user.member = this.editForm.get(['member']).value;
   }
 
   private onSaveSuccess(result) {
@@ -91,5 +95,12 @@ export class UserManagementUpdateComponent implements OnInit {
 
   private onSaveError() {
     this.isSaving = false;
+  }
+
+  setMember(member: Member) {
+    console.error(member);
+    this.editForm.patchValue({
+      member
+    });
   }
 }

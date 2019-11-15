@@ -1,0 +1,50 @@
+{
+    "name": "ChuchService",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "text"
+        },
+        {
+            "fieldName": "day",
+            "fieldType": "WeekDay",
+            "fieldValues": "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday"
+        },
+        {
+            "fieldName": "startTime",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "endTime",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "church",
+            "otherEntityRelationshipName": "chuchService",
+            "relationshipValidateRules": "required",
+            "relationshipName": "church",
+            "otherEntityField": "name"
+        }
+    ],
+    "changelogDate": "20191103090728",
+    "entityTableName": "chuch_service",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

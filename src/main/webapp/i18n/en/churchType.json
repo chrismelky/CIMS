@@ -1,0 +1,22 @@
+{
+  "churchApp": {
+    "churchType": {
+      "home": {
+        "title": "Church Types",
+        "createLabel": "Create a new Church Type",
+        "createOrEditLabel": "Create or edit a Church Type",
+        "notFound": "No Church Types found"
+      },
+      "created": "A new Church Type is created with identifier {{ param }}",
+      "updated": "A Church Type is updated with identifier {{ param }}",
+      "deleted": "A Church Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Church Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Church Type"
+      },
+      "name": "Name"
+    }
+  }
+}

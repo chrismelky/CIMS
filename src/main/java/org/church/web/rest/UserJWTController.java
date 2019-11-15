@@ -1,11 +1,14 @@
 package org.church.web.rest;
 
+import org.church.domain.User;
 import org.church.security.jwt.JWTFilter;
 import org.church.security.jwt.TokenProvider;
+import org.church.service.UserService;
 import org.church.web.rest.vm.LoginVM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,9 @@ public class UserJWTController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+    @Autowired
+    private UserService userService;
+
     public UserJWTController(TokenProvider tokenProvider, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.tokenProvider = tokenProvider;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
@@ -45,7 +51,8 @@ public class UserJWTController {
         String jwt = tokenProvider.createToken(authentication, rememberMe);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+
+        return new ResponseEntity<>(new JWTToken(jwt, userService.getUserWithAuthoritiesByLogin(authentication.getName()).get()), httpHeaders, HttpStatus.OK);
     }
 
     /**
@@ -55,8 +62,19 @@ public class UserJWTController {
 
         private String idToken;
 
-        JWTToken(String idToken) {
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        private User user;
+
+        JWTToken(String idToken, User user) {
             this.idToken = idToken;
+            this.user = user;
         }
 
         @JsonProperty("id_token")

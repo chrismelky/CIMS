@@ -1,0 +1,23 @@
+{
+  "churchApp": {
+    "rite": {
+      "home": {
+        "title": "Rites",
+        "createLabel": "Create a new Rite",
+        "createOrEditLabel": "Create or edit a Rite",
+        "notFound": "No Rites found"
+      },
+      "created": "A new Rite is created with identifier {{ param }}",
+      "updated": "A Rite is updated with identifier {{ param }}",
+      "deleted": "A Rite is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Rite {{ id }}?"
+      },
+      "detail": {
+        "title": "Rite"
+      },
+      "code": "Code",
+      "name": "Name"
+    }
+  }
+}

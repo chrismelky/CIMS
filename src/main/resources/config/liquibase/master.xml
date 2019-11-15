@@ -14,6 +14,28 @@
     <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090724_added_entity_ChurchType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090725_added_entity_ChurchCommunity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090726_added_entity_Church.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090727_added_entity_ChurchActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090728_added_entity_ChuchService.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090729_added_entity_PaymentMethod.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090730_added_entity_ContributionType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090731_added_entity_Member.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090732_added_entity_Rite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090733_added_entity_MemberRite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090734_added_entity_MemberPromise.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090735_added_entity_MemberRelative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090736_added_entity_MemberContribution.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20191103090725_added_entity_constraints_ChurchCommunity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090726_added_entity_constraints_Church.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090727_added_entity_constraints_ChurchActivity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090728_added_entity_constraints_ChuchService.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090731_added_entity_constraints_Member.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090733_added_entity_constraints_MemberRite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090734_added_entity_constraints_MemberPromise.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090735_added_entity_constraints_MemberRelative.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191103090736_added_entity_constraints_MemberContribution.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
