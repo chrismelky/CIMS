@@ -11,6 +11,7 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ChuchServiceService } from './chuch-service.service';
+import { IChurch } from 'app/shared/model/church.model';
 
 @Component({
   selector: 'church-chuch-service',
@@ -18,6 +19,7 @@ import { ChuchServiceService } from './chuch-service.service';
 })
 export class ChuchServiceComponent implements OnInit, OnDestroy {
   currentAccount: any;
+  church: IChurch;
   chuchServices: IChuchService[];
   error: any;
   success: any;
@@ -46,15 +48,18 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
       this.previousPage = data.pagingParams.page;
       this.reverse = data.pagingParams.ascending;
       this.predicate = data.pagingParams.predicate;
+      this.church = data.church;
     });
   }
 
   loadAll() {
+    console.error(this.church);
     this.chuchServiceService
       .query({
         page: this.page - 1,
         size: this.itemsPerPage,
-        sort: this.sort()
+        sort: this.sort(),
+        'churchId.equals': this.church.id
       })
       .subscribe((res: HttpResponse<IChuchService[]>) => this.paginateChuchServices(res.body, res.headers));
   }

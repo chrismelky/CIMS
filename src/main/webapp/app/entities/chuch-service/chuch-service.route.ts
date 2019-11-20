@@ -12,6 +12,8 @@ import { ChuchServiceDetailComponent } from './chuch-service-detail.component';
 import { ChuchServiceUpdateComponent } from './chuch-service-update.component';
 import { ChuchServiceDeletePopupComponent } from './chuch-service-delete-dialog.component';
 import { IChuchService } from 'app/shared/model/chuch-service.model';
+import { Church, IChurch } from 'app/shared/model/church.model';
+import { ChurchService } from 'app/entities/church/church.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChuchServiceResolve implements Resolve<IChuchService> {
@@ -29,12 +31,29 @@ export class ChuchServiceResolve implements Resolve<IChuchService> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class ChurchResolve implements Resolve<IChurch> {
+  constructor(private service: ChurchService) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IChurch> {
+    const id = route.params['churchId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Church>) => response.ok),
+        map((church: HttpResponse<Church>) => church.body)
+      );
+    }
+    return of(null);
+  }
+}
+
 export const chuchServiceRoute: Routes = [
   {
-    path: '',
+    path: ':churchId',
     component: ChuchServiceComponent,
     resolve: {
-      pagingParams: JhiResolvePagingParams
+      pagingParams: JhiResolvePagingParams,
+      church: ChurchResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],
@@ -56,10 +75,11 @@ export const chuchServiceRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: ':churchId/new',
     component: ChuchServiceUpdateComponent,
     resolve: {
-      chuchService: ChuchServiceResolve
+      chuchService: ChuchServiceResolve,
+      church: ChurchResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],
@@ -68,10 +88,11 @@ export const chuchServiceRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':churchId/:id/edit',
     component: ChuchServiceUpdateComponent,
     resolve: {
-      chuchService: ChuchServiceResolve
+      chuchService: ChuchServiceResolve,
+      church: ChurchResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],

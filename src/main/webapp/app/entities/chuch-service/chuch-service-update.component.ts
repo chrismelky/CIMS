@@ -18,6 +18,7 @@ import { ChurchService } from 'app/entities/church/church.service';
 })
 export class ChuchServiceUpdateComponent implements OnInit {
   isSaving: boolean;
+  church: IChurch;
 
   churches: IChurch[];
 
@@ -38,7 +39,14 @@ export class ChuchServiceUpdateComponent implements OnInit {
     protected churchService: ChurchService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
-  ) {}
+  ) {
+    activatedRoute.data.subscribe(data => {
+      this.church = data.church;
+      this.editForm.patchValue({
+        church: { id: this.church.id, name: this.church.name }
+      });
+    });
+  }
 
   ngOnInit() {
     this.isSaving = false;
@@ -62,7 +70,7 @@ export class ChuchServiceUpdateComponent implements OnInit {
       day: chuchService.day,
       startTime: chuchService.startTime,
       endTime: chuchService.endTime,
-      church: chuchService.church
+      church: { id: this.church.id, name: this.church.name } //chuchService.church
     });
   }
 

@@ -63,7 +63,7 @@
                             (click)="adminIsOpen.value = (adminIsOpen.value === '0')?'1': '0'">
                <mat-icon>account_balance</mat-icon> Administration
             </mat-list-item>
-            <div class="submenu" *ngIf="adminIsOpen.value === '1' && user?.member" >
+            <div class="submenu" *ngIf="adminIsOpen.value === '1'" >
                <mat-list-item
                           [routerLink]="['/church', user.member.church.id, 'view' ]"
                               routerLinkActive="active"
@@ -71,7 +71,7 @@
                    <mat-icon>account_balance</mat-icon>
                    <span jhiTranslate="global.menu.entities.church">Church</span>
                </mat-list-item>
-                <mat-list-item routerLink="chuch-service"
+                <mat-list-item [routerLink]="['/chuch-service', user.member.church.id]"
                                routerLinkActive="active"
                                [routerLinkActiveOptions]="{ exact: true }">
                     <mat-icon>date_range</mat-icon>
@@ -93,7 +93,7 @@
 
             </div>
         </mat-nav-list>
-        <mat-nav-list *churchHasAnyAuthority="'ROLE_USER'">
+        <mat-nav-list *churchHasAnyAuthority="'ROLE_ADMIN'">
             <input type="hidden" #memberIsOpen [value]="0" />
             <mat-list-item  class="parent-menu mat-elevation-z2"
                             (click)="memberIsOpen.value = (memberIsOpen.value === '0')?'1': '0'">
