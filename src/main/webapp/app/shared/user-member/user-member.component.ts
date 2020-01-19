@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { MemberService } from 'app/entities/member/member.service';
-import { filter, map } from 'rxjs/operators';
-import { HttpResponse } from '@angular/common/http';
 import { IMember, Member } from 'app/shared/model/member.model';
 import { BehaviorSubject } from 'rxjs';
 
@@ -28,5 +26,9 @@ export class UserMemberComponent implements OnInit {
 
   setMember() {
     this.onMemberChange.next(this.member);
+  }
+
+  resetMember() {
+    this.onMemberChange.next(null);
   }
 }

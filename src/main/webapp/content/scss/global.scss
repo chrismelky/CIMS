@@ -19,6 +19,18 @@ a:hover {
   /* make sure browsers use the pointer cursor for anchors, even with no href */
   cursor: pointer;
 }
+.input-row {
+  margin-top: 12px;
+  //border-bottom: 1px solid #ced4da;
+  padding-bottom: 12px;
+  .form-group {
+    input,
+    select {
+      border: 1px solid #e2e8f0;
+      background-color: #f7fafc;
+    }
+  }
+}
 .side-nav {
   width: 230px;
   background-color: #222d32;

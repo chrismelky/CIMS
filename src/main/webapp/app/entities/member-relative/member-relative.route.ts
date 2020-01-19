@@ -12,6 +12,8 @@ import { MemberRelativeDetailComponent } from './member-relative-detail.componen
 import { MemberRelativeUpdateComponent } from './member-relative-update.component';
 import { MemberRelativeDeletePopupComponent } from './member-relative-delete-dialog.component';
 import { IMemberRelative } from 'app/shared/model/member-relative.model';
+import { IMember, Member } from 'app/shared/model/member.model';
+import { MemberService } from 'app/entities/member/member.service';
 
 @Injectable({ providedIn: 'root' })
 export class MemberRelativeResolve implements Resolve<IMemberRelative> {
@@ -29,22 +31,25 @@ export class MemberRelativeResolve implements Resolve<IMemberRelative> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class MemberRelativeMemberResolve implements Resolve<IMember> {
+  constructor(private service: MemberService) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMember> {
+    const id = route.params['memberId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Member>) => response.ok),
+        map((member: HttpResponse<Member>) => member.body)
+      );
+    }
+    return of(null);
+  }
+}
+
 export const memberRelativeRoute: Routes = [
   {
-    path: '',
-    component: MemberRelativeComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
-      pageTitle: 'churchApp.memberRelative.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/view',
+    path: ':memberId/:id/view',
     component: MemberRelativeDetailComponent,
     resolve: {
       memberRelative: MemberRelativeResolve
@@ -56,10 +61,11 @@ export const memberRelativeRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: ':memberId/new',
     component: MemberRelativeUpdateComponent,
     resolve: {
-      memberRelative: MemberRelativeResolve
+      memberRelative: MemberRelativeResolve,
+      member: MemberRelativeMemberResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -68,10 +74,11 @@ export const memberRelativeRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':memberId/:id/edit',
     component: MemberRelativeUpdateComponent,
     resolve: {
-      memberRelative: MemberRelativeResolve
+      memberRelative: MemberRelativeResolve,
+      member: MemberRelativeMemberResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -81,18 +88,4 @@ export const memberRelativeRoute: Routes = [
   }
 ];
 
-export const memberRelativePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: MemberRelativeDeletePopupComponent,
-    resolve: {
-      memberRelative: MemberRelativeResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'churchApp.memberRelative.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
-];
+export const memberRelativePopupRoute: Routes = [];

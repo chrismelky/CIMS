@@ -28,16 +28,14 @@ import { ContributionTypeService } from 'app/entities/contribution-type/contribu
 export class MemberContributionUpdateComponent implements OnInit {
   isSaving: boolean;
 
-  members: IMember[];
-
-  churches: IChurch[];
-
   paymentmethods: IPaymentMethod[];
 
   memberpromises: IMemberPromise[];
 
   contributiontypes: IContributionType[];
   paymentDateDp: any;
+
+  member: IMember;
 
   editForm = this.fb.group({
     id: [],
@@ -64,23 +62,12 @@ export class MemberContributionUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ memberContribution }) => {
+    this.activatedRoute.data.subscribe(({ memberContribution, member }) => {
+      this.member = member;
+      memberContribution.member = { id: this.member.id };
+      memberContribution.church = memberContribution.church ? { id: memberContribution.church.id } : { id: this.member.church.id };
       this.updateForm(memberContribution);
     });
-    this.memberService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IMember[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IMember[]>) => response.body)
-      )
-      .subscribe((res: IMember[]) => (this.members = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.churchService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurch[]>) => response.body)
-      )
-      .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.paymentMethodService
       .query()
       .pipe(

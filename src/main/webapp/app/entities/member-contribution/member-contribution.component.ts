@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
 import { IMemberContribution } from 'app/shared/model/member-contribution.model';
@@ -11,6 +10,8 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { MemberContributionService } from './member-contribution.service';
+import { IMember } from 'app/shared/model/member.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-member-contribution',
@@ -30,6 +31,8 @@ export class MemberContributionComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  private member: IMember;
+  private selectedContributionId: any;
 
   constructor(
     protected memberContributionService: MemberContributionService,
@@ -37,23 +40,20 @@ export class MemberContributionComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected deleteModal: NgbModal
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
   }
 
   loadAll() {
+    if (this.member.id === undefined) {
+      return;
+    }
     this.memberContributionService
       .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
+        'memberId.equals': this.member.id,
+        'churchId.equals': this.member.church.id
       })
       .subscribe((res: HttpResponse<IMemberContribution[]>) => this.paginateMemberContributions(res.body, res.headers));
   }
@@ -61,35 +61,23 @@ export class MemberContributionComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.transition();
     }
   }
 
   transition() {
-    this.router.navigate(['/member-contribution'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
     this.loadAll();
   }
 
   clear() {
     this.page = 0;
-    this.router.navigate([
-      '/member-contribution',
-      {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
     this.loadAll();
   }
 
   ngOnInit() {
-    this.loadAll();
+    this.activatedRoute.data.subscribe(({ member }) => {
+      this.member = member;
+      this.loadAll();
+    });
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
     });
@@ -120,5 +108,20 @@ export class MemberContributionComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.memberContributions = data;
+  }
+
+  openDeleteDialog(content, id) {
+    this.selectedContributionId = id;
+    this.deleteModal.open(content, { backdrop: false }).result.then(
+      r => {
+        this.memberContributionService.delete(this.selectedContributionId).subscribe(resp => {
+          this.selectedContributionId = undefined;
+          this.loadAll();
+        });
+      },
+      d => {
+        this.selectedContributionId = undefined;
+      }
+    );
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,22 +14,24 @@ import { IChurch } from 'app/shared/model/church.model';
 import { ChurchService } from 'app/entities/church/church.service';
 import { IChurchCommunity } from 'app/shared/model/church-community.model';
 import { ChurchCommunityService } from 'app/entities/church-community/church-community.service';
+import { NgbTab, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-member-update',
   templateUrl: './member-update.component.html'
 })
-export class MemberUpdateComponent implements OnInit {
+export class MemberUpdateComponent implements OnInit, AfterViewInit {
   isSaving: boolean;
 
   churches: IChurch[];
-
+  @ViewChild('tab', { static: true }) tab: ElementRef<NgbTabset>;
   churchcommunities: IChurchCommunity[];
   dateOfBirthDp: any;
   deceasedDateDp: any;
 
   editForm = this.fb.group({
     id: [],
+    memberRn: [{ value: null, disabled: true }],
     firstName: [null, [Validators.required, Validators.maxLength(100)]],
     lastName: [null, [Validators.required, Validators.maxLength(100)]],
     middleName: [null, [Validators.maxLength(100)]],
@@ -81,6 +83,7 @@ export class MemberUpdateComponent implements OnInit {
   updateForm(member: IMember) {
     this.editForm.patchValue({
       id: member.id,
+      memberRn: member.memberRn,
       firstName: member.firstName,
       lastName: member.lastName,
       middleName: member.middleName,
@@ -101,6 +104,7 @@ export class MemberUpdateComponent implements OnInit {
   }
 
   previousState() {
+    localStorage.setItem('memberActiveTab', 'basicInfo');
     window.history.back();
   }
 
@@ -118,6 +122,7 @@ export class MemberUpdateComponent implements OnInit {
     return {
       ...new Member(),
       id: this.editForm.get(['id']).value,
+      memberRn: this.editForm.get(['memberRn']).value,
       firstName: this.editForm.get(['firstName']).value,
       lastName: this.editForm.get(['lastName']).value,
       middleName: this.editForm.get(['middleName']).value,
@@ -143,7 +148,8 @@ export class MemberUpdateComponent implements OnInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
-    this.previousState();
+    //this.previousState();
+    // this.jhiAlertService.success("Member info updated", null, null);
   }
 
   protected onSaveError() {
@@ -170,5 +176,14 @@ export class MemberUpdateComponent implements OnInit {
       }
     }
     return option;
+  }
+
+  setSelectedTab($event: NgbTabChangeEvent) {
+    localStorage.setItem('memberActiveTab', $event.nextId);
+  }
+
+  ngAfterViewInit(): void {
+    const activeTab = localStorage.getItem('memberActiveTab') || 'basicInfo';
+    setTimeout(() => this.tab.select(activeTab));
   }
 }

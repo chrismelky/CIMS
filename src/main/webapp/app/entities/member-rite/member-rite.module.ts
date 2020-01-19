@@ -19,6 +19,7 @@ const ENTITY_STATES = [...memberRiteRoute, ...memberRitePopupRoute];
     MemberRiteDeleteDialogComponent,
     MemberRiteDeletePopupComponent
   ],
-  entryComponents: [MemberRiteDeleteDialogComponent]
+  entryComponents: [MemberRiteDeleteDialogComponent],
+  exports: [MemberRiteComponent]
 })
 export class ChurchMemberRiteModule {}

@@ -20,7 +20,7 @@ export class ChuchServiceUpdateComponent implements OnInit {
   isSaving: boolean;
   church: IChurch;
 
-  churches: IChurch[];
+  // churches: IChurch[];
 
   editForm = this.fb.group({
     id: [],
@@ -42,9 +42,6 @@ export class ChuchServiceUpdateComponent implements OnInit {
   ) {
     activatedRoute.data.subscribe(data => {
       this.church = data.church;
-      this.editForm.patchValue({
-        church: { id: this.church.id, name: this.church.name }
-      });
     });
   }
 
@@ -53,13 +50,6 @@ export class ChuchServiceUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ chuchService }) => {
       this.updateForm(chuchService);
     });
-    this.churchService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurch[]>) => response.body)
-      )
-      .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(chuchService: IChuchService) {
@@ -70,7 +60,7 @@ export class ChuchServiceUpdateComponent implements OnInit {
       day: chuchService.day,
       startTime: chuchService.startTime,
       endTime: chuchService.endTime,
-      church: { id: this.church.id, name: this.church.name } //chuchService.church
+      church: { id: this.church.id, name: this.church.name }
     });
   }
 

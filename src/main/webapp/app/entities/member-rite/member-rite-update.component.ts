@@ -27,6 +27,7 @@ export class MemberRiteUpdateComponent implements OnInit {
   rites: IRite[];
 
   members: IMember[];
+  member: IMember;
 
   churches: IChurch[];
   dateReceivedDp: any;
@@ -51,8 +52,15 @@ export class MemberRiteUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ memberRite }) => {
+    this.activatedRoute.data.subscribe(({ memberRite, member }) => {
+      this.member = member;
       this.updateForm(memberRite);
+      this.editForm.patchValue({
+        member: this.member
+      });
+      if (this.member !== null) {
+        this.members = [this.member];
+      }
     });
     this.riteService
       .query()
@@ -61,13 +69,6 @@ export class MemberRiteUpdateComponent implements OnInit {
         map((response: HttpResponse<IRite[]>) => response.body)
       )
       .subscribe((res: IRite[]) => (this.rites = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.memberService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IMember[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IMember[]>) => response.body)
-      )
-      .subscribe((res: IMember[]) => (this.members = res), (res: HttpErrorResponse) => this.onError(res.message));
     this.churchService
       .query()
       .pipe(

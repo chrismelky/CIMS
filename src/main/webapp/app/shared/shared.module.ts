@@ -8,6 +8,7 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 
 import { JhMaterialModule } from 'app/shared/jh-material.module';
 import { UserMemberComponent } from './user-member/user-member.component';
+
 @NgModule({
   imports: [JhMaterialModule, ChurchSharedLibsModule],
   declarations: [

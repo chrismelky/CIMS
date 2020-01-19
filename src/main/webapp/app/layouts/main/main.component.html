@@ -64,22 +64,21 @@
                <mat-icon>account_balance</mat-icon> Administration
             </mat-list-item>
             <div class="submenu" *ngIf="adminIsOpen.value === '1'" >
-               <mat-list-item
+               <mat-list-item *ngIf="user.member"
                           [routerLink]="['/church', user.member.church.id, 'view' ]"
                               routerLinkActive="active"
                               >
                    <mat-icon>account_balance</mat-icon>
                    <span jhiTranslate="global.menu.entities.church">Church</span>
                </mat-list-item>
-                <mat-list-item [routerLink]="['/chuch-service', user.member.church.id]"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }">
+                <mat-list-item *ngIf="user.member" [routerLink]="['/chuch-service', user.member?.church.id]"
+                               routerLinkActive="active">
                     <mat-icon>date_range</mat-icon>
                     <span jhiTranslate="global.menu.entities.chuchService">Church Service</span>
                 </mat-list-item>
-                <mat-list-item routerLink="church-activity"
+                <mat-list-item *ngIf="user.member" [routerLink]="['/church-activity', user.member?.church.id]"
                                routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }">
+                               >
                     <mat-icon>calendar_today</mat-icon>
                     <span jhiTranslate="global.menu.entities.churchActivity">Church Activity</span>
                 </mat-list-item>

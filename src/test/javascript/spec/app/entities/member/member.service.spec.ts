@@ -28,6 +28,7 @@ describe('Service Tests', () => {
 
       elemDefault = new Member(
         0,
+        '1234556',
         'AAAAAAA',
         'AAAAAAA',
         'AAAAAAA',

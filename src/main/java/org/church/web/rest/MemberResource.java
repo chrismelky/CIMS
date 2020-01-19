@@ -85,6 +85,9 @@ public class MemberResource {
         if (member.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (member.getMemberRn() == null) {
+            member.setMemberRn(memberService.getMemberRn(member.getChurch()));
+        }
         Member result = memberService.save(member);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, member.getId().toString()))

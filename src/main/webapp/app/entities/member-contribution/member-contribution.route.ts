@@ -12,6 +12,9 @@ import { MemberContributionDetailComponent } from './member-contribution-detail.
 import { MemberContributionUpdateComponent } from './member-contribution-update.component';
 import { MemberContributionDeletePopupComponent } from './member-contribution-delete-dialog.component';
 import { IMemberContribution } from 'app/shared/model/member-contribution.model';
+import { IMember, Member } from 'app/shared/model/member.model';
+import { MemberService } from 'app/entities/member/member.service';
+import { MemberIdResolve } from 'app/entities/member/member.route';
 
 @Injectable({ providedIn: 'root' })
 export class MemberContributionResolve implements Resolve<IMemberContribution> {
@@ -31,19 +34,6 @@ export class MemberContributionResolve implements Resolve<IMemberContribution> {
 
 export const memberContributionRoute: Routes = [
   {
-    path: '',
-    component: MemberContributionComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
-      pageTitle: 'churchApp.memberContribution.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
     path: ':id/view',
     component: MemberContributionDetailComponent,
     resolve: {
@@ -56,10 +46,11 @@ export const memberContributionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: ':memberId/new',
     component: MemberContributionUpdateComponent,
     resolve: {
-      memberContribution: MemberContributionResolve
+      memberContribution: MemberContributionResolve,
+      member: MemberIdResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -68,10 +59,11 @@ export const memberContributionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':memberId/:id/edit',
     component: MemberContributionUpdateComponent,
     resolve: {
-      memberContribution: MemberContributionResolve
+      memberContribution: MemberContributionResolve,
+      member: MemberIdResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -81,18 +73,4 @@ export const memberContributionRoute: Routes = [
   }
 ];
 
-export const memberContributionPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: MemberContributionDeletePopupComponent,
-    resolve: {
-      memberContribution: MemberContributionResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'churchApp.memberContribution.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
-];
+export const memberContributionPopupRoute: Routes = [];

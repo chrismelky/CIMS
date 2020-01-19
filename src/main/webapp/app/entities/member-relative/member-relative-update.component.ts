@@ -20,6 +20,7 @@ export class MemberRelativeUpdateComponent implements OnInit {
   isSaving: boolean;
 
   members: IMember[];
+  member: IMember;
 
   editForm = this.fb.group({
     id: [],
@@ -39,16 +40,16 @@ export class MemberRelativeUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ memberRelative }) => {
+    this.activatedRoute.data.subscribe(({ memberRelative, member }) => {
+      this.member = member;
       this.updateForm(memberRelative);
+      this.editForm.patchValue({
+        member: this.member
+      });
+      if (this.member !== null) {
+        this.members = [this.member];
+      }
     });
-    this.memberService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IMember[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IMember[]>) => response.body)
-      )
-      .subscribe((res: IMember[]) => (this.members = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(memberRelative: IMemberRelative) {

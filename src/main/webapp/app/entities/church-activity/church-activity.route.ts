@@ -31,7 +31,7 @@ export class ChurchActivityResolve implements Resolve<IChurchActivity> {
 
 export const churchActivityRoute: Routes = [
   {
-    path: '',
+    path: ':churchId',
     component: ChurchActivityComponent,
     resolve: {
       pagingParams: JhiResolvePagingParams

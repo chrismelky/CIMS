@@ -5,6 +5,8 @@ import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import {
   MatAutocompleteModule,
   MatBadgeModule,
@@ -85,7 +87,8 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    ScrollingModule
+    ScrollingModule,
+    FlexLayoutModule
   ]
 })
 export class JhMaterialModule {}

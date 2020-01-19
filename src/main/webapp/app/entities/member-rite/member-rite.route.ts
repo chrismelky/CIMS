@@ -12,6 +12,8 @@ import { MemberRiteDetailComponent } from './member-rite-detail.component';
 import { MemberRiteUpdateComponent } from './member-rite-update.component';
 import { MemberRiteDeletePopupComponent } from './member-rite-delete-dialog.component';
 import { IMemberRite } from 'app/shared/model/member-rite.model';
+import { IMember, Member } from 'app/shared/model/member.model';
+import { MemberService } from 'app/entities/member/member.service';
 
 @Injectable({ providedIn: 'root' })
 export class MemberRiteResolve implements Resolve<IMemberRite> {
@@ -29,22 +31,25 @@ export class MemberRiteResolve implements Resolve<IMemberRite> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class MemberRelativeMemberResolve implements Resolve<IMember> {
+  constructor(private service: MemberService) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IMember> {
+    const id = route.params['memberId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Member>) => response.ok),
+        map((member: HttpResponse<Member>) => member.body)
+      );
+    }
+    return of(null);
+  }
+}
+
 export const memberRiteRoute: Routes = [
   {
-    path: '',
-    component: MemberRiteComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      defaultSort: 'id,asc',
-      pageTitle: 'churchApp.memberRite.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/view',
+    path: ':memberId/:id/view',
     component: MemberRiteDetailComponent,
     resolve: {
       memberRite: MemberRiteResolve
@@ -56,10 +61,11 @@ export const memberRiteRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: ':memberId/new',
     component: MemberRiteUpdateComponent,
     resolve: {
-      memberRite: MemberRiteResolve
+      memberRite: MemberRiteResolve,
+      member: MemberRelativeMemberResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -68,10 +74,11 @@ export const memberRiteRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':memberId/:id/edit',
     component: MemberRiteUpdateComponent,
     resolve: {
-      memberRite: MemberRiteResolve
+      memberRite: MemberRiteResolve,
+      member: MemberRelativeMemberResolve
     },
     data: {
       authorities: ['ROLE_USER'],
@@ -81,18 +88,4 @@ export const memberRiteRoute: Routes = [
   }
 ];
 
-export const memberRitePopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: MemberRiteDeletePopupComponent,
-    resolve: {
-      memberRite: MemberRiteResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'churchApp.memberRite.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
-];
+export const memberRitePopupRoute: Routes = [];

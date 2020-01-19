@@ -33,33 +33,6 @@
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.memberContribution.member" for="field_member">Member</label>
-                    <select class="form-control" id="field_member" name="member" formControlName="member">
-                        <option *ngIf="!editForm.get('member').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="memberOption.id === editForm.get('member').value?.id ? editForm.get('member').value : memberOption" *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.firstName}}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('member').invalid && (editForm.get('member').dirty || editForm.get('member').touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('member').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.memberContribution.church" for="field_church">Church</label>
-                    <select class="form-control" id="field_church" name="church" formControlName="church">
-                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('church').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberContribution.paymentMethod" for="field_paymentMethod">Payment Method</label>
                     <select class="form-control" id="field_paymentMethod" name="paymentMethod" formControlName="paymentMethod">

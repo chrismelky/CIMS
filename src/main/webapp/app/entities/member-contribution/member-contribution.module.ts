@@ -22,6 +22,7 @@ const ENTITY_STATES = [...memberContributionRoute, ...memberContributionPopupRou
     MemberContributionDeleteDialogComponent,
     MemberContributionDeletePopupComponent
   ],
-  entryComponents: [MemberContributionDeleteDialogComponent]
+  entryComponents: [MemberContributionDeleteDialogComponent],
+  exports: [MemberContributionComponent]
 })
 export class ChurchMemberContributionModule {}

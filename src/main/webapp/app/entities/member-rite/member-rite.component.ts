@@ -11,6 +11,8 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { MemberRiteService } from './member-rite.service';
+import { IMember } from 'app/shared/model/member.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-member-rite',
@@ -18,6 +20,7 @@ import { MemberRiteService } from './member-rite.service';
 })
 export class MemberRiteComponent implements OnInit, OnDestroy {
   currentAccount: any;
+  member: IMember;
   memberRites: IMemberRite[];
   error: any;
   success: any;
@@ -30,6 +33,7 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  selectedRiteId: any;
 
   constructor(
     protected memberRiteService: MemberRiteService,
@@ -37,23 +41,28 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected deleteModal: NgbModal
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
+      // this.page = data.pagingParams.page;
+      // this.previousPage = data.pagingParams.page;
+      // this.reverse = data.pagingParams.ascending;
+      // this.predicate = data.pagingParams.predicate;
     });
   }
 
   loadAll() {
+    if (this.member.id === undefined) {
+      return;
+    }
     this.memberRiteService
       .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
+        'memberId.equals': this.member.id
+        // page: this.page - 1,
+        // size: this.itemsPerPage,
+        // sort: this.sort()
       })
       .subscribe((res: HttpResponse<IMemberRite[]>) => this.paginateMemberRites(res.body, res.headers));
   }
@@ -61,12 +70,11 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.transition();
     }
   }
 
   transition() {
-    this.router.navigate(['/member-rite'], {
+    this.router.navigate(['/member-rites'], {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -89,7 +97,10 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.loadAll();
+    this.activatedRoute.data.subscribe(({ member }) => {
+      this.member = member;
+      this.loadAll();
+    });
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
     });
@@ -120,5 +131,20 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.memberRites = data;
+  }
+
+  openDeleteDialog(content, id) {
+    this.selectedRiteId = id;
+    this.deleteModal.open(content, { backdrop: false }).result.then(
+      r => {
+        this.memberRiteService.delete(this.selectedRiteId).subscribe(resp => {
+          this.selectedRiteId = undefined;
+          this.loadAll();
+        });
+      },
+      d => {
+        this.selectedRiteId = undefined;
+      }
+    );
   }
 }

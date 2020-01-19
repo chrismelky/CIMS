@@ -24,16 +24,8 @@
             <th scope="col"  jhiSortBy="middleName"><span jhiTranslate="churchApp.member.middleName">Middle Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="gender"><span jhiTranslate="churchApp.member.gender">Gender</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="phoneNumber"><span jhiTranslate="churchApp.member.phoneNumber">Phone Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="email"><span jhiTranslate="churchApp.member.email">Email</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="dateOfBirth"><span jhiTranslate="churchApp.member.dateOfBirth">Date Of Bith</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="placeOfBirth"><span jhiTranslate="churchApp.member.placeOfBirth">Place Of Bith</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="maritalStatus"><span jhiTranslate="churchApp.member.maritalStatus">Marital Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="work"><span jhiTranslate="churchApp.member.work">Work</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="placeOfWork"><span jhiTranslate="churchApp.member.placeOfWork">Place Of Work</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="maritalStatus"><span jhiTranslate="churchApp.member.maritalStatus">Marital Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="isActive"><span jhiTranslate="churchApp.member.isActive">Is Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="isDeceased"><span jhiTranslate="churchApp.member.isDeceased">Is Deceased</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="deceasedDate"><span jhiTranslate="churchApp.member.deceasedDate">Deceased Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="church.name"><span jhiTranslate="churchApp.member.church">Church</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
             </thead>
@@ -45,20 +37,8 @@
                 <td>{{member.middleName}}</td>
                 <td jhiTranslate="{{'churchApp.Gender.' + member.gender}}">{{member.gender}}</td>
                 <td>{{member.phoneNumber}}</td>
-                <td>{{member.email}}</td>
-                <td>{{member.dateOfBirth | date:'mediumDate'}}</td>
-                <td>{{member.placeOfBirth}}</td>
                 <td jhiTranslate="{{'churchApp.MaritalStatus.' + member.maritalStatus}}">{{member.maritalStatus}}</td>
-                <td>{{member.work}}</td>
-                <td>{{member.placeOfWork}}</td>
                 <td>{{member.isActive}}</td>
-                <td>{{member.isDeceased}}</td>
-                <td>{{member.deceasedDate | date:'mediumDate'}}</td>
-                <td>
-                    <div *ngIf="member.church">
-                        <a [routerLink]="['/church', member.church?.id, 'view' ]" >{{member.church?.name}}</a>
-                    </div>
-                </td>
                 <td class="text-right">
                     <div class="btn-group">
                         <button type="submit"
