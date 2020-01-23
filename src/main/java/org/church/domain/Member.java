@@ -88,8 +88,39 @@ public class Member implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("members")
+    @JsonIgnoreProperties(
+        {
+            "members",
+            "email",
+            "phoneNumber",
+            "address",
+            "latitude",
+            "longitude",
+            "otherDetails",
+            "parent",
+            "type"
+        })
     private Church church;
+
+    @ManyToOne()
+    @JsonIgnoreProperties({
+        "church",
+        "chairman",
+        "secretary" ,
+        "treasurer",
+        "address",
+        "numberOfHouseHold",
+        "phoneNumber"
+    })
+    private HomeChurchCommunity homeChurchCommunity;
+
+    public HomeChurchCommunity getHomeChurchCommunity() {
+        return homeChurchCommunity;
+    }
+
+    public void setHomeChurchCommunity(HomeChurchCommunity homeChurchCommunity) {
+        this.homeChurchCommunity = homeChurchCommunity;
+    }
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)

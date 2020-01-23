@@ -1,0 +1,52 @@
+{
+    "name": "PeriodContributionItem",
+    "fields": [
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dateReceived",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "receivedBy",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "periodContribution",
+            "otherEntityRelationshipName": "periodContributionItem",
+            "relationshipValidateRules": "required",
+            "relationshipName": "periodContribution",
+            "otherEntityField": "description"
+        }
+    ],
+    "changelogDate": "20200119063430",
+    "entityTableName": "period_contribution_item",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

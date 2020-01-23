@@ -153,7 +153,6 @@ export class ChurchUpdateComponent implements OnInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
-    this.previousState();
   }
 
   protected onSaveError() {

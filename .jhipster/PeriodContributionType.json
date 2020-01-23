@@ -1,0 +1,44 @@
+{
+    "name": "PeriodContributionType",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "periodType",
+            "otherEntityRelationshipName": "periodContributionType",
+            "relationshipValidateRules": "required",
+            "relationshipName": "periodType",
+            "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "church",
+            "otherEntityName": "church",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "periodContributionType"
+        }
+    ],
+    "changelogDate": "20200119063428",
+    "entityTableName": "period_contribution_type",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

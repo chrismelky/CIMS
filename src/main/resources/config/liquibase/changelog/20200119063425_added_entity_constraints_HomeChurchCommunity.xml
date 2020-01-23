@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity HomeChurchCommunity.
+    -->
+    <changeSet id="20200119063425-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="church_id"
+                                 baseTableName="home_church_community"
+                                 constraintName="fk_home_church_community_church_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="church"/>
+
+        <addForeignKeyConstraint baseColumnNames="chairman_id"
+                                 baseTableName="home_church_community"
+                                 constraintName="fk_home_church_community_chair_man_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="member"/>
+
+        <addForeignKeyConstraint baseColumnNames="secretary_id"
+                                 baseTableName="home_church_community"
+                                 constraintName="fk_home_church_community_secreatry_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="member"/>
+
+        <addForeignKeyConstraint baseColumnNames="treasurer_id"
+                                 baseTableName="home_church_community"
+                                 constraintName="fk_home_church_community_treasurer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="member"/>
+
+        <addForeignKeyConstraint baseColumnNames="home_church_community_id"
+                                 baseTableName="member"
+                                 constraintName="fk_home_church_community_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="home_church_community"/>
+
+    </changeSet>
+</databaseChangeLog>

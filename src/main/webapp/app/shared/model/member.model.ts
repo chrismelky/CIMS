@@ -5,6 +5,7 @@ import { IChurchCommunity } from 'app/shared/model/church-community.model';
 import { IMemberRite } from 'app/shared/model/member-rite.model';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
 import { MaritalStatus } from 'app/shared/model/enumerations/marital-status.model';
+import { IHomeChurchCommunity } from 'app/shared/model/home-church-community.model';
 
 export interface IMember {
   id?: number;
@@ -27,6 +28,7 @@ export interface IMember {
   church?: IChurch;
   churchCommunities?: IChurchCommunity[];
   memberRites?: IMemberRite[];
+  homeChurchCommunity?: IHomeChurchCommunity;
 }
 
 export class Member implements IMember {
@@ -50,7 +52,8 @@ export class Member implements IMember {
     public relatives?: IMemberRelative[],
     public church?: IChurch,
     public churchCommunities?: IChurchCommunity[],
-    public memberRites?: IMemberRite[]
+    public memberRites?: IMemberRite[],
+    public homeChurchCommunity?: IHomeChurchCommunity
   ) {
     this.isActive = this.isActive || false;
     this.isDeceased = this.isDeceased || false;

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
 import { IMember } from 'app/shared/model/member.model';
@@ -30,6 +29,7 @@ export class MemberComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  churchId: number;
 
   constructor(
     protected memberService: MemberService,
@@ -49,8 +49,10 @@ export class MemberComponent implements OnInit, OnDestroy {
   }
 
   loadAll() {
+    const churchFilter = this.churchId === undefined ? {} : { 'churchId.equals': this.churchId };
     this.memberService
       .query({
+        ...churchFilter,
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort()
@@ -66,7 +68,8 @@ export class MemberComponent implements OnInit, OnDestroy {
   }
 
   transition() {
-    this.router.navigate(['/member'], {
+    const command = this.churchId ? ['/member', this.churchId] : ['/member'];
+    this.router.navigate(command, {
       queryParams: {
         page: this.page,
         size: this.itemsPerPage,
@@ -89,6 +92,7 @@ export class MemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.churchId = this.activatedRoute.snapshot.params['churchId'];
     this.loadAll();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;

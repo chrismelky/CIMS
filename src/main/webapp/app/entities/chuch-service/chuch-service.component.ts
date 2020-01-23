@@ -12,6 +12,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ChuchServiceService } from './chuch-service.service';
 import { IChurch } from 'app/shared/model/church.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-chuch-service',
@@ -32,6 +33,7 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  churchId: number;
 
   constructor(
     protected chuchServiceService: ChuchServiceService,
@@ -40,26 +42,16 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected dataUtils: JhiDataUtils,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected deleteModal: NgbModal
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-      this.church = data.church;
-    });
   }
 
   loadAll() {
-    console.error(this.church);
     this.chuchServiceService
       .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-        'churchId.equals': this.church.id
+        'churchId.equals': this.churchId
       })
       .subscribe((res: HttpResponse<IChuchService[]>) => this.paginateChuchServices(res.body, res.headers));
   }
@@ -67,7 +59,6 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.transition();
     }
   }
 
@@ -95,6 +86,7 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.churchId = this.activatedRoute.snapshot.params['id'];
     this.loadAll();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
@@ -108,14 +100,6 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
 
   trackId(index: number, item: IChuchService) {
     return item.id;
-  }
-
-  byteSize(field) {
-    return this.dataUtils.byteSize(field);
-  }
-
-  openFile(contentType, field) {
-    return this.dataUtils.openFile(contentType, field);
   }
 
   registerChangeInChuchServices() {
@@ -134,5 +118,16 @@ export class ChuchServiceComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.chuchServices = data;
+  }
+
+  openDeleteDialog(content, id) {
+    this.deleteModal.open(content, { backdrop: false }).result.then(
+      r => {
+        this.chuchServiceService.delete(id).subscribe(resp => {
+          this.loadAll();
+        });
+      },
+      d => {}
+    );
   }
 }

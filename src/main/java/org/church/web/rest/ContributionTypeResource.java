@@ -91,13 +91,13 @@ public class ContributionTypeResource {
     }
 
     /**
-     * {@code GET  /contribution-types} : get all the contributionTypes.
+     * {@code GET  /contribution-types} : get all the periodContributionTypes.
      *
 
      * @param pageable the pagination information.
 
      * @param criteria the criteria which the requested entities should match.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contributionTypes in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of periodContributionTypes in body.
      */
     @GetMapping("/contribution-types")
     public ResponseEntity<List<ContributionType>> getAllContributionTypes(ContributionTypeCriteria criteria, Pageable pageable) {
@@ -108,7 +108,7 @@ public class ContributionTypeResource {
     }
 
     /**
-    * {@code GET  /contribution-types/count} : count all the contributionTypes.
+    * {@code GET  /contribution-types/count} : count all the periodContributionTypes.
     *
     * @param criteria the criteria which the requested entities should match.
     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.

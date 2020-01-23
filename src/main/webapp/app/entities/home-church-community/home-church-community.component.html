@@ -1,0 +1,99 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="churchApp.homeChurchCommunity.home.title">Home Church Communities</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-home-church-community"
+                [routerLink]="['/home-church-community', churchId, 'new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="churchApp.homeChurchCommunity.home.createLabel">
+            Create a new Home Church Community
+            </span>
+        </button>
+    </h2>
+    <church-alert-error></church-alert-error>
+    <church-alert></church-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="homeChurchCommunities?.length === 0">
+        <span jhiTranslate="churchApp.homeChurchCommunity.home.notFound">No homeChurchCommunities found</span>
+    </div>
+    <div class="table-responsive" *ngIf="homeChurchCommunities?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="name"><span jhiTranslate="churchApp.homeChurchCommunity.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="numberOfHouseHold"><span jhiTranslate="churchApp.homeChurchCommunity.numberOfHouseHold">Number Of House Hold</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="phoneNumber"><span jhiTranslate="churchApp.homeChurchCommunity.phoneNumber">Phone Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="address"><span jhiTranslate="churchApp.homeChurchCommunity.address">Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="chairMan.firstName"><span jhiTranslate="churchApp.homeChurchCommunity.chairMan">Chair Man</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="secreatry.firstName"><span jhiTranslate="churchApp.homeChurchCommunity.secreatry">Secreatry</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="treasurer.firstName"><span jhiTranslate="churchApp.homeChurchCommunity.treasurer">Treasurer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let homeChurchCommunity of homeChurchCommunities ;trackBy: trackId">
+                <td><a [routerLink]="['/home-church-community', homeChurchCommunity.id, 'view' ]">{{homeChurchCommunity.id}}</a></td>
+                <td>{{homeChurchCommunity.name}}</td>
+                <td>{{homeChurchCommunity.numberOfHouseHold}}</td>
+                <td>{{homeChurchCommunity.phoneNumber}}</td>
+                <td>{{homeChurchCommunity.address}}</td>
+                <td>
+                    <div *ngIf="homeChurchCommunity.chairMan">
+                        <a [routerLink]="['/member', homeChurchCommunity.chairMan?.id, 'view' ]" >{{homeChurchCommunity.chairMan?.firstName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="homeChurchCommunity.secreatry">
+                        <a [routerLink]="['/member', homeChurchCommunity.secreatry?.id, 'view' ]" >{{homeChurchCommunity.secreatry?.firstName}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="homeChurchCommunity.treasurer">
+                        <a [routerLink]="['/member', homeChurchCommunity.treasurer?.id, 'view' ]" >{{homeChurchCommunity.treasurer?.firstName}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/home-church-community', churchId, homeChurchCommunity.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                (click)="openDeleteDialog(confirmDelete, homeChurchCommunity.id)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="homeChurchCommunities?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>
+
+<ng-template #confirmDelete let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Delete Home Community</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to delete this home community
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.dismiss('Close click')">Cancel</button>
+        <button type="button" class="btn btn-warning" (click)="modal.close('Close click')">Yes</button>
+    </div>
+</ng-template>

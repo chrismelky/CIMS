@@ -1,0 +1,24 @@
+{
+  "churchApp": {
+    "periodContributionType": {
+      "home": {
+        "title": "Period Contribution Types",
+        "createLabel": "Create a new Period Contribution Type",
+        "createOrEditLabel": "Create or edit a Period Contribution Type",
+        "notFound": "No Period Contribution Types found"
+      },
+      "created": "A new Period Contribution Type is created with identifier {{ param }}",
+      "updated": "A Period Contribution Type is updated with identifier {{ param }}",
+      "deleted": "A Period Contribution Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Period Contribution Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Period Contribution Type"
+      },
+      "name": "Name",
+      "periodType": "Period Type",
+      "church": "Church"
+    }
+  }
+}

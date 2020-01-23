@@ -24,7 +24,7 @@ export class UserMemberComponent implements OnInit {
     });
   }
 
-  setMember() {
+  selectMember() {
     this.onMemberChange.next(this.member);
   }
 

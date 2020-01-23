@@ -1,90 +1,116 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="church-church-heading" jhiTranslate="churchApp.church.home.createOrEditLabel">Create or edit a Church</h2>
-            <div>
-                <church-alert-error></church-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.name" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                           formControlName="name"/>
-                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.email" for="field_email">Email</label>
-                    <input type="text" class="form-control" name="email" id="field_email"
-                           formControlName="email"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.phoneNumber" for="field_phoneNumber">Phone Number</label>
-                    <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
-                           formControlName="phoneNumber"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.address" for="field_address">Address</label>
-                    <input type="text" class="form-control" name="address" id="field_address"
-                           formControlName="address"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.fax" for="field_fax">Fax</label>
-                    <input type="text" class="form-control" name="fax" id="field_fax"
-                           formControlName="fax"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.latitude" for="field_latitude">Latitude</label>
-                    <input type="number" class="form-control" name="latitude" id="field_latitude"
-                           formControlName="latitude"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.longitude" for="field_longitude">Longitude</label>
-                    <input type="number" class="form-control" name="longitude" id="field_longitude"
-                           formControlName="longitude"/>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.otherDetails" for="field_otherDetails">Other Details</label>
-                    <textarea class="form-control" name="otherDetails" id="field_otherDetails"
-                              formControlName="otherDetails"></textarea>
-                </div>
+<ngb-tabset class="col-12" #churchTab="ngbTabset">
+    <ngb-tab title="Basic Information">
+        <ng-template ngbTabContent>
+            <div class="col-8">
+                <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                    <h2 id="church-church-heading" jhiTranslate="churchApp.church.home.createOrEditLabel">Create or edit a Church</h2>
+                    <div>
+                        <church-alert></church-alert>
+                        <church-alert-error></church-alert-error>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.name" for="field_name">Name</label>
+                            <input type="text" class="form-control" name="name" id="field_name"
+                                   formControlName="name"/>
+                            <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                                <small class="form-text text-danger"
+                                       *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.email" for="field_email">Email</label>
+                            <input type="text" class="form-control" name="email" id="field_email"
+                                   formControlName="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.phoneNumber" for="field_phoneNumber">Phone Number</label>
+                            <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
+                                   formControlName="phoneNumber"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.address" for="field_address">Address</label>
+                            <input type="text" class="form-control" name="address" id="field_address"
+                                   formControlName="address"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.fax" for="field_fax">Fax</label>
+                            <input type="text" class="form-control" name="fax" id="field_fax"
+                                   formControlName="fax"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.latitude" for="field_latitude">Latitude</label>
+                            <input type="number" class="form-control" name="latitude" id="field_latitude"
+                                   formControlName="latitude"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.longitude" for="field_longitude">Longitude</label>
+                            <input type="number" class="form-control" name="longitude" id="field_longitude"
+                                   formControlName="longitude"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.otherDetails" for="field_otherDetails">Other Details</label>
+                            <textarea class="form-control" name="otherDetails" id="field_otherDetails"
+                                      formControlName="otherDetails"></textarea>
+                        </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.parent" for="field_parent">Parent</label>
-                    <select class="form-control" id="field_parent" name="parent" formControlName="parent">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="churchOption.id === editForm.get('parent').value?.id ? editForm.get('parent').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.church.type" for="field_type">Type</label>
-                    <select class="form-control" id="field_type" name="type" formControlName="type">
-                        <option *ngIf="!editForm.get('type').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="churchTypeOption.id === editForm.get('type').value?.id ? editForm.get('type').value : churchTypeOption" *ngFor="let churchTypeOption of churchtypes; trackBy: trackChurchTypeById">{{churchTypeOption.name}}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('type').invalid && (editForm.get('type').dirty || editForm.get('type').touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('type').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.parent" for="field_parent">Parent</label>
+                            <select class="form-control" id="field_parent" name="parent" formControlName="parent">
+                                <option [ngValue]="null"></option>
+                                <option [ngValue]="churchOption.id === editForm.get('parent').value?.id ? editForm.get('parent').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="churchApp.church.type" for="field_type">Type</label>
+                            <select class="form-control" id="field_type" name="type" formControlName="type">
+                                <option *ngIf="!editForm.get('type').value" [ngValue]="null" selected></option>
+                                <option [ngValue]="churchTypeOption.id === editForm.get('type').value?.id ? editForm.get('type').value : churchTypeOption" *ngFor="let churchTypeOption of churchtypes; trackBy: trackChurchTypeById">{{churchTypeOption.name}}</option>
+                            </select>
+                        </div>
+                        <div *ngIf="editForm.get('type').invalid && (editForm.get('type').dirty || editForm.get('type').touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('type').errors.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                            <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                        </button>
+                        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                            <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-                </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Services">
+        <ng-template ngbTabContent>
+            <church-chuch-service></church-chuch-service>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Activities">
+        <ng-template ngbTabContent>
+            <church-church-activity></church-church-activity>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Home Church Communities">
+        <ng-template ngbTabContent>
+            <church-home-church-community></church-home-church-community>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Communities">
+        <ng-template ngbTabContent>
+            <church-church-community></church-church-community>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Users">
+        <ng-template ngbTabContent>
+            Users here
+        </ng-template>
+    </ngb-tab>
+</ngb-tabset>
+

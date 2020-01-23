@@ -27,6 +27,12 @@
     <include file="config/liquibase/changelog/20191103090734_added_entity_MemberPromise.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090735_added_entity_MemberRelative.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090736_added_entity_MemberContribution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063425_added_entity_HomeChurchCommunity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063426_added_entity_PeriodType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063427_added_entity_Period.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063428_added_entity_PeriodContributionType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063429_added_entity_PeriodContribution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063430_added_entity_PeriodContributionItem.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20191103090725_added_entity_constraints_ChurchCommunity.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090726_added_entity_constraints_Church.xml" relativeToChangelogFile="false"/>
@@ -37,5 +43,10 @@
     <include file="config/liquibase/changelog/20191103090734_added_entity_constraints_MemberPromise.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090735_added_entity_constraints_MemberRelative.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090736_added_entity_constraints_MemberContribution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063427_added_entity_constraints_Period.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063428_added_entity_constraints_PeriodContributionType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063430_added_entity_constraints_PeriodContributionItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063425_added_entity_constraints_HomeChurchCommunity.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063429_added_entity_constraints_PeriodContribution.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

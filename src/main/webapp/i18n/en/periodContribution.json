@@ -1,0 +1,29 @@
+{
+  "churchApp": {
+    "periodContribution": {
+      "home": {
+        "title": "Contributions",
+        "createLabel": "Add Contribution",
+        "createOrEditLabel": "Create or edit a Period Contribution",
+        "notFound": "No Period Contributions found"
+      },
+      "created": "A new Period Contribution is created with identifier {{ param }}",
+      "updated": "A Period Contribution is updated with identifier {{ param }}",
+      "deleted": "A Period Contribution is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Period Contribution {{ id }}?"
+      },
+      "detail": {
+        "title": "Period Contribution"
+      },
+      "amountPromised": "Amount Promised",
+      "amountContributed": "Amount Contributed",
+      "description": "Description",
+      "dueDate": "Due Date",
+      "period": "Period",
+      "member": "Member",
+      "church": "Church",
+      "periodContributionType": "Period Contribution Type"
+    }
+  }
+}

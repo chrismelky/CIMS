@@ -46,7 +46,7 @@ export class MemberIdResolve implements Resolve<IMember> {
 
 export const memberRoute: Routes = [
   {
-    path: '',
+    path: 'byChurch/:churchId',
     component: MemberComponent,
     resolve: {
       pagingParams: JhiResolvePagingParams
@@ -71,7 +71,7 @@ export const memberRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
+    path: 'new/byChurch/:churchId',
     component: MemberUpdateComponent,
     resolve: {
       member: MemberResolve
@@ -83,7 +83,7 @@ export const memberRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':id/edit/byChurch/:churchId',
     component: MemberUpdateComponent,
     resolve: {
       member: MemberResolve

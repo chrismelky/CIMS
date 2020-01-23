@@ -1,0 +1,66 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="churchApp.periodType.home.title">Period Types</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-period-type" [routerLink]="['/period-type/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="churchApp.periodType.home.createLabel">
+            Create a new Period Type
+            </span>
+        </button>
+    </h2>
+    <church-alert-error></church-alert-error>
+    <church-alert></church-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="periodTypes?.length === 0">
+        <span jhiTranslate="churchApp.periodType.home.notFound">No periodTypes found</span>
+    </div>
+    <div class="table-responsive" *ngIf="periodTypes?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="name"><span jhiTranslate="churchApp.periodType.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let periodType of periodTypes ;trackBy: trackId">
+                <td><a [routerLink]="['/period-type', periodType.id, 'view' ]">{{periodType.id}}</a></td>
+                <td>{{periodType.name}}</td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/period-type', periodType.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/period-type', periodType.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/period-type', { outlets: { popup: periodType.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div [hidden]="periodTypes?.length === 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

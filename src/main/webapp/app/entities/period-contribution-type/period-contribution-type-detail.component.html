@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="periodContributionType">
+            <h2><span jhiTranslate="churchApp.periodContributionType.detail.title">Period Contribution Type</span> {{periodContributionType.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.periodContributionType.name">Name</span></dt>
+                <dd>
+                    <span>{{periodContributionType.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionType.periodType">Period Type</span></dt>
+                <dd>
+                    <div *ngIf="periodContributionType.periodType">
+                        <a [routerLink]="['/period-type', periodContributionType.periodType?.id, 'view']">{{periodContributionType.periodType?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionType.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="periodContributionType.church">
+                        <a [routerLink]="['/church', periodContributionType.church?.id, 'view']">{{periodContributionType.church?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/period-contribution-type', periodContributionType.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

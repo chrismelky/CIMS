@@ -1,0 +1,81 @@
+{
+    "name": "PeriodContribution",
+    "fields": [
+        {
+            "fieldName": "amountPromised",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "amountContributed",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dueDate",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "period",
+            "otherEntityName": "period",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "periodContribution"
+        },
+        {
+            "relationshipName": "member",
+            "otherEntityName": "member",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "firstName",
+            "otherEntityRelationshipName": "periodContribution"
+        },
+        {
+            "relationshipName": "church",
+            "otherEntityName": "church",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "periodContribution"
+        },
+        {
+            "relationshipName": "periodContributionType",
+            "otherEntityName": "periodContributionType",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "periodContribution"
+        }
+    ],
+    "changelogDate": "20200119063429",
+    "entityTableName": "period_contribution",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

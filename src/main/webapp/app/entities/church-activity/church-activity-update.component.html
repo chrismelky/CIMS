@@ -55,19 +55,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.churchActivity.church" for="field_church">Church</label>
-                    <select class="form-control" id="field_church" name="church" formControlName="church">
-                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
-                    </select>
-                </div>
-                <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
-                    <small class="form-text text-danger"
-                           *ngIf="editForm.get('church').errors.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

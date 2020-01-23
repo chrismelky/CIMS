@@ -1,6 +1,7 @@
 <div class="row justify-content-center">
     <h2 id="church-member-heading" jhiTranslate="churchApp.member.home.createOrEditLabel">Create or edit a Member</h2>
-    <ngb-tabset class="col-12" #tab="ngbTabset" (tabChange)="setSelectedTab($event)">
+    <ngb-tabset class="col-12" #memberTab="ngbTabset"
+                (tabChange)="setSelectedTab($event)">
         <ngb-tab title="Basic Info" id="basicInfo">
             <ng-template ngbTabContent>
                 <div class="col-12">
@@ -13,6 +14,24 @@
                                 <label for="id" jhiTranslate="global.field.id">ID</label>
                                 <input class="form-control" formControlName="id" id="id" name="id" readonly
                                        type="hidden" />
+                            </div>
+                            <div class="row input-row" *ngIf="churchId === undefined">
+                                <div class="form-group col-sm-12 col-md-6" >
+                                    <label class="form-control-label" for="field_church" jhiTranslate="churchApp.member.church">Church</label>
+                                    <select class="form-control"
+                                            (ngModelChange)="loadChurchData(editForm.get('church').value)"
+                                            formControlName="church" id="field_church" name="church">
+                                        <option *ngIf="!editForm.get('church').value"
+                                                [ngValue]="null" selected></option>
+                                        <option *ngFor="let churchOption of churches; trackBy: trackChurchById" [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption">{{churchOption.name}}</option>
+                                    </select>
+                                    <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
+                                        <small *ngIf="editForm.get('church').errors.required"
+                                               class="form-text text-danger" jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row input-row">
                                 <div class="form-group col-sm-12 col-md-3">
@@ -146,10 +165,17 @@
                             </div>
                             <div class="row input-row">
                                 <div class="form-group col-sm-12 col-md-6">
-                                    <label class="form-control-label" for="field_church" jhiTranslate="churchApp.member.church">Church</label>
-                                    <select class="form-control" formControlName="church" id="field_church" name="church">
-                                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
-                                        <option *ngFor="let churchOption of churches; trackBy: trackChurchById" [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption">{{churchOption.name}}</option>
+                                    <label class="form-control-label"
+                                           for="field_home_church"
+                                           jhiTranslate="churchApp.member.homeChurch">Home Church Community</label>
+                                    <select class="form-control"
+                                            (ngModelChange)="loadHomeChurchCommunities(editForm.get('church').value)"
+                                            formControlName="homeChurchCommunity" id="field_home_church"
+                                            name="homeChurchCommunity">
+                                        <option *ngIf="!editForm.get('homeChurchCommunity').value"
+                                                [ngValue]="null" selected></option>
+                                        <option *ngFor="let churchOption of homeChurchCommunities; trackBy: trackHomeChurchById"
+                                                [ngValue]="churchOption.id === editForm.get('homeChurchCommunity').value?.id ? editForm.get('homeChurchCommunity').value : churchOption">{{churchOption.name}}</option>
                                     </select>
                                     <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
                                         <small *ngIf="editForm.get('church').errors.required"
@@ -162,7 +188,7 @@
                                 <div class="form-group col-sm-12 col-md-6">
                                     <label for="field_churchCommunities" jhiTranslate="churchApp.member.churchCommunities">Church Communities</label>
                                     <select class="form-control" formControlName="churchCommunities" id="field_churchCommunities" multiple name="churchCommunities">
-                                        <option *ngFor="let churchCommunityOption of churchcommunities; trackBy: trackChurchCommunityById" [ngValue]="getSelected(editForm.get('churchCommunities').value, churchCommunityOption)">{{churchCommunityOption.name}}</option>
+                                        <option *ngFor="let churchCommunityOption of churchCommunities; trackBy: trackChurchCommunityById" [ngValue]="getSelected(editForm.get('churchCommunities').value, churchCommunityOption)">{{churchCommunityOption.name}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -187,6 +213,17 @@
         <ngb-tab title="Rites" id="rites">
             <ng-template ngbTabContent>
               <church-member-rite></church-member-rite>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab *ngFor="let c of periodContributionTypes"
+                 [title]="c.name"  [id]="c.id.toString()">
+            <ng-template ngbTabContent>
+                <church-period-contribution
+                  [churchId]="churchId"
+                  [periodId]="4551"
+                  [memberId]="memberId"
+                  [periodContributionTypeId]="c.id"
+                ></church-period-contribution>
             </ng-template>
         </ngb-tab>
         <ngb-tab title="Contribution" id="contribution">

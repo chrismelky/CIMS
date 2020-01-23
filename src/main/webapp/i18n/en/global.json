@@ -20,6 +20,12 @@
         "memberPromise": "Member Promise",
         "memberRelative": "Member Relative",
         "memberContribution": "Member Contribution",
+        "homeChurchCommunity": "Home Church Community",
+        "periodType": "Period Type",
+        "period": "Period",
+        "periodContributionType": "Period Contribution Type",
+        "periodContribution": "Period Contribution",
+        "periodContributionItem": "Period Contribution Item",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

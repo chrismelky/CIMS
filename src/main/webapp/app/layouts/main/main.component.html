@@ -65,7 +65,7 @@
             </mat-list-item>
             <div class="submenu" *ngIf="adminIsOpen.value === '1'" >
                <mat-list-item *ngIf="user.member"
-                          [routerLink]="['/church', user.member.church.id, 'view' ]"
+                          [routerLink]="['/church', user.member.church.id, 'edit' ]"
                               routerLinkActive="active"
                               >
                    <mat-icon>account_balance</mat-icon>
@@ -99,7 +99,8 @@
                 <mat-icon>people</mat-icon> Members
             </mat-list-item>
             <div class="submenu" *ngIf="memberIsOpen.value === '1'">
-                <mat-list-item routerLink="member"
+                <mat-list-item [routerLink]="['/member', 'byChurch',user.member.church.id]"
+                               *ngIf="user.member"
                                routerLinkActive="active"
                                [routerLinkActiveOptions]="{ exact: true }" >
                     <mat-icon>person</mat-icon>

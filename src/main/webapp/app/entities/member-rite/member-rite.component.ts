@@ -45,12 +45,6 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
     protected deleteModal: NgbModal
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      // this.page = data.pagingParams.page;
-      // this.previousPage = data.pagingParams.page;
-      // this.reverse = data.pagingParams.ascending;
-      // this.predicate = data.pagingParams.predicate;
-    });
   }
 
   loadAll() {
@@ -60,9 +54,6 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
     this.memberRiteService
       .query({
         'memberId.equals': this.member.id
-        // page: this.page - 1,
-        // size: this.itemsPerPage,
-        // sort: this.sort()
       })
       .subscribe((res: HttpResponse<IMemberRite[]>) => this.paginateMemberRites(res.body, res.headers));
   }
@@ -134,17 +125,13 @@ export class MemberRiteComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(content, id) {
-    this.selectedRiteId = id;
     this.deleteModal.open(content, { backdrop: false }).result.then(
       r => {
-        this.memberRiteService.delete(this.selectedRiteId).subscribe(resp => {
-          this.selectedRiteId = undefined;
+        this.memberRiteService.delete(id).subscribe(resp => {
           this.loadAll();
         });
       },
-      d => {
-        this.selectedRiteId = undefined;
-      }
+      d => {}
     );
   }
 }

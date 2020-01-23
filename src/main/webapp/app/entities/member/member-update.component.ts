@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
 import { IMember, Member } from 'app/shared/model/member.model';
 import { MemberService } from './member.service';
@@ -14,7 +13,11 @@ import { IChurch } from 'app/shared/model/church.model';
 import { ChurchService } from 'app/entities/church/church.service';
 import { IChurchCommunity } from 'app/shared/model/church-community.model';
 import { ChurchCommunityService } from 'app/entities/church-community/church-community.service';
-import { NgbTab, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
+import { HomeChurchCommunityService } from 'app/entities/home-church-community/home-church-community.service';
+import { IHomeChurchCommunity } from 'app/shared/model/home-church-community.model';
+import { PeriodContributionTypeService } from 'app/entities/period-contribution-type/period-contribution-type.service';
+import { IPeriodContributionType, PeriodContributionType } from 'app/shared/model/period-contribution-type.model';
 
 @Component({
   selector: 'church-member-update',
@@ -22,10 +25,15 @@ import { NgbTab, NgbTabChangeEvent, NgbTabset } from '@ng-bootstrap/ng-bootstrap
 })
 export class MemberUpdateComponent implements OnInit, AfterViewInit {
   isSaving: boolean;
-
+  churchId: number;
+  memberId: number;
   churches: IChurch[];
-  @ViewChild('tab', { static: true }) tab: ElementRef<NgbTabset>;
-  churchcommunities: IChurchCommunity[];
+
+  @ViewChild('memberTab', { static: false }) tab: NgbTabset;
+
+  churchCommunities: IChurchCommunity[];
+  homeChurchCommunities: IHomeChurchCommunity[];
+  periodContributionTypes: PeriodContributionType[];
   dateOfBirthDp: any;
   deceasedDateDp: any;
 
@@ -47,7 +55,8 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     isDeceased: [],
     deceasedDate: [],
     church: [null, Validators.required],
-    churchCommunities: []
+    churchCommunities: [],
+    homeChurchCommunity: [null]
   });
 
   constructor(
@@ -56,28 +65,82 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     protected churchService: ChurchService,
     protected churchCommunityService: ChurchCommunityService,
     protected activatedRoute: ActivatedRoute,
+    protected homeChurchCommunityService: HomeChurchCommunityService,
+    protected periodContribTypeService: PeriodContributionTypeService,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.isSaving = false;
+    this.churchId = this.activatedRoute.snapshot.params['churchId'];
+    this.memberId = this.activatedRoute.snapshot.params['id'];
     this.activatedRoute.data.subscribe(({ member }) => {
       this.updateForm(member);
     });
-    this.churchService
-      .query()
+
+    // If not church param passed fetch all churches
+    if (this.churchId === undefined) {
+      this.churchService
+        .query()
+        .pipe(
+          filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
+          map((response: HttpResponse<IChurch[]>) => response.body)
+        )
+        .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
+    } else {
+      this.editForm.patchValue({
+        church: { id: this.churchId }
+      });
+
+      this.loadChurchData(this.churchId);
+    }
+  }
+
+  loadChurchData(churchId: number) {
+    if (churchId === undefined) {
+      return;
+    }
+    const byChurchId = { 'churchId.equals': churchId };
+
+    this.loadHomeChurchCommunities(byChurchId);
+    this.loadPeriodContribTypes(byChurchId);
+    this.loadChurchService(byChurchId);
+  }
+
+  loadPeriodContribTypes(byChurchId: any) {
+    this.periodContribTypeService
+      .query(byChurchId)
       .pipe(
-        filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurch[]>) => response.body)
+        filter((mayBeOk: HttpResponse<IPeriodContributionType[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IPeriodContributionType[]>) => response.body)
       )
-      .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe(
+        (res: IPeriodContributionType[]) => (this.periodContributionTypes = res),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
+  }
+
+  loadChurchService(byChurchId: any) {
     this.churchCommunityService
-      .query()
+      .query(byChurchId)
       .pipe(
         filter((mayBeOk: HttpResponse<IChurchCommunity[]>) => mayBeOk.ok),
         map((response: HttpResponse<IChurchCommunity[]>) => response.body)
       )
-      .subscribe((res: IChurchCommunity[]) => (this.churchcommunities = res), (res: HttpErrorResponse) => this.onError(res.message));
+      .subscribe((res: IChurchCommunity[]) => (this.churchCommunities = res), (res: HttpErrorResponse) => this.onError(res.message));
+  }
+
+  loadHomeChurchCommunities(byChurchId: any) {
+    this.homeChurchCommunityService
+      .query(byChurchId)
+      .pipe(
+        filter((mayBeOk: HttpResponse<IHomeChurchCommunity[]>) => mayBeOk.ok),
+        map((response: HttpResponse<IHomeChurchCommunity[]>) => response.body)
+      )
+      .subscribe(
+        (res: IHomeChurchCommunity[]) => (this.homeChurchCommunities = res),
+        (res: HttpErrorResponse) => this.onError(res.message)
+      );
   }
 
   updateForm(member: IMember) {
@@ -99,7 +162,8 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
       isDeceased: member.isDeceased,
       deceasedDate: member.deceasedDate,
       church: member.church,
-      churchCommunities: member.churchCommunities
+      churchCommunities: member.churchCommunities,
+      homeChurchCommunity: member.homeChurchCommunity
     });
   }
 
@@ -138,7 +202,8 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
       isDeceased: this.editForm.get(['isDeceased']).value,
       deceasedDate: this.editForm.get(['deceasedDate']).value,
       church: this.editForm.get(['church']).value,
-      churchCommunities: this.editForm.get(['churchCommunities']).value
+      churchCommunities: this.editForm.get(['churchCommunities']).value,
+      homeChurchCommunity: this.editForm.get(['homeChurchCommunity']).value
     };
   }
 
@@ -148,7 +213,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
 
   protected onSaveSuccess() {
     this.isSaving = false;
-    //this.previousState();
+    // this.previousState();
     // this.jhiAlertService.success("Member info updated", null, null);
   }
 
@@ -160,6 +225,9 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
   }
 
   trackChurchById(index: number, item: IChurch) {
+    return item.id;
+  }
+  trackHomeChurchById(index: number, item: IHomeChurchCommunity) {
     return item.id;
   }
 
@@ -184,6 +252,6 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const activeTab = localStorage.getItem('memberActiveTab') || 'basicInfo';
-    setTimeout(() => this.tab.select(activeTab));
+    setTimeout(() => this.tab.select(activeTab), 100);
   }
 }

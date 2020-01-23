@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ChurchActivity } from 'app/shared/model/church-activity.model';
+import { ChurchActivity, IChurchActivity } from 'app/shared/model/church-activity.model';
 import { ChurchActivityService } from './church-activity.service';
-import { ChurchActivityComponent } from './church-activity.component';
-import { ChurchActivityDetailComponent } from './church-activity-detail.component';
 import { ChurchActivityUpdateComponent } from './church-activity-update.component';
-import { ChurchActivityDeletePopupComponent } from './church-activity-delete-dialog.component';
-import { IChurchActivity } from 'app/shared/model/church-activity.model';
+import { ChurchResolve } from 'app/entities/chuch-service/chuch-service.route';
 
 @Injectable({ providedIn: 'root' })
 export class ChurchActivityResolve implements Resolve<IChurchActivity> {
@@ -31,35 +27,11 @@ export class ChurchActivityResolve implements Resolve<IChurchActivity> {
 
 export const churchActivityRoute: Routes = [
   {
-    path: ':churchId',
-    component: ChurchActivityComponent,
-    resolve: {
-      pagingParams: JhiResolvePagingParams
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      defaultSort: 'id,asc',
-      pageTitle: 'churchApp.churchActivity.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':id/view',
-    component: ChurchActivityDetailComponent,
-    resolve: {
-      churchActivity: ChurchActivityResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'churchApp.churchActivity.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: 'new',
+    path: ':churchId/new',
     component: ChurchActivityUpdateComponent,
     resolve: {
-      churchActivity: ChurchActivityResolve
+      churchActivity: ChurchActivityResolve,
+      church: ChurchResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],
@@ -68,10 +40,11 @@ export const churchActivityRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: ':churchId/:id/edit',
     component: ChurchActivityUpdateComponent,
     resolve: {
-      churchActivity: ChurchActivityResolve
+      churchActivity: ChurchActivityResolve,
+      church: ChurchResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],
@@ -81,18 +54,4 @@ export const churchActivityRoute: Routes = [
   }
 ];
 
-export const churchActivityPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: ChurchActivityDeletePopupComponent,
-    resolve: {
-      churchActivity: ChurchActivityResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN'],
-      pageTitle: 'churchApp.churchActivity.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
-  }
-];
+export const churchActivityPopupRoute: Routes = [];

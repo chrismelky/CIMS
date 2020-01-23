@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    
+    <!--
+        Added the entity HomeChurchCommunity.
+    -->
+    <changeSet id="20200119063425-1" author="jhipster">
+        <createTable tableName="home_church_community">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="number_of_house_hold" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="church_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="chairman_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="secretary_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="treasurer_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20200119063425-2" author="chris">
+        <addColumn tableName="member">
+            <column name="home_church_community_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+</databaseChangeLog>

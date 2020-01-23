@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
-import { IChurchActivity, ChurchActivity } from 'app/shared/model/church-activity.model';
+import { ChurchActivity, IChurchActivity } from 'app/shared/model/church-activity.model';
 import { ChurchActivityService } from './church-activity.service';
 import { IChurch } from 'app/shared/model/church.model';
 import { ChurchService } from 'app/entities/church/church.service';
@@ -19,10 +18,9 @@ import { ChurchService } from 'app/entities/church/church.service';
 })
 export class ChurchActivityUpdateComponent implements OnInit {
   isSaving: boolean;
-
-  churches: IChurch[];
   startDateDp: any;
   endDateDp: any;
+  private church: IChurch;
 
   editForm = this.fb.group({
     id: [],
@@ -44,16 +42,10 @@ export class ChurchActivityUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ churchActivity }) => {
+    this.activatedRoute.data.subscribe(({ churchActivity, church }) => {
+      this.church = church;
       this.updateForm(churchActivity);
     });
-    this.churchService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurch[]>) => response.body)
-      )
-      .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(churchActivity: IChurchActivity) {
@@ -64,7 +56,7 @@ export class ChurchActivityUpdateComponent implements OnInit {
       estamateBudget: churchActivity.estamateBudget,
       startDate: churchActivity.startDate,
       endDate: churchActivity.endDate,
-      church: churchActivity.church
+      church: { id: this.church.id }
     });
   }
 

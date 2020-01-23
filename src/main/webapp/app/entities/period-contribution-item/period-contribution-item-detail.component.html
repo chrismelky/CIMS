@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="periodContributionItem">
+            <h2><span jhiTranslate="churchApp.periodContributionItem.detail.title">Period Contribution Item</span> {{periodContributionItem.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.periodContributionItem.amount">Amount</span></dt>
+                <dd>
+                    <span>{{periodContributionItem.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionItem.description">Description</span></dt>
+                <dd>
+                    <span>{{periodContributionItem.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionItem.dateReceived">Date Received</span></dt>
+                <dd>
+                    <span>{{periodContributionItem.dateReceived}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionItem.receivedBy">Received By</span></dt>
+                <dd>
+                    <span>{{periodContributionItem.receivedBy}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.periodContributionItem.periodContribution">Period Contribution</span></dt>
+                <dd>
+                    <div *ngIf="periodContributionItem.periodContribution">
+                        <a [routerLink]="['/period-contribution', periodContributionItem.periodContribution?.id, 'view']">{{periodContributionItem.periodContribution?.description}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/period-contribution-item', periodContributionItem.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

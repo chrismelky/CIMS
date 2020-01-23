@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,7 +32,6 @@ export class MemberRelativeComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
-  selectedMemberId: any;
 
   constructor(
     protected memberRelativeService: MemberRelativeService,
@@ -110,17 +109,13 @@ export class MemberRelativeComponent implements OnInit, OnDestroy {
   }
 
   openDeleteDialog(content, id) {
-    this.selectedMemberId = id;
     this.deleteModal.open(content, { backdrop: false }).result.then(
       r => {
-        this.memberRelativeService.delete(this.selectedMemberId).subscribe(resp => {
-          this.selectedMemberId = undefined;
+        this.memberRelativeService.delete(id).subscribe(resp => {
           this.loadAll();
         });
       },
-      d => {
-        this.selectedMemberId = undefined;
-      }
+      d => {}
     );
   }
 }

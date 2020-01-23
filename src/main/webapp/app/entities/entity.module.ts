@@ -59,6 +59,32 @@ import { RouterModule } from '@angular/router';
       {
         path: 'member-contribution',
         loadChildren: () => import('./member-contribution/member-contribution.module').then(m => m.ChurchMemberContributionModule)
+      },
+      {
+        path: 'home-church-community',
+        loadChildren: () => import('./home-church-community/home-church-community.module').then(m => m.ChurchHomeChurchCommunityModule)
+      },
+      {
+        path: 'period-type',
+        loadChildren: () => import('./period-type/period-type.module').then(m => m.ChurchPeriodTypeModule)
+      },
+      {
+        path: 'period',
+        loadChildren: () => import('./period/period.module').then(m => m.ChurchPeriodModule)
+      },
+      {
+        path: 'period-contribution-type',
+        loadChildren: () =>
+          import('./period-contribution-type/period-contribution-type.module').then(m => m.ChurchPeriodContributionTypeModule)
+      },
+      {
+        path: 'period-contribution',
+        loadChildren: () => import('./period-contribution/period-contribution.module').then(m => m.ChurchPeriodContributionModule)
+      },
+      {
+        path: 'period-contribution-item',
+        loadChildren: () =>
+          import('./period-contribution-item/period-contribution-item.module').then(m => m.ChurchPeriodContributionItemModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

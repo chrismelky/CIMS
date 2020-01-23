@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity PeriodContributionItem.
+    -->
+    <changeSet id="20200119063430-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="period_contribution_id"
+                                 baseTableName="period_contribution_item"
+                                 constraintName="fk_period_contribution_item_period_contribution_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="period_contribution"/>
+
+    </changeSet>
+</databaseChangeLog>

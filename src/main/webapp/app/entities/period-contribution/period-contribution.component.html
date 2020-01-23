@@ -1,0 +1,74 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="churchApp.periodContribution.home.title">Period Contributions</span>
+        <button *ngIf="periodContributions?.length === 0"
+                id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-period-contribution"
+                [routerLink]="['/period-contribution/byChurch', churchId, 'byMember', memberId, 'byType', periodContributionTypeId, 'byPeriod', periodId, 'new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="churchApp.periodContribution.home.createLabel">
+            Create a new Period Contribution
+            </span>
+        </button>
+    </h2>
+    <church-alert-error></church-alert-error>
+    <church-alert></church-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="periodContributions?.length === 0">
+        <span jhiTranslate="churchApp.periodContribution.home.notFound">No periodContributions found</span>
+    </div>
+    <div class="table-responsive" *ngIf="periodContributions?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="amountPromised"><span jhiTranslate="churchApp.periodContribution.amountPromised">Amount Promised</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="amountContributed"><span jhiTranslate="churchApp.periodContribution.amountContributed">Amount Contributed</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="description"><span jhiTranslate="churchApp.periodContribution.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="dueDate"><span jhiTranslate="churchApp.periodContribution.dueDate">Due Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="period.name"><span jhiTranslate="churchApp.periodContribution.period">Period</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+           <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let periodContribution of periodContributions ;trackBy: trackId">
+                <td><a [routerLink]="['/period-contribution', periodContribution.id, 'view' ]">{{periodContribution.id}}</a></td>
+                <td>{{periodContribution.amountPromised}}</td>
+                <td>{{periodContribution.amountContributed}}</td>
+                <td>{{periodContribution.description}}</td>
+                <td>{{periodContribution.dueDate | date:'mediumDate'}}</td>
+                <td>
+                    <div *ngIf="periodContribution.period">
+                        <a [routerLink]="['/period', periodContribution.period?.id, 'view' ]" >{{periodContribution.period?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="['/period-contribution/byChurch', churchId,
+                                'byMember', memberId,
+                                'byType', periodContributionTypeId,
+                                'byPeriod', periodId, periodContribution.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/period-contribution', { outlets: { popup: periodContribution.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <church-period-contribution-item
+            (itemChange)="itemChange($event)"
+            [periodContributionId]="periodContributions[0].id">
+        </church-period-contribution-item>
+    </div>
+</div>

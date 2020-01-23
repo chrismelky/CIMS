@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
 import { IChurchCommunity } from 'app/shared/model/church-community.model';
@@ -30,6 +29,7 @@ export class ChurchCommunityComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  churchId: number;
 
   constructor(
     protected churchCommunityService: ChurchCommunityService,
@@ -40,20 +40,15 @@ export class ChurchCommunityComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
   }
 
   loadAll() {
+    if (this.churchId === undefined) {
+      return;
+    }
     this.churchCommunityService
       .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
+        'churchId.equals': this.churchId
       })
       .subscribe((res: HttpResponse<IChurchCommunity[]>) => this.paginateChurchCommunities(res.body, res.headers));
   }
@@ -61,7 +56,6 @@ export class ChurchCommunityComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.transition();
     }
   }
 
@@ -89,6 +83,7 @@ export class ChurchCommunityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.churchId = this.activatedRoute.snapshot.params['id'];
     this.loadAll();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;

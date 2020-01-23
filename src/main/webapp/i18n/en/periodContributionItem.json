@@ -1,0 +1,26 @@
+{
+  "churchApp": {
+    "periodContributionItem": {
+      "home": {
+        "title": "Payments",
+        "createLabel": "Add Payment",
+        "createOrEditLabel": "Add/edit Payment",
+        "notFound": "No Payment found"
+      },
+      "created": "A Payment is created with identifier {{ param }}",
+      "updated": "A Payment is updated with identifier {{ param }}",
+      "deleted": "A Payment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Payment {{ id }}?"
+      },
+      "detail": {
+        "title": "Payments"
+      },
+      "amount": "Amount",
+      "description": "Description",
+      "dateReceived": "Date Received",
+      "receivedBy": "Received By",
+      "periodContribution": "Period Contribution"
+    }
+  }
+}

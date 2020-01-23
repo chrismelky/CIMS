@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="church-home-church-community-heading" jhiTranslate="churchApp.homeChurchCommunity.home.createOrEditLabel">Create or edit a Home Church Community</h2>
+            <div>
+                <church-alert-error></church-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.numberOfHouseHold" for="field_numberOfHouseHold">Number Of House Hold</label>
+                    <input type="number" class="form-control" name="numberOfHouseHold" id="field_numberOfHouseHold"
+                           formControlName="numberOfHouseHold"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.phoneNumber" for="field_phoneNumber">Phone Number</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="field_phoneNumber"
+                           formControlName="phoneNumber"/>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.address" for="field_address">Address</label>
+                    <input type="text" class="form-control" name="address" id="field_address"
+                           formControlName="address"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.chairMan" for="field_chairMan">Chair Man</label>
+                    <select class="form-control" id="field_chairMan" name="chairMan" formControlName="chairMan">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="memberOption.id === editForm.get('chairMan').value?.id ? editForm.get('chairMan').value : memberOption"
+                                *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.firstName+' '+ memberOption.lastName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.secreatry" for="field_secreatry">Secreatry</label>
+                    <select class="form-control" id="field_secreatry" name="secreatry" formControlName="secreatry">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="memberOption.id === editForm.get('secreatry').value?.id ? editForm.get('secreatry').value : memberOption"
+                                *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.firstName+' '+ memberOption.lastName}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.homeChurchCommunity.treasurer" for="field_treasurer">Treasurer</label>
+                    <select class="form-control" id="field_treasurer" name="treasurer" formControlName="treasurer">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="memberOption.id === editForm.get('treasurer').value?.id ? editForm.get('treasurer').value : memberOption"
+                                *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.firstName+' '+memberOption.lastName}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

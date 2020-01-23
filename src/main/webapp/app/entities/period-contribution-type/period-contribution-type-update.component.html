@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="church-period-contribution-type-heading" jhiTranslate="churchApp.periodContributionType.home.createOrEditLabel">Create or edit a Period Contribution Type</h2>
+            <div>
+                <church-alert-error></church-alert-error>
+                <div class="form-group" [hidden]="!editForm.get('id').value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
+                        readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.periodContributionType.name" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                           formControlName="name"/>
+                    <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('name').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.periodContributionType.periodType" for="field_periodType">Period Type</label>
+                    <select class="form-control" id="field_periodType" name="periodType" formControlName="periodType">
+                        <option *ngIf="!editForm.get('periodType').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="periodTypeOption.id === editForm.get('periodType').value?.id ? editForm.get('periodType').value : periodTypeOption" *ngFor="let periodTypeOption of periodtypes; trackBy: trackPeriodTypeById">{{periodTypeOption.name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('periodType').invalid && (editForm.get('periodType').dirty || editForm.get('periodType').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('periodType').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.periodContributionType.church" for="field_church">Church</label>
+                    <select class="form-control" id="field_church" name="church" formControlName="church">
+                        <option *ngIf="!editForm.get('church').value" [ngValue]="null" selected></option>
+                        <option [ngValue]="churchOption.id === editForm.get('church').value?.id ? editForm.get('church').value : churchOption" *ngFor="let churchOption of churches; trackBy: trackChurchById">{{churchOption.name}}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('church').invalid && (editForm.get('church').dirty || editForm.get('church').touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('church').errors.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -59,6 +59,12 @@ public class CacheConfiguration {
             createCache(cm, org.church.domain.MemberPromise.class.getName());
             createCache(cm, org.church.domain.MemberRelative.class.getName());
             createCache(cm, org.church.domain.MemberContribution.class.getName());
+            createCache(cm, org.church.domain.HomeChurchCommunity.class.getName());
+            createCache(cm, org.church.domain.PeriodType.class.getName());
+            createCache(cm, org.church.domain.Period.class.getName());
+            createCache(cm, org.church.domain.PeriodContributionType.class.getName());
+            createCache(cm, org.church.domain.PeriodContribution.class.getName());
+            createCache(cm, org.church.domain.PeriodContributionItem.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

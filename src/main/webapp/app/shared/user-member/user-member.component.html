@@ -18,7 +18,7 @@
             <div  *ngIf="member" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxFlex>Member Church: <strong>{{member.church?.name}}</strong></div>
                 <div fxFlex>Member Record Number: <strong>{{member.memberRn}}</strong></div>
-                <button type="button" mat-raised-button color="primary" (click)="setMember()">
+                <button type="button" mat-raised-button color="primary" (click)="selectMember()">
                     <mat-icon>save</mat-icon> Set
                 </button>
             </div>

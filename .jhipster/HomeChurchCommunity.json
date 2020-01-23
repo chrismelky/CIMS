@@ -1,0 +1,69 @@
+{
+    "name": "HomeChurchCommunity",
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "numberOfHouseHold",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "church",
+            "otherEntityName": "church",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "homeChurchCommunity"
+        },
+        {
+            "relationshipName": "chairMan",
+            "otherEntityName": "member",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "firstName",
+            "otherEntityRelationshipName": "homeChurchCommunity"
+        },
+        {
+            "relationshipName": "secreatry",
+            "otherEntityName": "member",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "firstName",
+            "otherEntityRelationshipName": "homeChurchCommunity"
+        },
+        {
+            "relationshipName": "treasurer",
+            "otherEntityName": "member",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "firstName",
+            "otherEntityRelationshipName": "homeChurchCommunity"
+        }
+    ],
+    "changelogDate": "20200119063425",
+    "entityTableName": "home_church_community",
+    "dto": "no",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": true,
+    "fluentMethods": true,
+    "readOnly": false,
+    "clientRootFolder": "",
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
+}

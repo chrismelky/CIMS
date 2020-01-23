@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="period">
+            <h2><span jhiTranslate="churchApp.period.detail.title">Period</span> {{period.id}}</h2>
+            <hr>
+            <church-alert-error></church-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="churchApp.period.name">Name</span></dt>
+                <dd>
+                    <span>{{period.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.period.startDate">Start Date</span></dt>
+                <dd>
+                    <span>{{period.startDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.period.endDate">End Date</span></dt>
+                <dd>
+                    <span>{{period.endDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.period.isCurrent">Is Current</span></dt>
+                <dd>
+                    <span>{{period.isCurrent}}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.period.type">Type</span></dt>
+                <dd>
+                    <div *ngIf="period.type">
+                        <a [routerLink]="['/period-type', period.type?.id, 'view']">{{period.type?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/period', period.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
