@@ -43,6 +43,7 @@ public class HomeChurchCommunity implements Serializable {
     private Church church;
 
     @ManyToOne
+    @JoinColumn(name = "chairman_id")
     @JsonIgnoreProperties({
         "homeChurchCommunities",
         "church",
@@ -59,6 +60,7 @@ public class HomeChurchCommunity implements Serializable {
     private Member chairman;
 
     @ManyToOne
+    @JoinColumn(name = "secretary_id")
     @JsonIgnoreProperties({
         "homeChurchCommunities",
         "church",
@@ -75,6 +77,7 @@ public class HomeChurchCommunity implements Serializable {
     private Member secretary;
 
     @ManyToOne
+    @JoinColumn(name = "treasurer_id")
     @JsonIgnoreProperties({
         "homeChurchCommunities",
         "church",

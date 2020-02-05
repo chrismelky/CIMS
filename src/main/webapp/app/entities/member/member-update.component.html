@@ -169,7 +169,6 @@
                                            for="field_home_church"
                                            jhiTranslate="churchApp.member.homeChurch">Home Church Community</label>
                                     <select class="form-control"
-                                            (ngModelChange)="loadHomeChurchCommunities(editForm.get('church').value)"
                                             formControlName="homeChurchCommunity" id="field_home_church"
                                             name="homeChurchCommunity">
                                         <option *ngIf="!editForm.get('homeChurchCommunity').value"

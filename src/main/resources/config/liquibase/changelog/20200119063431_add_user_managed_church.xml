@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="20200119063431" author="chris">
+       <addColumn tableName="church_user">
+           <column name="church_id" type="bigint"/>
+       </addColumn>
+        <addForeignKeyConstraint baseTableName="church_user"
+                                 baseColumnNames="church_id"
+                                 constraintName="fk_user_church"
+                                 referencedTableName="church"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -187,4 +187,12 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.noContent().headers(HeaderUtil.createAlert(applicationName,  "userManagement.deleted", login)).build();
     }
+
+    @GetMapping("/users/by-church/{churchId}")
+    public ResponseEntity<List<UserDTO>> getByChurch(Pageable pageable, @PathVariable Long churchId) {
+        final Page<UserDTO> page = userService.getByChurch(churchId, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
 }

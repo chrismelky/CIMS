@@ -48,5 +48,6 @@
     <include file="config/liquibase/changelog/20200119063430_added_entity_constraints_PeriodContributionItem.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200119063425_added_entity_constraints_HomeChurchCommunity.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200119063429_added_entity_constraints_PeriodContribution.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200119063431_add_user_managed_church.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

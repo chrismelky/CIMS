@@ -57,6 +57,16 @@ public class UserDTO {
 
     private Member member;
 
+    public Church getChurch() {
+        return church;
+    }
+
+    public void setChurch(Church church) {
+        this.church = church;
+    }
+
+    private Church church;
+
     public Member getMember() {
         return member;
     }
@@ -83,6 +93,7 @@ public class UserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.member = user.getMember();
+        this.church = user.getChurch();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());

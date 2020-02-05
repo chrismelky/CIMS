@@ -101,6 +101,8 @@ public class MemberCriteria implements Serializable, Criteria {
 
     private LongFilter memberRitesId;
 
+    private LongFilter homeChurchCommunityId;
+
     public MemberCriteria(){
     }
 
@@ -124,6 +126,7 @@ public class MemberCriteria implements Serializable, Criteria {
         this.churchId = other.churchId == null ? null : other.churchId.copy();
         this.churchCommunitiesId = other.churchCommunitiesId == null ? null : other.churchCommunitiesId.copy();
         this.memberRitesId = other.memberRitesId == null ? null : other.memberRitesId.copy();
+        this.homeChurchCommunityId = other.homeChurchCommunityId == null ? null : other.homeChurchCommunityId.copy();
     }
 
     @Override
@@ -281,6 +284,14 @@ public class MemberCriteria implements Serializable, Criteria {
 
     public void setMemberRitesId(LongFilter memberRitesId) {
         this.memberRitesId = memberRitesId;
+    }
+
+    public LongFilter getHomeChurchCommunityId() {
+        return homeChurchCommunityId;
+    }
+
+    public void setHomeChurchCommunityId(LongFilter homeChurchCommunityId) {
+        this.homeChurchCommunityId = homeChurchCommunityId;
     }
 
 

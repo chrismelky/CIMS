@@ -25,7 +25,7 @@ export class HomeChurchCommunityUpdateComponent implements OnInit {
   church: IChurch;
 
   members: IMember[];
-
+  homeChurchCommunity: IHomeChurchCommunity;
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
@@ -52,14 +52,20 @@ export class HomeChurchCommunityUpdateComponent implements OnInit {
     this.activatedRoute.data.subscribe(({ homeChurchCommunity, church }) => {
       this.church = church;
       this.updateForm(homeChurchCommunity);
+      this.homeChurchCommunity = homeChurchCommunity;
       this.loadMembers();
     });
   }
 
   loadMembers() {
-    // TODO filter
+    const filterBy = { 'churchId.equals': this.church.id };
+    if (this.homeChurchCommunity.id) {
+      filterBy['homeChurchCommunityId.equals'] = this.homeChurchCommunity.id;
+    } else {
+      filterBy['homeChurchCommunityId.specified'] = false;
+    }
     this.memberService
-      .query({ 'churchId.equals': this.church.id, 'homeChurchCommunityId.specified': false })
+      .query(filterBy)
       .pipe(
         filter((mayBeOk: HttpResponse<IMember[]>) => mayBeOk.ok),
         map((response: HttpResponse<IMember[]>) => response.body)

@@ -11,6 +11,8 @@ import { ChurchComponent } from './church.component';
 import { ChurchDetailComponent } from './church-detail.component';
 import { ChurchUpdateComponent } from './church-update.component';
 import { ChurchDeletePopupComponent } from './church-delete-dialog.component';
+import { UserManagementUpdateComponent } from 'app/admin/user-management/user-management-update.component';
+import { UserManagementResolve } from 'app/admin/user-management/user-management.route';
 
 @Injectable({ providedIn: 'root' })
 export class ChurchResolve implements Resolve<IChurch> {
@@ -25,6 +27,21 @@ export class ChurchResolve implements Resolve<IChurch> {
       );
     }
     return of(new Church());
+  }
+}
+@Injectable({ providedIn: 'root' })
+export class ChurchIdResolve implements Resolve<IChurch> {
+  constructor(private service: ChurchService) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IChurch> {
+    const id = route.params['churchId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<Church>) => response.ok),
+        map((church: HttpResponse<Church>) => church.body)
+      );
+    }
+    return of(null);
   }
 }
 
@@ -71,6 +88,32 @@ export const churchRoute: Routes = [
     component: ChurchUpdateComponent,
     resolve: {
       church: ChurchResolve
+    },
+    data: {
+      authorities: ['ROLE_ADMIN'],
+      pageTitle: 'churchApp.church.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':churchId/user/:login/edit',
+    component: UserManagementUpdateComponent,
+    resolve: {
+      church: ChurchIdResolve,
+      user: UserManagementResolve
+    },
+    data: {
+      authorities: ['ROLE_ADMIN'],
+      pageTitle: 'churchApp.church.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: ':churchId/user/new',
+    component: UserManagementUpdateComponent,
+    resolve: {
+      church: ChurchIdResolve,
+      user: UserManagementResolve
     },
     data: {
       authorities: ['ROLE_ADMIN'],

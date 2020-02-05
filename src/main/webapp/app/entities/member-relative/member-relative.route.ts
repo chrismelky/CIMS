@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { MemberRelative } from 'app/shared/model/member-relative.model';
+import { IMemberRelative, MemberRelative } from 'app/shared/model/member-relative.model';
 import { MemberRelativeService } from './member-relative.service';
-import { MemberRelativeComponent } from './member-relative.component';
 import { MemberRelativeDetailComponent } from './member-relative-detail.component';
 import { MemberRelativeUpdateComponent } from './member-relative-update.component';
-import { MemberRelativeDeletePopupComponent } from './member-relative-delete-dialog.component';
-import { IMemberRelative } from 'app/shared/model/member-relative.model';
 import { IMember, Member } from 'app/shared/model/member.model';
 import { MemberService } from 'app/entities/member/member.service';
 

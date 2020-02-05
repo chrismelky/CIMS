@@ -6,6 +6,8 @@ import { JhiLanguageHelper } from 'app/core/language/language.helper';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { Member } from 'app/shared/model/member.model';
+import { ChurchService } from 'app/entities/church/church.service';
+import { IChurch } from 'app/shared/model/church.model';
 
 @Component({
   selector: 'church-user-mgmt-update',
@@ -16,6 +18,8 @@ export class UserManagementUpdateComponent implements OnInit {
   languages: any[];
   authorities: any[];
   isSaving: boolean;
+  churches: IChurch[] = [];
+  church: IChurch;
 
   editForm = this.fb.group({
     id: [null],
@@ -26,20 +30,23 @@ export class UserManagementUpdateComponent implements OnInit {
     activated: [true],
     langKey: [],
     authorities: [],
-    member: []
+    member: [],
+    church: []
   });
 
   constructor(
     private languageHelper: JhiLanguageHelper,
     private userService: UserService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private churchService: ChurchService
   ) {}
 
   ngOnInit() {
     this.isSaving = false;
-    this.route.data.subscribe(({ user }) => {
+    this.route.data.subscribe(({ user, church }) => {
       this.user = user.body ? user.body : user;
+      this.church = church;
       this.updateForm(this.user);
     });
     this.authorities = [];
@@ -47,6 +54,24 @@ export class UserManagementUpdateComponent implements OnInit {
       this.authorities = authorities;
     });
     this.languages = this.languageHelper.getAll();
+    this.loadChurches();
+  }
+
+  loadChurches() {
+    if (this.church) {
+      this.editForm.patchValue({
+        church: { id: this.church.id, name: this.church.name }
+      });
+      this.churches.push(this.church);
+      return;
+    }
+    this.churchService
+      .query({
+        size: 1000
+      })
+      .subscribe(resp => {
+        this.churches = resp.body;
+      });
   }
 
   private updateForm(user: User): void {
@@ -59,7 +84,8 @@ export class UserManagementUpdateComponent implements OnInit {
       activated: user.activated,
       langKey: user.langKey,
       authorities: user.authorities,
-      member: user.member
+      member: user.member,
+      church: user.church
     });
   }
 
@@ -86,6 +112,7 @@ export class UserManagementUpdateComponent implements OnInit {
     user.langKey = this.editForm.get(['langKey']).value;
     user.authorities = this.editForm.get(['authorities']).value;
     user.member = this.editForm.get(['member']).value;
+    user.church = this.editForm.get(['church']).value;
   }
 
   private onSaveSuccess(result) {
@@ -102,5 +129,9 @@ export class UserManagementUpdateComponent implements OnInit {
     this.editForm.patchValue({
       member
     });
+  }
+
+  trackChurchById(index: number, item: IChurch) {
+    return item.id;
   }
 }

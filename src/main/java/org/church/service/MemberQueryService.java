@@ -142,6 +142,9 @@ public class MemberQueryService extends QueryService<Member> {
             if (criteria.getMemberRitesId() != null) {
                 specification = specification.and(buildSpecification(criteria.getMemberRitesId(),
                     root -> root.join(Member_.memberRites, JoinType.LEFT).get(MemberRite_.id)));
+            }if (criteria.getHomeChurchCommunityId() != null) {
+                specification = specification.and(buildSpecification(criteria.getHomeChurchCommunityId(),
+                    root -> root.join(Member_.homeChurchCommunity, JoinType.LEFT).get(HomeChurchCommunity_.id)));
             }
         }
         return specification;

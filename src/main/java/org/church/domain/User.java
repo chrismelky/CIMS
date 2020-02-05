@@ -88,6 +88,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne
+    @JoinColumn(name = "church_id")
+    private Church church;
+
     public Member getMember() {
         return member;
     }
@@ -209,6 +213,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Church getChurch() {
+        return church;
+    }
+
+    public void setChurch(Church church) {
+        this.church = church;
     }
 
     @Override

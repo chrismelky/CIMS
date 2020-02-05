@@ -1,4 +1,5 @@
 import { Member } from 'app/shared/model/member.model';
+import { Church } from 'app/shared/model/church.model';
 
 export interface IUser {
   id?: any;
@@ -15,6 +16,7 @@ export interface IUser {
   lastModifiedDate?: Date;
   password?: string;
   member?: Member;
+  church?: Church;
 }
 
 export class User implements IUser {
@@ -32,7 +34,8 @@ export class User implements IUser {
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
     public password?: string,
-    public member?: Member
+    public member?: Member,
+    public church?: Church
   ) {
     this.id = id ? id : null;
     this.login = login ? login : null;
@@ -48,5 +51,6 @@ export class User implements IUser {
     this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
     this.password = password ? password : null;
     this.member = member ? member : null;
+    this.church = church ? church : null;
   }
 }

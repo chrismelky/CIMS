@@ -71,25 +71,6 @@
                    <mat-icon>account_balance</mat-icon>
                    <span jhiTranslate="global.menu.entities.church">Church</span>
                </mat-list-item>
-                <mat-list-item *ngIf="user.member" [routerLink]="['/chuch-service', user.member?.church.id]"
-                               routerLinkActive="active">
-                    <mat-icon>date_range</mat-icon>
-                    <span jhiTranslate="global.menu.entities.chuchService">Church Service</span>
-                </mat-list-item>
-                <mat-list-item *ngIf="user.member" [routerLink]="['/church-activity', user.member?.church.id]"
-                               routerLinkActive="active"
-                               >
-                    <mat-icon>calendar_today</mat-icon>
-                    <span jhiTranslate="global.menu.entities.churchActivity">Church Activity</span>
-                </mat-list-item>
-               <mat-list-item routerLink="church-community"
-                              routerLinkActive="active"
-                              [routerLinkActiveOptions]="{ exact: true }">
-                   <mat-icon>account_tree</mat-icon>
-                   <span jhiTranslate="global.menu.entities.churchCommunity">Church Community</span>
-               </mat-list-item>
-
-
             </div>
         </mat-nav-list>
         <mat-nav-list *churchHasAnyAuthority="'ROLE_ADMIN'">
@@ -105,30 +86,6 @@
                                [routerLinkActiveOptions]="{ exact: true }" >
                     <mat-icon>person</mat-icon>
                     <span jhiTranslate="global.menu.entities.member">Member</span>
-                </mat-list-item>
-                <mat-list-item routerLink="member-relative"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }" >
-                    <mat-icon>people_alt</mat-icon>
-                    <span jhiTranslate="global.menu.entities.memberRelative">Member Relative</span>
-                </mat-list-item>
-                <mat-list-item routerLink="member-rite"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }">
-                    <mat-icon>person_pin</mat-icon>
-                    <span jhiTranslate="global.menu.entities.memberRite">Member Rite</span>
-                </mat-list-item>
-                <mat-list-item routerLink="member-promise"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }">
-                    <mat-icon>emoji_people</mat-icon>
-                    <span jhiTranslate="global.menu.entities.memberPromise">Member Promise</span>
-                </mat-list-item>
-                <mat-list-item routerLink="member-contribution"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{ exact: true }" >
-                    <mat-icon>money</mat-icon>
-                    <span jhiTranslate="global.menu.entities.memberContribution">Member Contribution</span>
                 </mat-list-item>
             </div>
         </mat-nav-list>
