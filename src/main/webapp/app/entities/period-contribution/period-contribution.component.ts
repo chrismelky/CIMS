@@ -11,6 +11,8 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PeriodContributionService } from './period-contribution.service';
+import { PeriodService } from 'app/entities/period/period.service';
+import { Period } from 'app/shared/model/period.model';
 
 @Component({
   selector: 'church-period-contribution',
@@ -20,7 +22,7 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   @Input() periodContributionTypeId: number;
   @Input() memberId: number;
   @Input() churchId: number;
-  @Input() periodId: number;
+  @Input() periodTypeId: number;
 
   currentAccount: any;
   periodContributions: IPeriodContribution[];
@@ -35,6 +37,8 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  periodId: number;
+  periods: Period[] = [];
 
   constructor(
     protected periodContributionService: PeriodContributionService,
@@ -42,12 +46,16 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected periodService: PeriodService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
   }
 
   loadAll() {
+    if (this.periodId === undefined) {
+      return;
+    }
     this.periodContributionService
       .query({
         'periodContributionTypeId.equals': this.periodContributionTypeId,
@@ -88,8 +96,18 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     this.loadAll();
   }
 
+  loadPeriods() {
+    this.periodService
+      .query({
+        'periodType.equals': this.periodTypeId
+      })
+      .subscribe((res: HttpResponse<IPeriodContribution[]>) => {
+        this.periods = res.body;
+      });
+  }
+
   ngOnInit() {
-    this.loadAll();
+    this.loadPeriods();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
     });

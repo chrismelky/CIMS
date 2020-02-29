@@ -11,6 +11,7 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PeriodContributionTypeService } from './period-contribution-type.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-period-contribution-type',
@@ -30,6 +31,7 @@ export class PeriodContributionTypeComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
+  churchId: number;
 
   constructor(
     protected periodContributionTypeService: PeriodContributionTypeService,
@@ -37,23 +39,19 @@ export class PeriodContributionTypeComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
+    protected deleteModal: NgbModal,
     protected eventManager: JhiEventManager
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
   }
 
   loadAll() {
+    if (this.churchId === undefined) {
+      return;
+    }
     this.periodContributionTypeService
       .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
+        'churchId.equals': this.churchId
       })
       .subscribe((res: HttpResponse<IPeriodContributionType[]>) => this.paginatePeriodContributionTypes(res.body, res.headers));
   }
@@ -61,7 +59,6 @@ export class PeriodContributionTypeComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      this.transition();
     }
   }
 
@@ -89,6 +86,7 @@ export class PeriodContributionTypeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.churchId = this.activatedRoute.snapshot.params['id'];
     this.loadAll();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
@@ -120,5 +118,16 @@ export class PeriodContributionTypeComponent implements OnInit, OnDestroy {
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.periodContributionTypes = data;
+  }
+
+  openDeleteDialog(content, id) {
+    this.deleteModal.open(content, { backdrop: false }).result.then(
+      r => {
+        this.periodContributionTypeService.delete(id).subscribe(resp => {
+          this.loadAll();
+        });
+      },
+      d => {}
+    );
   }
 }

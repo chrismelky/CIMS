@@ -152,4 +152,11 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="0000000000003" author="chris">
+        <loadData
+            file="config/liquibase/data/church_authorities.csv"
+            separator=";"
+            tableName="church_authority"/>
+    </changeSet>
 </databaseChangeLog>

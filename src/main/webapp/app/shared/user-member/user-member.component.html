@@ -1,35 +1,33 @@
-<mat-card fxFlexLayout="column">
-    <mat-card-header>
-        <mat-card-title>
-           <mat-icon>account_balance</mat-icon> User Membership
-        </mat-card-title>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
+<div fxFlexLayout="column" class="card">
+    <div class="card-header">
+        <div class="card-title">
+           <fa-icon>account_balance</fa-icon> User Membership
+        </div>
+    </div>
+    <div class="divider"></div>
+    <div >
         <div *ngIf="existingMember === null" fxLayout="column" fxFlex="100%">
             <div style="padding-top:8px" fxLayout="row">
-                <mat-form-field fxFlex>
-                    <input matInput #rn placeholder="Enter membership number" />
-                </mat-form-field>
-                <button type="button" fxFlex="30px" mat-icon-button (click)="getMemberByRn(rn.value)">
-                    <mat-icon>search</mat-icon>
+                    <input class="form-control" #rn placeholder="Enter membership number" />
+                <button type="button" fxFlex="30px"  (click)="getMemberByRn(rn.value)">
+                    <fa-icon>search</fa-icon>
                 </button>
             </div>
             <div  *ngIf="member" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxFlex>Member Church: <strong>{{member.church?.name}}</strong></div>
                 <div fxFlex>Member Record Number: <strong>{{member.memberRn}}</strong></div>
-                <button type="button" mat-raised-button color="primary" (click)="selectMember()">
-                    <mat-icon>save</mat-icon> Set
+                <button type="button" color="primary" (click)="selectMember()">
+                    <fa-icon>save</fa-icon> Set
                 </button>
             </div>
         </div>
         <div style="padding-top:8px" *ngIf="existingMember" fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center" >
             <div fxFlex>Member Church: <strong>{{existingMember.church?.name}}</strong></div>
             <div fxFlex>Member Record Number: <strong>{{existingMember.memberRn}}</strong></div>
-            <button color="warn" type="button" mat-raised-button (click)="resetMember()">
-                <mat-icon>delete</mat-icon>
+            <button color="warn" type="button" (click)="resetMember()">
+                <fa-icon>delete</fa-icon>
                 Change
             </button>
         </div>
-    </mat-card-content>
-</mat-card>
+    </div>
+</div>

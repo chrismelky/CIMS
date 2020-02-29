@@ -1,5 +1,5 @@
 <ngb-tabset class="col-12" #churchTab="ngbTabset">
-    <ngb-tab title="Basic Information">
+    <ngb-tab title="Taarifa za Kanisa">
         <ng-template ngbTabContent>
             <div class="col-8">
                 <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -87,9 +87,14 @@
             </div>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Services">
+    <ngb-tab title="Ratiba za Kanisa">
         <ng-template ngbTabContent>
             <church-chuch-service></church-chuch-service>
+        </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Aina za Michango">
+        <ng-template ngbTabContent>
+            <church-period-contribution-type></church-period-contribution-type>
         </ng-template>
     </ngb-tab>
     <ngb-tab title="Activities">
@@ -97,17 +102,17 @@
             <church-church-activity></church-church-activity>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Home Church Communities">
+    <ngb-tab title="Jumuiya">
         <ng-template ngbTabContent>
             <church-home-church-community></church-home-church-community>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Communities">
+    <ngb-tab title="Vikundi">
         <ng-template ngbTabContent>
             <church-church-community></church-church-community>
         </ng-template>
     </ngb-tab>
-    <ngb-tab title="Users">
+    <ngb-tab title="Watumiaji">
         <ng-template ngbTabContent>
             <church-church-user></church-church-user>
         </ng-template>

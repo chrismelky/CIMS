@@ -24,6 +24,7 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
   periodtypes: IPeriodType[];
 
   churches: IChurch[];
+  church: IChurch;
 
   editForm = this.fb.group({
     id: [],
@@ -43,7 +44,8 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ periodContributionType }) => {
+    this.activatedRoute.data.subscribe(({ periodContributionType, church }) => {
+      this.church = church;
       this.updateForm(periodContributionType);
     });
     this.periodTypeService
@@ -53,13 +55,6 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
         map((response: HttpResponse<IPeriodType[]>) => response.body)
       )
       .subscribe((res: IPeriodType[]) => (this.periodtypes = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.churchService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IChurch[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurch[]>) => response.body)
-      )
-      .subscribe((res: IChurch[]) => (this.churches = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(periodContributionType: IPeriodContributionType) {
@@ -67,7 +62,7 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
       id: periodContributionType.id,
       name: periodContributionType.name,
       periodType: periodContributionType.periodType,
-      church: periodContributionType.church
+      church: { id: this.church.id }
     });
   }
 
