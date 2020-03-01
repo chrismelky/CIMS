@@ -31,8 +31,8 @@ export class MemberContributionComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
-  private member: IMember;
-  private selectedContributionId: any;
+  member: IMember;
+  selectedContributionId: any;
 
   constructor(
     protected memberContributionService: MemberContributionService,

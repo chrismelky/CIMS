@@ -57,15 +57,15 @@
                 </a>
             </li>
         </ul>
-        <ul  class="list-unstyled components" *ngIf="user.church" *churchHasAnyAuthority="'ROLE-CHURCH_ADMIN'">
-            <li>
+        <ul  class="list-unstyled components"  *churchHasAnyAuthority="'ROLE-CHURCH_ADMIN'">
+            <li *ngIf="user.church">
                 <a  [routerLink]="['/church', user.church.id, 'edit' ]"
                    routerLinkActive="active" >
                     <fa-icon icon="church" fixedWidth="true"></fa-icon>
                     <span class="menu-item">{{user.church.name}} Church</span>
                 </a>
             </li>
-            <li>
+            <li *ngIf="user.church">
                 <a [routerLink]="['/member', 'byChurch',user.church.id]"
                    routerLinkActive="active"
                    [routerLinkActiveOptions]="{ exact: true }"  >

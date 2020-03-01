@@ -4,11 +4,6 @@
             <h2 id="church-chuch-service-heading" jhiTranslate="churchApp.chuchService.home.createOrEditLabel">Create or edit a Chuch Service</h2>
             <div>
                 <church-alert-error></church-alert-error>
-                <mat-card>
-                    <mat-card-header>
-                        <mat-icon>account_balance</mat-icon> {{editForm.get('church').value?.name}}
-                    </mat-card-header>
-                </mat-card>
                 <div class="form-group" [hidden]="!editForm.get('id').value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id"
