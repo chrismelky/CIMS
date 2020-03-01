@@ -57,7 +57,7 @@
                 </a>
             </li>
         </ul>
-        <ul  class="list-unstyled components"  *churchHasAnyAuthority="'ROLE-CHURCH_ADMIN'">
+        <ul  class="list-unstyled components"  *churchHasAnyAuthority="'ROLE_CHURCH_ADMIN'">
             <li *ngIf="user.church">
                 <a  [routerLink]="['/church', user.church.id, 'edit' ]"
                    routerLinkActive="active" >
