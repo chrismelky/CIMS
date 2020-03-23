@@ -8,17 +8,15 @@ import { IPeriod } from 'app/shared/model/period.model';
   templateUrl: './period-detail.component.html'
 })
 export class PeriodDetailComponent implements OnInit {
-  period: IPeriod;
+  period: IPeriod | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ period }) => {
-      this.period = period;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ period }) => (this.period = period));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

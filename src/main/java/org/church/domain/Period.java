@@ -1,4 +1,5 @@
 package org.church.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -43,6 +44,11 @@ public class Period implements Serializable {
     @NotNull
     @JsonIgnoreProperties("periods")
     private PeriodType type;
+
+    @ManyToOne
+    @JoinColumn(name = "financial_year_id")
+    @JsonIgnoreProperties("periods")
+    private FinancialYear financialYear;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -116,6 +122,19 @@ public class Period implements Serializable {
 
     public void setType(PeriodType periodType) {
         this.type = periodType;
+    }
+
+    public FinancialYear getFinancialYear() {
+        return financialYear;
+    }
+
+    public Period financialYear(FinancialYear financialYear) {
+        this.financialYear = financialYear;
+        return this;
+    }
+
+    public void setFinancialYear(FinancialYear financialYear) {
+        this.financialYear = financialYear;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

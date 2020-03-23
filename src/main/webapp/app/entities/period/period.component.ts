@@ -2,123 +2,102 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { filter, map } from 'rxjs/operators';
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IPeriod } from 'app/shared/model/period.model';
-import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PeriodService } from './period.service';
+import { PeriodDeleteDialogComponent } from './period-delete-dialog.component';
 
 @Component({
   selector: 'church-period',
   templateUrl: './period.component.html'
 })
 export class PeriodComponent implements OnInit, OnDestroy {
-  currentAccount: any;
-  periods: IPeriod[];
-  error: any;
-  success: any;
-  eventSubscriber: Subscription;
-  routeData: any;
-  links: any;
-  totalItems: any;
-  itemsPerPage: any;
-  page: any;
-  predicate: any;
-  previousPage: any;
-  reverse: any;
+  periods?: IPeriod[];
+  eventSubscriber?: Subscription;
+  totalItems = 0;
+  itemsPerPage = ITEMS_PER_PAGE;
+  page!: number;
+  predicate!: string;
+  ascending!: boolean;
+  ngbPaginationPage = 1;
 
   constructor(
     protected periodService: PeriodService,
-    protected parseLinks: JhiParseLinks,
-    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
-  ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
-  }
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal
+  ) {}
 
-  loadAll() {
+  loadPage(page?: number): void {
+    const pageToLoad: number = page || this.page;
+
     this.periodService
       .query({
-        page: this.page - 1,
+        page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort()
       })
-      .subscribe((res: HttpResponse<IPeriod[]>) => this.paginatePeriods(res.body, res.headers));
+      .subscribe((res: HttpResponse<IPeriod[]>) => this.onSuccess(res.body, res.headers, pageToLoad), () => this.onError());
   }
 
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      this.transition();
-    }
-  }
-
-  transition() {
-    this.router.navigate(['/period'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
-    this.loadAll();
-  }
-
-  clear() {
-    this.page = 0;
-    this.router.navigate([
-      '/period',
-      {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
-    this.loadAll();
-  }
-
-  ngOnInit() {
-    this.loadAll();
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(data => {
+      this.page = data.pagingParams.page;
+      this.ascending = data.pagingParams.ascending;
+      this.predicate = data.pagingParams.predicate;
+      this.ngbPaginationPage = data.pagingParams.page;
+      this.loadPage();
     });
     this.registerChangeInPeriods();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
+    }
   }
 
-  trackId(index: number, item: IPeriod) {
-    return item.id;
+  trackId(index: number, item: IPeriod): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
   }
 
-  registerChangeInPeriods() {
-    this.eventSubscriber = this.eventManager.subscribe('periodListModification', response => this.loadAll());
+  registerChangeInPeriods(): void {
+    this.eventSubscriber = this.eventManager.subscribe('periodListModification', () => this.loadPage());
   }
 
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
+  delete(period: IPeriod): void {
+    const modalRef = this.modalService.open(PeriodDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.period = period;
+  }
+
+  sort(): string[] {
+    const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
     if (this.predicate !== 'id') {
       result.push('id');
     }
     return result;
   }
 
-  protected paginatePeriods(data: IPeriod[], headers: HttpHeaders) {
-    this.links = this.parseLinks.parse(headers.get('link'));
-    this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    this.periods = data;
+  protected onSuccess(data: IPeriod[] | null, headers: HttpHeaders, page: number): void {
+    this.totalItems = Number(headers.get('X-Total-Count'));
+    this.page = page;
+    this.router.navigate(['/period'], {
+      queryParams: {
+        page: this.page,
+        size: this.itemsPerPage,
+        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+      }
+    });
+    this.periods = data || [];
+  }
+
+  protected onError(): void {
+    this.ngbPaginationPage = this.page;
   }
 }

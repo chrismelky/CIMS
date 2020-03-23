@@ -50,7 +50,6 @@ public class PeriodService {
         return periodRepository.findAll(pageable);
     }
 
-
     /**
      * Get one period by id.
      *

@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
+import { Observable, of, EMPTY } from 'rxjs';
+import { flatMap } from 'rxjs/operators';
+
+import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { Period } from 'app/shared/model/period.model';
+import { IPeriod, Period } from 'app/shared/model/period.model';
 import { PeriodService } from './period.service';
 import { PeriodComponent } from './period.component';
 import { PeriodDetailComponent } from './period-detail.component';
 import { PeriodUpdateComponent } from './period-update.component';
-import { PeriodDeletePopupComponent } from './period-delete-dialog.component';
-import { IPeriod } from 'app/shared/model/period.model';
 
 @Injectable({ providedIn: 'root' })
 export class PeriodResolve implements Resolve<IPeriod> {
-  constructor(private service: PeriodService) {}
+  constructor(private service: PeriodService, private router: Router) {}
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPeriod> {
+  resolve(route: ActivatedRouteSnapshot): Observable<IPeriod> | Observable<never> {
     const id = route.params['id'];
     if (id) {
       return this.service.find(id).pipe(
-        filter((response: HttpResponse<Period>) => response.ok),
-        map((period: HttpResponse<Period>) => period.body)
+        flatMap((period: HttpResponse<Period>) => {
+          if (period.body) {
+            return of(period.body);
+          } else {
+            this.router.navigate(['404']);
+            return EMPTY;
+          }
+        })
       );
     }
     return of(new Period());
@@ -37,7 +43,7 @@ export const periodRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.period.home.title'
     },
@@ -50,7 +56,7 @@ export const periodRoute: Routes = [
       period: PeriodResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       pageTitle: 'churchApp.period.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +68,7 @@ export const periodRoute: Routes = [
       period: PeriodResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       pageTitle: 'churchApp.period.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,25 +80,9 @@ export const periodRoute: Routes = [
       period: PeriodResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: [Authority.USER],
       pageTitle: 'churchApp.period.home.title'
     },
     canActivate: [UserRouteAccessService]
-  }
-];
-
-export const periodPopupRoute: Routes = [
-  {
-    path: ':id/delete',
-    component: PeriodDeletePopupComponent,
-    resolve: {
-      period: PeriodResolve
-    },
-    data: {
-      authorities: ['ROLE_USER'],
-      pageTitle: 'churchApp.period.home.title'
-    },
-    canActivate: [UserRouteAccessService],
-    outlet: 'popup'
   }
 ];

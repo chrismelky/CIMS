@@ -5,14 +5,12 @@ import { ChurchSharedModule } from 'app/shared/shared.module';
 import { PeriodComponent } from './period.component';
 import { PeriodDetailComponent } from './period-detail.component';
 import { PeriodUpdateComponent } from './period-update.component';
-import { PeriodDeletePopupComponent, PeriodDeleteDialogComponent } from './period-delete-dialog.component';
-import { periodRoute, periodPopupRoute } from './period.route';
-
-const ENTITY_STATES = [...periodRoute, ...periodPopupRoute];
+import { PeriodDeleteDialogComponent } from './period-delete-dialog.component';
+import { periodRoute } from './period.route';
 
 @NgModule({
-  imports: [ChurchSharedModule, RouterModule.forChild(ENTITY_STATES)],
-  declarations: [PeriodComponent, PeriodDetailComponent, PeriodUpdateComponent, PeriodDeleteDialogComponent, PeriodDeletePopupComponent],
+  imports: [ChurchSharedModule, RouterModule.forChild(periodRoute)],
+  declarations: [PeriodComponent, PeriodDetailComponent, PeriodUpdateComponent, PeriodDeleteDialogComponent],
   entryComponents: [PeriodDeleteDialogComponent]
 })
 export class ChurchPeriodModule {}

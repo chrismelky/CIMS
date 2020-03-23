@@ -14,8 +14,8 @@ export class DashboardService {
 
   constructor(protected http: HttpClient) {}
 
-  getContribution(churchId: number, periodId: number): Observable<EntityArrayResponseType> {
-    const url = this.resourceUrl + '/contribution/' + churchId + '/' + periodId;
+  getContribution(churchId: number, fyId: number): Observable<EntityArrayResponseType> {
+    const url = this.resourceUrl + '/contribution/' + churchId + '/' + fyId;
     return this.http.get<any[]>(url, { observe: 'response' });
   }
 

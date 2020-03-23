@@ -36,6 +36,13 @@
             "relationshipValidateRules": "required",
             "relationshipName": "type",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "financialYear",
+            "otherEntityName": "financialYear",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "period"
         }
     ],
     "changelogDate": "20200119063427",
@@ -47,5 +54,7 @@
     "fluentMethods": true,
     "readOnly": false,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
 }

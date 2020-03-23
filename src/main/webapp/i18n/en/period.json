@@ -20,7 +20,8 @@
       "startDate": "Start Date",
       "endDate": "End Date",
       "isCurrent": "Is Current",
-      "type": "Type"
+      "type": "Type",
+      "financialYear": "Financial Year"
     }
   }
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPeriod } from 'app/shared/model/period.model';
@@ -46,22 +45,22 @@ export class PeriodService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(period: IPeriod): IPeriod {
     const copy: IPeriod = Object.assign({}, period, {
-      startDate: period.startDate != null && period.startDate.isValid() ? period.startDate.format(DATE_FORMAT) : null,
-      endDate: period.endDate != null && period.endDate.isValid() ? period.endDate.format(DATE_FORMAT) : null
+      startDate: period.startDate && period.startDate.isValid() ? period.startDate.format(DATE_FORMAT) : undefined,
+      endDate: period.endDate && period.endDate.isValid() ? period.endDate.format(DATE_FORMAT) : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.startDate = res.body.startDate != null ? moment(res.body.startDate) : null;
-      res.body.endDate = res.body.endDate != null ? moment(res.body.endDate) : null;
+      res.body.startDate = res.body.startDate ? moment(res.body.startDate) : undefined;
+      res.body.endDate = res.body.endDate ? moment(res.body.endDate) : undefined;
     }
     return res;
   }
@@ -69,8 +68,8 @@ export class PeriodService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((period: IPeriod) => {
-        period.startDate = period.startDate != null ? moment(period.startDate) : null;
-        period.endDate = period.endDate != null ? moment(period.endDate) : null;
+        period.startDate = period.startDate ? moment(period.startDate) : undefined;
+        period.endDate = period.endDate ? moment(period.endDate) : undefined;
       });
     }
     return res;

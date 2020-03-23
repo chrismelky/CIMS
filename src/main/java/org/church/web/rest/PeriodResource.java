@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,9 +92,7 @@ public class PeriodResource {
     /**
      * {@code GET  /periods} : get all the periods.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of periods in body.
      */
@@ -108,11 +105,11 @@ public class PeriodResource {
     }
 
     /**
-    * {@code GET  /periods/count} : count all the periods.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /periods/count} : count all the periods.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/periods/count")
     public ResponseEntity<Long> countPeriods(PeriodCriteria criteria) {
         log.debug("REST request to count Periods by criteria: {}", criteria);

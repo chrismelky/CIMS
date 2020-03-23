@@ -22,10 +22,10 @@ public class DashboardResource {
         this.dashboardRepository = dashboardRepository;
     }
 
-    @GetMapping("/contribution/{churchId}/{periodId}")
+    @GetMapping("/contribution/{churchId}/{financialYearId}")
     public List<ContributionDashboard> getContr(@PathVariable Long churchId,
-                                                                @PathVariable Long periodId) {
-        return dashboardRepository.getContribution(churchId, periodId);
+                                                @PathVariable Long financialYearId) {
+        return dashboardRepository.getContribution(churchId, financialYearId);
     }
 
     @GetMapping("/member-contribution/{churchId}/{periodId}/{typeId}")
@@ -33,7 +33,6 @@ public class DashboardResource {
                                                             @PathVariable Long periodId,
                                                             @PathVariable Long typeId,
                                                             Pageable pageable) {
-        System.out.println(pageable.getPageNumber());
         int pageNumber = pageable.getPageNumber() + 1;
         return dashboardRepository.getMemberContr(churchId,
             periodId,typeId, pageNumber, pageable.getPageSize());

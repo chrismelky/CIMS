@@ -83,7 +83,7 @@ public class PeriodQueryService extends QueryService<Period> {
         Specification<Period> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), Period_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), Period_.id));
             }
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Period_.name));
@@ -100,6 +100,10 @@ public class PeriodQueryService extends QueryService<Period> {
             if (criteria.getTypeId() != null) {
                 specification = specification.and(buildSpecification(criteria.getTypeId(),
                     root -> root.join(Period_.type, JoinType.LEFT).get(PeriodType_.id)));
+            }
+            if (criteria.getFinancialYearId() != null) {
+                specification = specification.and(buildSpecification(criteria.getFinancialYearId(),
+                    root -> root.join(Period_.financialYear, JoinType.LEFT).get(FinancialYear_.id)));
             }
         }
         return specification;

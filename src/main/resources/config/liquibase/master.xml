@@ -33,6 +33,7 @@
     <include file="config/liquibase/changelog/20200119063428_added_entity_PeriodContributionType.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200119063429_added_entity_PeriodContribution.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200119063430_added_entity_PeriodContributionItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200323124745_added_entity_FinancialYear.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20191103090725_added_entity_constraints_ChurchCommunity.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20191103090726_added_entity_constraints_Church.xml" relativeToChangelogFile="false"/>

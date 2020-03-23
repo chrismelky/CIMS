@@ -15,4 +15,11 @@
                                  referencedTableName="period_type"/>
 
     </changeSet>
+    <changeSet id="20200119063427-4" author="chris">
+        <addForeignKeyConstraint baseColumnNames="financial_year_id"
+                                 baseTableName="period"
+                                 constraintName="fk_period_financial_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year"/>
+    </changeSet>
 </databaseChangeLog>

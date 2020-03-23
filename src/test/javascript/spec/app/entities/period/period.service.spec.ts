@@ -1,6 +1,5 @@
 import { TestBed, getTestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { take, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { PeriodService } from 'app/entities/period/period.service';
@@ -12,13 +11,14 @@ describe('Service Tests', () => {
     let service: PeriodService;
     let httpMock: HttpTestingController;
     let elemDefault: IPeriod;
-    let expectedResult;
+    let expectedResult: IPeriod | IPeriod[] | boolean | null;
     let currentDate: moment.Moment;
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule]
       });
-      expectedResult = {};
+      expectedResult = null;
       injector = getTestBed();
       service = injector.get(PeriodService);
       httpMock = injector.get(HttpTestingController);
@@ -36,14 +36,12 @@ describe('Service Tests', () => {
           },
           elemDefault
         );
-        service
-          .find(123)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.find(123).subscribe(resp => (expectedResult = resp.body));
 
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: elemDefault });
+        expect(expectedResult).toMatchObject(elemDefault);
       });
 
       it('should create a Period', () => {
@@ -55,6 +53,7 @@ describe('Service Tests', () => {
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
             startDate: currentDate,
@@ -62,13 +61,12 @@ describe('Service Tests', () => {
           },
           returnedFromService
         );
-        service
-          .create(new Period(null))
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.create(new Period()).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'POST' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should update a Period', () => {
@@ -89,13 +87,12 @@ describe('Service Tests', () => {
           },
           returnedFromService
         );
-        service
-          .update(expected)
-          .pipe(take(1))
-          .subscribe(resp => (expectedResult = resp));
+
+        service.update(expected).subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'PUT' });
         req.flush(returnedFromService);
-        expect(expectedResult).toMatchObject({ body: expected });
+        expect(expectedResult).toMatchObject(expected);
       });
 
       it('should return a list of Period', () => {
@@ -108,6 +105,7 @@ describe('Service Tests', () => {
           },
           elemDefault
         );
+
         const expected = Object.assign(
           {
             startDate: currentDate,
@@ -115,13 +113,9 @@ describe('Service Tests', () => {
           },
           returnedFromService
         );
-        service
-          .query(expected)
-          .pipe(
-            take(1),
-            map(resp => resp.body)
-          )
-          .subscribe(body => (expectedResult = body));
+
+        service.query().subscribe(resp => (expectedResult = resp.body));
+
         const req = httpMock.expectOne({ method: 'GET' });
         req.flush([returnedFromService]);
         httpMock.verify();

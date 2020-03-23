@@ -65,6 +65,7 @@ public class CacheConfiguration {
             createCache(cm, org.church.domain.PeriodContributionType.class.getName());
             createCache(cm, org.church.domain.PeriodContribution.class.getName());
             createCache(cm, org.church.domain.PeriodContributionItem.class.getName());
+            createCache(cm, org.church.domain.FinancialYear.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

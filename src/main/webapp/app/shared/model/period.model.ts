@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { IPeriodType } from 'app/shared/model/period-type.model';
+import { IFinancialYear } from 'app/shared/model/financial-year.model';
 
 export interface IPeriod {
   id?: number;
@@ -8,6 +9,7 @@ export interface IPeriod {
   endDate?: Moment;
   isCurrent?: boolean;
   type?: IPeriodType;
+  financialYear?: IFinancialYear;
 }
 
 export class Period implements IPeriod {
@@ -17,7 +19,8 @@ export class Period implements IPeriod {
     public startDate?: Moment,
     public endDate?: Moment,
     public isCurrent?: boolean,
-    public type?: IPeriodType
+    public type?: IPeriodType,
+    public financialYear?: IFinancialYear
   ) {
     this.isCurrent = this.isCurrent || false;
   }

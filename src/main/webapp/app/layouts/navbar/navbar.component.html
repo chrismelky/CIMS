@@ -30,6 +30,18 @@
                 <!--</a>-->
                 <!--<ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">-->
                     <!---->
+                    <li>
+                        <a class="dropdown-item" routerLink="financial-year" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.financialYear">Financial Year</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="period" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.period">Period</span>
+                        </a>
+                    </li>
                     <!--&lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
                 <!--</ul>-->
             <!--</li>-->

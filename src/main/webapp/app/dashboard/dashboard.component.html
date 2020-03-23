@@ -1,4 +1,19 @@
-<div class="">
+<!--<div class="list-group list-group-horizontal col-md-6" >-->
+    <!--<a [ngClass]="{'active': fy.id === f.id}"-->
+       <!--*ngFor="let f of fys"-->
+       <!--(click)="setFy(f)"-->
+       <!--class="list-group-item list-group-item-action">-->
+        <!--{{f.name}}-->
+    <!--</a>-->
+<!--</div>-->
+<div class="card">
+    <label for="fy">Financial Year</label>
+    <select id="fy" class="form-control" [(ngModel)]="fy" (ngModelChange)="setFy($event)">
+        <option  *ngFor="let f of fys" [value]="f">{{f.name}}</option>
+    </select>
+
+</div>
+<div class="card">
     <fusioncharts
         width="99%"
         height="400"

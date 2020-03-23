@@ -37,16 +37,19 @@ public class PeriodCriteria implements Serializable, Criteria {
 
     private LongFilter typeId;
 
-    public PeriodCriteria(){
+    private LongFilter financialYearId;
+
+    public PeriodCriteria() {
     }
 
-    public PeriodCriteria(PeriodCriteria other){
+    public PeriodCriteria(PeriodCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
         this.startDate = other.startDate == null ? null : other.startDate.copy();
         this.endDate = other.endDate == null ? null : other.endDate.copy();
         this.isCurrent = other.isCurrent == null ? null : other.isCurrent.copy();
         this.typeId = other.typeId == null ? null : other.typeId.copy();
+        this.financialYearId = other.financialYearId == null ? null : other.financialYearId.copy();
     }
 
     @Override
@@ -102,6 +105,14 @@ public class PeriodCriteria implements Serializable, Criteria {
         this.typeId = typeId;
     }
 
+    public LongFilter getFinancialYearId() {
+        return financialYearId;
+    }
+
+    public void setFinancialYearId(LongFilter financialYearId) {
+        this.financialYearId = financialYearId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -118,7 +129,8 @@ public class PeriodCriteria implements Serializable, Criteria {
             Objects.equals(startDate, that.startDate) &&
             Objects.equals(endDate, that.endDate) &&
             Objects.equals(isCurrent, that.isCurrent) &&
-            Objects.equals(typeId, that.typeId);
+            Objects.equals(typeId, that.typeId) &&
+            Objects.equals(financialYearId, that.financialYearId);
     }
 
     @Override
@@ -129,7 +141,8 @@ public class PeriodCriteria implements Serializable, Criteria {
         startDate,
         endDate,
         isCurrent,
-        typeId
+        typeId,
+        financialYearId
         );
     }
 
@@ -142,6 +155,7 @@ public class PeriodCriteria implements Serializable, Criteria {
                 (endDate != null ? "endDate=" + endDate + ", " : "") +
                 (isCurrent != null ? "isCurrent=" + isCurrent + ", " : "") +
                 (typeId != null ? "typeId=" + typeId + ", " : "") +
+                (financialYearId != null ? "financialYearId=" + financialYearId + ", " : "") +
             "}";
     }
 

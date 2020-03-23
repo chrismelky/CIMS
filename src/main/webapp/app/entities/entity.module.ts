@@ -85,6 +85,10 @@ import { RouterModule } from '@angular/router';
         path: 'period-contribution-item',
         loadChildren: () =>
           import('./period-contribution-item/period-contribution-item.module').then(m => m.ChurchPeriodContributionItemModule)
+      },
+      {
+        path: 'financial-year',
+        loadChildren: () => import('./financial-year/financial-year.module').then(m => m.ChurchFinancialYearModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

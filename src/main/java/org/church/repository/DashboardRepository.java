@@ -18,18 +18,19 @@ public class DashboardRepository {
 
     public List<ContributionDashboard> getContribution(
         Long churchId,
-        Long periodId) {
+        Long financialYearId) {
 
        return em.createNativeQuery("select " +
            "  pct.name, " +
            "  sum(pc.amount_promised) as promise, " +
            "  sum(pc.amount_contributed) as collection " +
            " from period_contribution_type pct " +
-           " left join period_contribution pc on pc.period_contribution_type_id = pct.id and pc.period_id=:periodId " +
+           " left join period_contribution pc on pc.period_contribution_type_id = pct.id " +
+           " join period as p on p.id = pc.period_id and p.financial_year_id=:financialYearId" +
            " where pct.church_id =:churchId " +
            "group by pct.id order by pct.name", ContributionDashboard.class)
            .setParameter("churchId", churchId)
-           .setParameter("periodId", periodId)
+           .setParameter("financialYearId", financialYearId)
            .getResultList();
     }
 
