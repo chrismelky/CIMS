@@ -18,6 +18,7 @@ import { ChurchCommunityComponent } from 'app/entities/church-community/church-c
 import { HomeChurchCommunityComponent } from 'app/entities/home-church-community/home-church-community.component';
 import { UserManagementUpdateComponent } from 'app/admin/user-management/user-management-update.component';
 import { PeriodContributionTypeComponent } from 'app/entities/period-contribution-type/period-contribution-type.component';
+import { WeekPickComponent } from './week-pick/week-pick.component';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { PeriodContributionTypeComponent } from 'app/entities/period-contributio
     ChurchCommunityComponent,
     HomeChurchCommunityComponent,
     UserManagementUpdateComponent,
-    PeriodContributionTypeComponent
+    PeriodContributionTypeComponent,
+    WeekPickComponent
   ],
   entryComponents: [ChurchLoginModalComponent],
   exports: [
@@ -64,7 +66,8 @@ import { PeriodContributionTypeComponent } from 'app/entities/period-contributio
     ChurchCommunityComponent,
     HomeChurchCommunityComponent,
     UserManagementUpdateComponent,
-    PeriodContributionTypeComponent
+    PeriodContributionTypeComponent,
+    WeekPickComponent
   ]
 })
 export class ChurchSharedModule {}

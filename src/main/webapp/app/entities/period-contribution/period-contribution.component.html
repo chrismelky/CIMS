@@ -1,4 +1,13 @@
 <div>
+    <div class="list-group list-group-horizontal">
+        <a [ngClass]="{'active': periodId === p.id}"
+           *ngFor="let p of periods"
+           (click)="setPeriod(p.id)"
+           class="list-group-item list-group-item-action">
+            {{p.name}}
+        </a>
+    </div>
+    <br />
     <h2 id="page-heading">
         <span jhiTranslate="churchApp.periodContribution.home.title">Period Contributions</span>
         <button *ngIf="periodContributions?.length === 0"
@@ -16,12 +25,13 @@
     <div class="alert alert-warning" *ngIf="periodContributions?.length === 0">
         <span jhiTranslate="churchApp.periodContribution.home.notFound">No periodContributions found</span>
     </div>
-    <div>
-        <label for="period">Select Period</label>
-        <select id="period" class="form-control" [(ngModel)]="periodId" (ngModelChange)="loadAll()">
-            <option *ngFor="let p of periods" [value]="p.id">{{p.name}}</option>
-        </select>
-    </div>
+    <!--<div>-->
+        <!--<label for="period">Select Period</label>-->
+        <!--<select id="period" class="form-control" [(ngModel)]="periodId" (ngModelChange)="loadAll()">-->
+            <!--<option *ngFor="let p of periods" [value]="p.id">{{p.name}}</option>-->
+        <!--</select>-->
+    <!--</div>-->
+
     <div class="table-responsive" *ngIf="periodContributions?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
@@ -71,7 +81,7 @@
             </tr>
             </tbody>
         </table>
-        <p><ngb-progressbar type="success" textType="white" [value]="120" showValue="true"></ngb-progressbar></p>
+        <p><ngb-progressbar type="success" textType="white" [value]="progress" showValue="true"></ngb-progressbar></p>
         <br/>
         <church-period-contribution-item
             (itemChange)="itemChange($event)"

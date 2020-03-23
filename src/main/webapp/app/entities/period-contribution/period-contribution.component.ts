@@ -39,6 +39,7 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   reverse: any;
   periodId: number;
   periods: Period[] = [];
+  progress = 0;
 
   constructor(
     protected periodContributionService: PeriodContributionService,
@@ -99,7 +100,7 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   loadPeriods() {
     this.periodService
       .query({
-        'periodType.equals': this.periodTypeId
+        'typeId.equals': this.periodTypeId
       })
       .subscribe((res: HttpResponse<IPeriodContribution[]>) => {
         this.periods = res.body;
@@ -135,6 +136,9 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   }
 
   protected paginatePeriodContributions(data: IPeriodContribution[], headers: HttpHeaders) {
+    if (data.length) {
+      this.progress = Math.floor((data[0].amountContributed / data[0].amountPromised) * 100);
+    }
     this.links = this.parseLinks.parse(headers.get('link'));
     this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
     this.periodContributions = data;
@@ -144,5 +148,10 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     if (changed) {
       this.loadAll();
     }
+  }
+
+  setPeriod(id: number) {
+    this.periodId = id;
+    this.loadAll();
   }
 }

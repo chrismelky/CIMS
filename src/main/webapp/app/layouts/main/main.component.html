@@ -3,6 +3,15 @@
         <div class="sidenav-header">
             <h3 class="title"> CIMS </h3>
         </div>
+        <ul class="list-unstyled components">
+            <li>
+                <a routerLink="dashboard"
+                   routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <fa-icon icon="chart-pie" fixedWidth="true"></fa-icon>
+                    <span class="menu-item">Dashboard</span>
+                </a>
+            </li>
+        </ul>
         <ul  class="list-unstyled components" *churchHasAnyAuthority="'ROLE_ADMIN'">
             <li>
                 <a routerLink="admin/user-management" routerLinkActive="active">
@@ -58,14 +67,14 @@
             </li>
         </ul>
         <ul  class="list-unstyled components"  *churchHasAnyAuthority="'ROLE_CHURCH_ADMIN'">
-            <li *ngIf="user.church">
+            <li *ngIf="user?.church">
                 <a  [routerLink]="['/church', user.church.id, 'edit' ]"
                    routerLinkActive="active" >
                     <fa-icon icon="church" fixedWidth="true"></fa-icon>
                     <span class="menu-item">{{user.church.name}} Church</span>
                 </a>
             </li>
-            <li *ngIf="user.church">
+            <li *ngIf="user?.church">
                 <a [routerLink]="['/member', 'byChurch',user.church.id]"
                    routerLinkActive="active"
                    [routerLinkActiveOptions]="{ exact: true }"  >

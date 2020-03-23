@@ -1,62 +1,10 @@
-<!--<mat-toolbar class="primary-toolbar mat-elevation-z1">-->
-    <!--<button *ngIf="!isAuthenticated()" routerLink="/" mat-button>-->
-        <!--<mat-icon>games</mat-icon>-->
-        <!--<span jhiTranslate="global.title"-->
-              <!--class="navbar-title">CIMS</span>-->
-        <!--<span class="navbar-version">{{version}}</span>-->
-    <!--</button>-->
-    <!--<span class="spacer"></span>-->
-    <!--<button routerLink="/" mat-button>-->
-        <!--<mat-icon>home</mat-icon>-->
-        <!--<span>Home</span>-->
-    <!--</button>-->
-    <!--<button mat-button [matMenuTriggerFor]="accountMenu">-->
-        <!--<mat-icon>perm_identity</mat-icon>-->
-        <!--<span>Account</span>-->
-        <!--<mat-icon>arrow_drop_down</mat-icon>-->
-    <!--</button>-->
-    <!--<mat-menu #accountMenu="matMenu" [ngSwitch]="isAuthenticated()">-->
-        <!--<button *ngSwitchCase="true"-->
-                <!--routerLink="account/settings"-->
-                <!--mat-menu-item routerLinkActive="active">-->
-            <!--<mat-icon>settings_applications</mat-icon>-->
-            <!--<span>Settings</span>-->
-        <!--</button>-->
-        <!--<button *ngSwitchCase="true"-->
-                <!--mat-menu-item disabled-->
-                <!--routerLink="account/password"-->
-                <!--routerLinkActive="active">-->
-            <!--<mat-icon>vpn_key</mat-icon>-->
-            <!--<span>Password</span>-->
-        <!--</button>-->
-        <!--<button *ngSwitchCase="true"-->
-                <!--mat-menu-item-->
-                <!--(click)="logout()">-->
-            <!--<mat-icon>exit_to_app</mat-icon>-->
-            <!--<span>Sign Out</span>-->
-        <!--</button>-->
-        <!--<button *ngSwitchCase="false"-->
-                <!--mat-menu-item-->
-                <!--(click)="login()">-->
-            <!--<mat-icon>notifications_off</mat-icon>-->
-            <!--<span>Sign In</span>-->
-        <!--</button>-->
-        <!--<button *ngSwitchCase="false"-->
-                <!--mat-menu-item-->
-                <!--routerLink="account/register"-->
-                <!--routerLinkActive="active">-->
-            <!--<mat-icon>notifications_off</mat-icon>-->
-            <!--<span>Register</span>-->
-        <!--</button>-->
-    <!--</mat-menu>-->
-<!--</mat-toolbar>-->
-
 <nav class="navbar navbar-light navbar-expand-md bg-light">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <span class="logo-img"></span>
+    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()" *ngIf="!isAuthenticated()">
         <span jhiTranslate="global.title" class="navbar-title">Church</span> <span class="navbar-version">{{version}}</span>
     </a>
-    <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+    <a class="navbar-toggler d-lg-none" href="javascript:void(0);"
+       data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+       aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
         <fa-icon icon="bars"></fa-icon>
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed"
