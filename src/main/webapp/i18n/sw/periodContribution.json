@@ -2,8 +2,8 @@
   "churchApp": {
     "periodContribution": {
       "home": {
-        "title": "Contribution Promise",
-        "createLabel": "Add Promise",
+        "title": "Ahadi ya Mchango",
+        "createLabel": "Weka Ahadi",
         "createOrEditLabel": "Create or edit a Period Contribution Promise",
         "notFound": "No Period Contributions Promise found"
       },

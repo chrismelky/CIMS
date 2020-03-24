@@ -1,0 +1,9 @@
+{
+  "churchApp": {
+    "Gender": {
+      "null": "",
+      "Male": "Male",
+      "Female": "Female"
+    }
+  }
+}

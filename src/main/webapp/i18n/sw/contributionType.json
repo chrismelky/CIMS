@@ -1,0 +1,23 @@
+{
+  "churchApp": {
+    "contributionType": {
+      "home": {
+        "title": "Contribution Types",
+        "createLabel": "Create a new Contribution Type",
+        "createOrEditLabel": "Create or edit a Contribution Type",
+        "notFound": "No Contribution Types found"
+      },
+      "created": "A new Contribution Type is created with identifier {{ param }}",
+      "updated": "A Contribution Type is updated with identifier {{ param }}",
+      "deleted": "A Contribution Type is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Contribution Type {{ id }}?"
+      },
+      "detail": {
+        "title": "Contribution Type"
+      },
+      "code": "Code",
+      "name": "Name"
+    }
+  }
+}

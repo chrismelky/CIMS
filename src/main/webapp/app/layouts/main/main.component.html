@@ -1,9 +1,9 @@
 <div class="wrapper">
-    <nav class="side-nav" #sideNav *ngIf="isAuthenticated()">
+    <nav class="side-nav"  *ngIf="isAuthenticated()">
         <div class="sidenav-header">
             <h3 class="title"> CIMS </h3>
         </div>
-        <ul class="list-unstyled components">
+        <ul class="list-unstyled components" *ngIf="user?.church">
             <li>
                 <a routerLink="dashboard"
                    routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -31,17 +31,24 @@
                     <span class="menu-item"> Manage Churches</span></a>
             </li>
             <li>
+                <a class="dropdown-item" routerLink="financial-year"
+                   routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <fa-icon icon="calendar" fixedWidth="true"></fa-icon>
+                    <span class="menu-item" jhiTranslate="global.menu.entities.financialYear">Financial Year</span>
+                </a>
+            </li>
+            <li>
                 <a routerLink="period-type" routerLinkActive="active"
                    [routerLinkActiveOptions]="{ exact: true }" >
                     <fa-icon icon="calendar" fixedWidth="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.periodType">Period Type</span>
+                    <span class="menu-item" jhiTranslate="global.menu.entities.periodType">Period Type</span>
                 </a>
             </li>
             <li>
                 <a routerLink="period"
                    routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                     <fa-icon icon="calendar-alt" fixedWidth="true"></fa-icon>
-                    <span jhiTranslate="global.menu.entities.period">Periods</span>
+                    <span class="menu-item" jhiTranslate="global.menu.entities.period">Periods</span>
                 </a>
             </li>
             <li>
@@ -90,8 +97,11 @@
         <div class="container-fluid">
             <div class="card jh-card">
                 <router-outlet></router-outlet>
+                <ng-http-loader [backdrop]="false"
+                                [backgroundColor]="'#6d7fcc'"></ng-http-loader>
                 <router-outlet name="popup"></router-outlet>
             </div>
         </div>
     </div>
 </div>
+

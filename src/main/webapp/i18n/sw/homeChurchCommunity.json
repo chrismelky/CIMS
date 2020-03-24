@@ -1,0 +1,29 @@
+{
+  "churchApp": {
+    "homeChurchCommunity": {
+      "home": {
+        "title": "Home Church Communities",
+        "createLabel": "Create a new Home Church Community",
+        "createOrEditLabel": "Create or edit a Home Church Community",
+        "notFound": "No Home Church Communities found"
+      },
+      "created": "A new Home Church Community is created with identifier {{ param }}",
+      "updated": "A Home Church Community is updated with identifier {{ param }}",
+      "deleted": "A Home Church Community is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Home Church Community {{ id }}?"
+      },
+      "detail": {
+        "title": "Home Church Community"
+      },
+      "name": "Name",
+      "numberOfHouseHold": "Number Of House Hold",
+      "phoneNumber": "Phone Number",
+      "address": "Address",
+      "church": "Church",
+      "chairMan": "Chair Man",
+      "secreatry": "Secreatry",
+      "treasurer": "Treasurer"
+    }
+  }
+}

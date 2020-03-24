@@ -16,6 +16,7 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     ChurchHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     ChurchEntityModule,
-    ChurchAppRoutingModule
+    ChurchAppRoutingModule,
+    NgHttpLoaderModule.forRoot()
   ],
   declarations: [ChurchMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [ChurchMainComponent]

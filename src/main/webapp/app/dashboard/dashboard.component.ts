@@ -187,6 +187,9 @@ export class DashboardComponent implements OnInit {
   }
 
   setFy() {
+    this.dataSource.categories.length = 0;
+    this.dataSource.dataset.length = 0;
+    this.memberContr = [];
     this.getContributionTypes();
   }
 

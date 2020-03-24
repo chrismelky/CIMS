@@ -1,0 +1,10 @@
+{
+  "churchApp": {
+    "MaritalStatus": {
+      "null": "",
+      "Single": "Single",
+      "Married": "Married",
+      "Devoced": "Devoced"
+    }
+  }
+}

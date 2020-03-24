@@ -1,0 +1,25 @@
+{
+  "churchApp": {
+    "memberRelative": {
+      "home": {
+        "title": "Member Relatives",
+        "createLabel": "Create a new Member Relative",
+        "createOrEditLabel": "Create or edit a Member Relative",
+        "notFound": "No Member Relatives found"
+      },
+      "created": "A new Member Relative is created with identifier {{ param }}",
+      "updated": "A Member Relative is updated with identifier {{ param }}",
+      "deleted": "A Member Relative is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Member Relative {{ id }}?"
+      },
+      "detail": {
+        "title": "Member Relative"
+      },
+      "relativeType": "Relative Type",
+      "relativeFullName": "Relative Full Name",
+      "relativePhoneNumber": "Relative Phone Number",
+      "member": "Member"
+    }
+  }
+}

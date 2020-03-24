@@ -1,0 +1,25 @@
+{
+  "churchApp": {
+    "memberRite": {
+      "home": {
+        "title": "Member Rites",
+        "createLabel": "Create a new Member Rite",
+        "createOrEditLabel": "Create or edit a Member Rite",
+        "notFound": "No Member Rites found"
+      },
+      "created": "A new Member Rite is created with identifier {{ param }}",
+      "updated": "A Member Rite is updated with identifier {{ param }}",
+      "deleted": "A Member Rite is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Member Rite {{ id }}?"
+      },
+      "detail": {
+        "title": "Member Rite"
+      },
+      "dateReceived": "Date Received",
+      "rite": "Rite",
+      "member": "Member",
+      "church": "Church"
+    }
+  }
+}

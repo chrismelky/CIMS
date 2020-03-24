@@ -1,0 +1,11 @@
+{
+  "churchApp": {
+    "RelativeType": {
+      "null": "",
+      "FATHER": "FATHER",
+      "MOTHER": "MOTHER",
+      "SON": "SON",
+      "DAUGHTER": "DAUGHTER"
+    }
+  }
+}
