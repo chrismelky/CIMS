@@ -21,11 +21,7 @@ import { PeriodContributionTypeComponent } from 'app/entities/period-contributio
 import { WeekPickComponent } from './week-pick/week-pick.component';
 
 @NgModule({
-  imports: [
-    // JhMaterialModule,
-    ChurchSharedLibsModule,
-    RouterModule
-  ],
+  imports: [ChurchSharedLibsModule, RouterModule],
   declarations: [
     FindLanguageFromKeyPipe,
     ChurchAlertComponent,
@@ -48,7 +44,6 @@ import { WeekPickComponent } from './week-pick/week-pick.component';
   ],
   entryComponents: [ChurchLoginModalComponent],
   exports: [
-    // JhMaterialModule,
     ChurchSharedLibsModule,
     FindLanguageFromKeyPipe,
     ChurchAlertComponent,
