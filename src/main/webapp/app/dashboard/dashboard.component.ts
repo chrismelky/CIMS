@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   contributionTypes: IPeriodContributionType[] = [];
   periods: IPeriod[] = [];
   fys: IFinancialYear[] = [];
-  fy: IFinancialYear;
+  fy;
 
   constructor(
     private service: DashboardService,
@@ -178,26 +178,16 @@ export class DashboardComponent implements OnInit {
     this.getMemberContribution();
   }
 
-  setContributionType(t: IPeriodContributionType) {
-    if (t.id !== this.contributionType.id) {
-      this.contributionType = { ...t };
-      this.getPeriods();
-    }
+  setContributionType() {
+    this.getPeriods();
   }
 
-  setPeriod(p: IPeriod) {
-    if (p.id !== this.period.id) {
-      this.period = { ...p };
-      this.getMemberContribution();
-    }
+  setPeriod() {
+    this.getMemberContribution();
   }
 
-  setFy(f: IFinancialYear) {
-    console.error(f);
-    if (f.id !== this.fy.id) {
-      this.fy = { ...f };
-      this.getContributionTypes();
-    }
+  setFy() {
+    this.getContributionTypes();
   }
 
   formatDate(date) {

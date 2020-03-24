@@ -12,7 +12,9 @@ import { AccountService } from 'app/core/auth/account.service';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PeriodContributionService } from './period-contribution.service';
 import { PeriodService } from 'app/entities/period/period.service';
-import { Period } from 'app/shared/model/period.model';
+import { IPeriod, Period } from 'app/shared/model/period.model';
+import { IFinancialYear } from 'app/shared/model/financial-year.model';
+import { FinancialYearService } from 'app/entities/financial-year/financial-year.service';
 
 @Component({
   selector: 'church-period-contribution',
@@ -37,9 +39,12 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   predicate: any;
   previousPage: any;
   reverse: any;
-  periodId: number;
+  period: IPeriod;
   periods: Period[] = [];
   progress = 0;
+
+  fys: IFinancialYear[] = [];
+  fy;
 
   constructor(
     protected periodContributionService: PeriodContributionService,
@@ -48,13 +53,14 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected periodService: PeriodService
+    protected periodService: PeriodService,
+    private fyService: FinancialYearService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
   }
 
   loadAll() {
-    if (this.periodId === undefined) {
+    if (this.period === undefined) {
       return;
     }
     this.periodContributionService
@@ -62,7 +68,7 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
         'periodContributionTypeId.equals': this.periodContributionTypeId,
         'memberId.equals': this.memberId,
         'churchId.equals': this.churchId,
-        'periodId.equals': this.periodId
+        'periodId.equals': this.period.id
       })
       .subscribe((res: HttpResponse<IPeriodContribution[]>) => this.paginatePeriodContributions(res.body, res.headers));
   }
@@ -97,18 +103,51 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     this.loadAll();
   }
 
+  loadFy() {
+    this.fyService
+      .query({
+        'startDate.lessOrEqualThan': this.formatDate(new Date()),
+        sort: ['startDate,desc']
+      })
+      .subscribe(resp => {
+        const all = resp.body;
+        if (all.length > 2) {
+          this.fys = [all[0], all[1]];
+        } else {
+          this.fys = all;
+        }
+        if (this.fys.length) {
+          this.fy = this.fys[0];
+        }
+        this.loadPeriods();
+      });
+  }
+
   loadPeriods() {
+    this.periods = [];
+    if (this.periodTypeId === undefined || this.fy === undefined) {
+      return;
+    }
     this.periodService
       .query({
-        'typeId.equals': this.periodTypeId
+        'typeId.equals': this.periodTypeId,
+        'financialYearId.equals': this.fy.id,
+        'startDate.lessOrEqualThan': this.formatDate(new Date()),
+        sort: ['startDate,desc']
       })
-      .subscribe((res: HttpResponse<IPeriodContribution[]>) => {
-        this.periods = res.body;
+      .subscribe(resp => {
+        const periods = resp.body;
+        // take max of two
+        this.periods = periods.length > 2 ? [periods[0], periods[1]] : periods;
+        if (this.periods.length) {
+          this.period = this.periods[0];
+          this.loadAll();
+        }
       });
   }
 
   ngOnInit() {
-    this.loadPeriods();
+    this.loadFy();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;
     });
@@ -150,8 +189,21 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  setPeriod(id: number) {
-    this.periodId = id;
-    this.loadAll();
+  formatDate(date) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
+
+  setFy() {
+    this.periodContributions = [];
+
+    this.loadPeriods();
   }
 }

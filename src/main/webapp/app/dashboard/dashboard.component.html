@@ -1,18 +1,10 @@
-<!--<div class="list-group list-group-horizontal col-md-6" >-->
-    <!--<a [ngClass]="{'active': fy.id === f.id}"-->
-       <!--*ngFor="let f of fys"-->
-       <!--(click)="setFy(f)"-->
-       <!--class="list-group-item list-group-item-action">-->
-        <!--{{f.name}}-->
-    <!--</a>-->
-<!--</div>-->
-<div class="card">
-    <label for="fy">Financial Year</label>
-    <select id="fy" class="form-control" [(ngModel)]="fy" (ngModelChange)="setFy($event)">
-        <option  *ngFor="let f of fys" [value]="f">{{f.name}}</option>
-    </select>
-
+<div class="form-group">
+    <label for="fy" class="form-control-label">Year</label>
+    <select id="fy" class="form-control col-md-3" [(ngModel)]="fy" (ngModelChange)="setFy()" >
+        <option  *ngFor="let f of fys" [ngValue]="f">{{f.name}}</option>
+</select>
 </div>
+<br />
 <div class="card">
     <fusioncharts
         width="99%"
@@ -22,59 +14,57 @@
     </fusioncharts>
 </div>
 <br />
-<div class="">
+<div >
     <div class="row">
-    <div class="list-group list-group-horizontal col-md-6" >
-        <a [ngClass]="{'active': contributionType.id === t.id}"
-           *ngFor="let t of contributionTypes"
-           (click)="setContributionType(t)"
-           class="list-group-item list-group-item-action">
-            {{t.name}}
-        </a>
-    </div>
-        <div class="col-md-1"></div>
-    <div class="list-group list-group-horizontal col-md-5" >
-        <a [ngClass]="{'active': period.id === p.id}"
-           *ngFor="let p of periods"
-           (click)="setPeriod(p)"
-           class="list-group-item list-group-item-action">
-            {{p.name}}
-        </a>
-    </div>
-    </div>
-    <br />
-    <table class="table table-bordered">
-        <thead>
-         <tr>
-             <th>Name</th>
-             <th>Phone Number</th>
-             <th>Promise</th>
-             <th>Contribution</th>
-             <th>Balance</th>
-             <th>Due Date</th>
-             <th>Is Overdue</th>
-         </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let c of memberContr">
-            <td>{{c.name}}</td>
-            <td>{{c.phone_number}}</td>
-            <td>{{c.promise}}</td>
-            <td>{{c.contribution}}</td>
-            <td>{{c.promise - c.contribution}}</td>
-            <td>{{c.due_date}}</td>
-            <td>{{c.over_due}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <div>
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        <div  class="col-md-3 form-group">
+            <label for="ct" class="form-control-label">Type</label>
+            <select id="ct" class="form-control" [(ngModel)]="contributionType" (ngModelChange)="setContributionType()">
+                <option  *ngFor="let ct of contributionTypes" [ngValue]="ct">{{ct.name}}</option>
+            </select>
         </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
-                            [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
-                            [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        <div  class="col-md-3 form-group">
+            <label for="p" class="form-control-label">Period</label>
+            <select id="p" class="form-control" [(ngModel)]="period" (ngModelChange)="setPeriod()">
+                <option  *ngFor="let p of periods" [ngValue]="p">{{p.type?.name}}-{{p.name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 8px">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                 <tr>
+                     <th>Name</th>
+                     <th>Phone Number</th>
+                     <th>Promise</th>
+                     <th>Contribution</th>
+                     <th>Balance</th>
+                     <th>Due Date</th>
+                     <th>Is Overdue</th>
+                 </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let c of memberContr">
+                    <td>{{c.name}}</td>
+                    <td>{{c.phone_number}}</td>
+                    <td>{{c.promise}}</td>
+                    <td>{{c.contribution}}</td>
+                    <td>{{c.promise - c.contribution}}</td>
+                    <td>{{c.due_date}}</td>
+                    <td>{{c.over_due}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <div class="row justify-content-center">
+                    <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                </div>
+                <div class="row justify-content-center">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                                    [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true"
+                                    [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                </div>
+            </div>
         </div>
     </div>
 </div>
