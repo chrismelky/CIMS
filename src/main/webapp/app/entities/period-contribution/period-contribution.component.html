@@ -23,7 +23,7 @@
             <button *ngIf="periodContributions?.length === 0"
                     id="jh-create-entity" class="btn btn-primary float-center jh-create-entity
                     create-period-contribution"
-                    [routerLink]="['/period-contribution/byChurch', churchId, 'byMember', memberId, 'byType', periodContributionTypeId, 'byPeriod', periodId, 'new']">
+                    [routerLink]="['/period-contribution/byChurch', churchId, 'byMember', memberId, 'byType', periodContributionTypeId, 'byPeriod', period?.id, 'new']">
                 <fa-icon [icon]="'plus'"></fa-icon>
                 <span  jhiTranslate="churchApp.periodContribution.home.createLabel">
             Create a new Period Contribution
