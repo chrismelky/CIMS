@@ -4,10 +4,9 @@ import { RouterModule } from '@angular/router';
 import { ChurchSharedModule } from 'app/shared/shared.module';
 import { HOME_ROUTE } from './home.route';
 import { HomeComponent } from './home.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  imports: [ChurchSharedModule, FlexLayoutModule, RouterModule.forChild([HOME_ROUTE])],
+  imports: [ChurchSharedModule, RouterModule.forChild([HOME_ROUTE])],
   declarations: [HomeComponent]
 })
 export class ChurchHomeModule {}

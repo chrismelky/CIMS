@@ -8,7 +8,6 @@ import { ChurchAppRoutingModule } from './app-routing.module';
 import { ChurchHomeModule } from './home/home.module';
 import { ChurchEntityModule } from './entities/entity.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import 'hammerjs';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { ChurchMainComponent } from './layouts/main/main.component';
@@ -22,7 +21,6 @@ import { ErrorComponent } from './layouts/error/error.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FlexLayoutModule,
     ChurchSharedModule,
     ChurchCoreModule,
     ChurchHomeModule,
