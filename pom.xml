@@ -428,14 +428,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
+                    <executable>true</executable>
                     <mainClass>${start-class}</mainClass>
                     <fork>true</fork>
                     <embeddedLaunchScriptProperties>
@@ -446,6 +440,13 @@
                     <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
                     -->
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
