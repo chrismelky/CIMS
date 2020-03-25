@@ -124,7 +124,7 @@
     "webpack:dev-verbose": "npm run webpack-dev-server -- --config webpack/webpack.dev.js --inline --hot --port=9060 --watch-content-base --profile --progress --env.stats=normal",
     "webpack:build:main": "npm run webpack -- --config webpack/webpack.dev.js --env.stats=minimal",
     "webpack:build": "npm run cleanup && npm run webpack:build:main",
-    "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile",
+    "webpack:prod:main": "npm run webpack -- --config webpack/webpack.prod.js --profile --passWithNoTests",
     "webpack:prod": "npm run cleanup && npm run webpack:prod:main && npm run clean-www",
     "webpack:test": "npm run test",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
