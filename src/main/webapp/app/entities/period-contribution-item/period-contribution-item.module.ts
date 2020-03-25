@@ -2,14 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { ChurchSharedModule } from 'app/shared/shared.module';
-import { PeriodContributionItemComponent } from './period-contribution-item.component';
 import { PeriodContributionItemDetailComponent } from './period-contribution-item-detail.component';
 import { PeriodContributionItemUpdateComponent } from './period-contribution-item-update.component';
 import {
-  PeriodContributionItemDeletePopupComponent,
-  PeriodContributionItemDeleteDialogComponent
+  PeriodContributionItemDeleteDialogComponent,
+  PeriodContributionItemDeletePopupComponent
 } from './period-contribution-item-delete-dialog.component';
-import { periodContributionItemRoute, periodContributionItemPopupRoute } from './period-contribution-item.route';
+import { periodContributionItemPopupRoute, periodContributionItemRoute } from './period-contribution-item.route';
 
 const ENTITY_STATES = [...periodContributionItemRoute, ...periodContributionItemPopupRoute];
 

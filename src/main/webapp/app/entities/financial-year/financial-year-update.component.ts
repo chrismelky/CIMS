@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IFinancialYear, FinancialYear } from 'app/shared/model/financial-year.model';
+import { FinancialYear, IFinancialYear } from 'app/shared/model/financial-year.model';
 import { FinancialYearService } from './financial-year.service';
 
 @Component({
@@ -58,10 +58,10 @@ export class FinancialYearUpdateComponent implements OnInit {
   private createFromForm(): IFinancialYear {
     return {
       ...new FinancialYear(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      startDate: this.editForm.get(['startDate'])!.value,
-      endDate: this.editForm.get(['endDate'])!.value
+      id: this.editForm.get(['id']).value,
+      name: this.editForm.get(['name']).value,
+      startDate: this.editForm.get(['startDate']).value,
+      endDate: this.editForm.get(['endDate']).value
     };
   }
 

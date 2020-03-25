@@ -22,6 +22,7 @@ export class ChurchMainComponent implements OnInit {
     private $localStorage: LocalStorageService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
+    this.user = this.$localStorage.retrieve('user');
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
@@ -33,7 +34,6 @@ export class ChurchMainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user = this.$localStorage.retrieve('user');
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));

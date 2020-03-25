@@ -16,7 +16,7 @@
             <div  *ngIf="member" fxLayout="row" fxLayoutAlign="space-between center">
                 <div fxFlex>Member Church: <strong>{{member.church?.name}}</strong></div>
                 <div fxFlex>Member Record Number: <strong>{{member.memberRn}}</strong></div>
-                <button type="button" color="primary" (click)="selectMember()">
+                <button type="button" color="primary" (click)="setSelected()">
                     <fa-icon>save</fa-icon> Set
                 </button>
             </div>
@@ -24,7 +24,7 @@
         <div style="padding-top:8px" *ngIf="existingMember" fxLayout="row" fxFlex="100%" fxLayoutAlign="space-between center" >
             <div fxFlex>Member Church: <strong>{{existingMember.church?.name}}</strong></div>
             <div fxFlex>Member Record Number: <strong>{{existingMember.memberRn}}</strong></div>
-            <button color="warn" type="button" (click)="resetMember()">
+            <button color="warn" type="button" (click)="resetSelected()">
                 <fa-icon>delete</fa-icon>
                 Change
             </button>

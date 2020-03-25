@@ -34,7 +34,7 @@ export const homeChurchCommunityRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.homeChurchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -47,7 +47,7 @@ export const homeChurchCommunityRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.homeChurchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService]

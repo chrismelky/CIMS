@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -82,13 +81,13 @@ export class PeriodUpdateComponent implements OnInit {
   private createFromForm(): IPeriod {
     return {
       ...new Period(),
-      id: this.editForm.get(['id'])!.value,
-      name: this.editForm.get(['name'])!.value,
-      startDate: this.editForm.get(['startDate'])!.value,
-      endDate: this.editForm.get(['endDate'])!.value,
-      isCurrent: this.editForm.get(['isCurrent'])!.value,
-      type: this.editForm.get(['type'])!.value,
-      financialYear: this.editForm.get(['financialYear'])!.value
+      id: this.editForm.get(['id']).value,
+      name: this.editForm.get(['name']).value,
+      startDate: this.editForm.get(['startDate']).value,
+      endDate: this.editForm.get(['endDate']).value,
+      isCurrent: this.editForm.get(['isCurrent']).value,
+      type: this.editForm.get(['type']).value,
+      financialYear: this.editForm.get(['financialYear']).value
     };
   }
 

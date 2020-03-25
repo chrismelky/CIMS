@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ChurchCommunity } from 'app/shared/model/church-community.model';
+import { ChurchCommunity, IChurchCommunity } from 'app/shared/model/church-community.model';
 import { ChurchCommunityService } from './church-community.service';
 import { ChurchCommunityComponent } from './church-community.component';
 import { ChurchCommunityDetailComponent } from './church-community-detail.component';
 import { ChurchCommunityUpdateComponent } from './church-community-update.component';
 import { ChurchCommunityDeletePopupComponent } from './church-community-delete-dialog.component';
-import { IChurchCommunity } from 'app/shared/model/church-community.model';
 
 @Injectable({ providedIn: 'root' })
 export class ChurchCommunityResolve implements Resolve<IChurchCommunity> {
@@ -37,7 +36,7 @@ export const churchCommunityRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.churchCommunity.home.title'
     },
@@ -50,7 +49,7 @@ export const churchCommunityRoute: Routes = [
       churchCommunity: ChurchCommunityResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.churchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const churchCommunityRoute: Routes = [
       churchCommunity: ChurchCommunityResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.churchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const churchCommunityRoute: Routes = [
       churchCommunity: ChurchCommunityResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.churchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const churchCommunityPopupRoute: Routes = [
       churchCommunity: ChurchCommunityResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.churchCommunity.home.title'
     },
     canActivate: [UserRouteAccessService],

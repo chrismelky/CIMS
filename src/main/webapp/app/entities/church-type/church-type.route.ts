@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ChurchType } from 'app/shared/model/church-type.model';
+import { ChurchType, IChurchType } from 'app/shared/model/church-type.model';
 import { ChurchTypeService } from './church-type.service';
 import { ChurchTypeComponent } from './church-type.component';
 import { ChurchTypeDetailComponent } from './church-type-detail.component';
 import { ChurchTypeUpdateComponent } from './church-type-update.component';
 import { ChurchTypeDeletePopupComponent } from './church-type-delete-dialog.component';
-import { IChurchType } from 'app/shared/model/church-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class ChurchTypeResolve implements Resolve<IChurchType> {

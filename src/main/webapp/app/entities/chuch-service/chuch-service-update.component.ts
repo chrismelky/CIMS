@@ -5,7 +5,7 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiAlertService, JhiDataUtils } from 'ng-jhipster';
+import { JhiAlertService } from 'ng-jhipster';
 import { ChuchService, IChuchService } from 'app/shared/model/chuch-service.model';
 import { ChuchServiceService } from './chuch-service.service';
 import { IChurch } from 'app/shared/model/church.model';

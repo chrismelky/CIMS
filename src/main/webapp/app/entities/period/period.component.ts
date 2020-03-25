@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -63,8 +63,7 @@ export class PeriodComponent implements OnInit, OnDestroy {
   }
 
   trackId(index: number, item: IPeriod): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-    return item.id!;
+    return item.id;
   }
 
   registerChangeInPeriods(): void {

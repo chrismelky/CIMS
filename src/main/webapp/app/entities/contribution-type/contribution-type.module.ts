@@ -5,8 +5,8 @@ import { ChurchSharedModule } from 'app/shared/shared.module';
 import { ContributionTypeComponent } from './contribution-type.component';
 import { ContributionTypeDetailComponent } from './contribution-type-detail.component';
 import { ContributionTypeUpdateComponent } from './contribution-type-update.component';
-import { ContributionTypeDeletePopupComponent, ContributionTypeDeleteDialogComponent } from './contribution-type-delete-dialog.component';
-import { contributionTypeRoute, contributionTypePopupRoute } from './contribution-type.route';
+import { ContributionTypeDeleteDialogComponent, ContributionTypeDeletePopupComponent } from './contribution-type-delete-dialog.component';
+import { contributionTypePopupRoute, contributionTypeRoute } from './contribution-type.route';
 
 const ENTITY_STATES = [...contributionTypeRoute, ...contributionTypePopupRoute];
 

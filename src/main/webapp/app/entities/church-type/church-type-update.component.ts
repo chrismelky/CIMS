@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IChurchType, ChurchType } from 'app/shared/model/church-type.model';
+import { ChurchType, IChurchType } from 'app/shared/model/church-type.model';
 import { ChurchTypeService } from './church-type.service';
 
 @Component({

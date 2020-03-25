@@ -5,8 +5,8 @@ import { ChurchSharedModule } from 'app/shared/shared.module';
 import { MemberPromiseComponent } from './member-promise.component';
 import { MemberPromiseDetailComponent } from './member-promise-detail.component';
 import { MemberPromiseUpdateComponent } from './member-promise-update.component';
-import { MemberPromiseDeletePopupComponent, MemberPromiseDeleteDialogComponent } from './member-promise-delete-dialog.component';
-import { memberPromiseRoute, memberPromisePopupRoute } from './member-promise.route';
+import { MemberPromiseDeleteDialogComponent, MemberPromiseDeletePopupComponent } from './member-promise-delete-dialog.component';
+import { memberPromisePopupRoute, memberPromiseRoute } from './member-promise.route';
 
 const ENTITY_STATES = [...memberPromiseRoute, ...memberPromisePopupRoute];
 

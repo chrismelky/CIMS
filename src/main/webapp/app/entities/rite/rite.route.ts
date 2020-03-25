@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Rite } from 'app/shared/model/rite.model';
+import { IRite, Rite } from 'app/shared/model/rite.model';
 import { RiteService } from './rite.service';
 import { RiteComponent } from './rite.component';
 import { RiteDetailComponent } from './rite-detail.component';
 import { RiteUpdateComponent } from './rite-update.component';
 import { RiteDeletePopupComponent } from './rite-delete-dialog.component';
-import { IRite } from 'app/shared/model/rite.model';
 
 @Injectable({ providedIn: 'root' })
 export class RiteResolve implements Resolve<IRite> {
@@ -37,7 +36,7 @@ export const riteRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.rite.home.title'
     },
@@ -50,7 +49,7 @@ export const riteRoute: Routes = [
       rite: RiteResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.rite.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const riteRoute: Routes = [
       rite: RiteResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.rite.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const riteRoute: Routes = [
       rite: RiteResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.rite.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const ritePopupRoute: Routes = [
       rite: RiteResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.rite.home.title'
     },
     canActivate: [UserRouteAccessService],

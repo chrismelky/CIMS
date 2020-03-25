@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { MemberService } from 'app/entities/member/member.service';
-import { IMember, Member } from 'app/shared/model/member.model';
+import { IMember } from 'app/shared/model/member.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -9,10 +9,10 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./user-member.component.scss']
 })
 export class UserMemberComponent implements OnInit {
-  member: Member;
+  member: IMember;
 
   @Input() existingMember: IMember;
-  @Output() onMemberChange = new BehaviorSubject<Member>(null);
+  @Output() onMemberChange = new BehaviorSubject<IMember>(null);
 
   constructor(private memberService: MemberService) {}
 
@@ -24,11 +24,11 @@ export class UserMemberComponent implements OnInit {
     });
   }
 
-  selectMember() {
+  setSelected() {
     this.onMemberChange.next(this.member);
   }
 
-  resetMember() {
+  resetSelected() {
     this.onMemberChange.next(null);
   }
 }

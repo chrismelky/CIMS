@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { MemberPromise } from 'app/shared/model/member-promise.model';
+import { IMemberPromise, MemberPromise } from 'app/shared/model/member-promise.model';
 import { MemberPromiseService } from './member-promise.service';
 import { MemberPromiseComponent } from './member-promise.component';
 import { MemberPromiseDetailComponent } from './member-promise-detail.component';
 import { MemberPromiseUpdateComponent } from './member-promise-update.component';
 import { MemberPromiseDeletePopupComponent } from './member-promise-delete-dialog.component';
-import { IMemberPromise } from 'app/shared/model/member-promise.model';
 
 @Injectable({ providedIn: 'root' })
 export class MemberPromiseResolve implements Resolve<IMemberPromise> {
@@ -37,7 +36,7 @@ export const memberPromiseRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.memberPromise.home.title'
     },
@@ -50,7 +49,7 @@ export const memberPromiseRoute: Routes = [
       memberPromise: MemberPromiseResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberPromise.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const memberPromiseRoute: Routes = [
       memberPromise: MemberPromiseResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberPromise.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const memberPromiseRoute: Routes = [
       memberPromise: MemberPromiseResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberPromise.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const memberPromisePopupRoute: Routes = [
       memberPromise: MemberPromiseResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberPromise.home.title'
     },
     canActivate: [UserRouteAccessService],

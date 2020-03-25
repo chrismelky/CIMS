@@ -51,7 +51,7 @@ export const memberRelativeRoute: Routes = [
       memberRelative: MemberRelativeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRelative.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -64,7 +64,7 @@ export const memberRelativeRoute: Routes = [
       member: MemberRelativeMemberResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRelative.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -77,7 +77,7 @@ export const memberRelativeRoute: Routes = [
       member: MemberRelativeMemberResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRelative.home.title'
     },
     canActivate: [UserRouteAccessService]

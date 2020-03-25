@@ -1,17 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { JhiAlertService } from 'ng-jhipster';
 import { IPeriodContributionItem, PeriodContributionItem } from 'app/shared/model/period-contribution-item.model';
 import { PeriodContributionItemService } from './period-contribution-item.service';
-import { IPeriodContribution } from 'app/shared/model/period-contribution.model';
-import { PeriodContributionService } from 'app/entities/period-contribution/period-contribution.service';
 
 @Component({
   selector: 'church-period-contribution-item-update',

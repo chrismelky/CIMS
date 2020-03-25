@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { PeriodType } from 'app/shared/model/period-type.model';
+import { IPeriodType, PeriodType } from 'app/shared/model/period-type.model';
 import { PeriodTypeService } from './period-type.service';
 import { PeriodTypeComponent } from './period-type.component';
 import { PeriodTypeDetailComponent } from './period-type-detail.component';
 import { PeriodTypeUpdateComponent } from './period-type-update.component';
 import { PeriodTypeDeletePopupComponent } from './period-type-delete-dialog.component';
-import { IPeriodType } from 'app/shared/model/period-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class PeriodTypeResolve implements Resolve<IPeriodType> {
@@ -37,7 +36,7 @@ export const periodTypeRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.periodType.home.title'
     },
@@ -50,7 +49,7 @@ export const periodTypeRoute: Routes = [
       periodType: PeriodTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.periodType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const periodTypeRoute: Routes = [
       periodType: PeriodTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.periodType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const periodTypeRoute: Routes = [
       periodType: PeriodTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.periodType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const periodTypePopupRoute: Routes = [
       periodType: PeriodTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.periodType.home.title'
     },
     canActivate: [UserRouteAccessService],

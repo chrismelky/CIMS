@@ -51,7 +51,7 @@ export const chuchServiceRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.chuchService.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -64,7 +64,7 @@ export const chuchServiceRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.chuchService.home.title'
     },
     canActivate: [UserRouteAccessService]

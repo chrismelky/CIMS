@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ContributionType } from 'app/shared/model/contribution-type.model';
+import { ContributionType, IContributionType } from 'app/shared/model/contribution-type.model';
 import { ContributionTypeService } from './contribution-type.service';
 import { ContributionTypeComponent } from './contribution-type.component';
 import { ContributionTypeDetailComponent } from './contribution-type-detail.component';
 import { ContributionTypeUpdateComponent } from './contribution-type-update.component';
 import { ContributionTypeDeletePopupComponent } from './contribution-type-delete-dialog.component';
-import { IContributionType } from 'app/shared/model/contribution-type.model';
 
 @Injectable({ providedIn: 'root' })
 export class ContributionTypeResolve implements Resolve<IContributionType> {
@@ -37,7 +36,7 @@ export const contributionTypeRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.contributionType.home.title'
     },
@@ -50,7 +49,7 @@ export const contributionTypeRoute: Routes = [
       contributionType: ContributionTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.contributionType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const contributionTypeRoute: Routes = [
       contributionType: ContributionTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.contributionType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const contributionTypeRoute: Routes = [
       contributionType: ContributionTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.contributionType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const contributionTypePopupRoute: Routes = [
       contributionType: ContributionTypeResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN'],
       pageTitle: 'churchApp.contributionType.home.title'
     },
     canActivate: [UserRouteAccessService],

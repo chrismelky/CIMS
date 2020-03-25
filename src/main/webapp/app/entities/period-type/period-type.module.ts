@@ -5,8 +5,8 @@ import { ChurchSharedModule } from 'app/shared/shared.module';
 import { PeriodTypeComponent } from './period-type.component';
 import { PeriodTypeDetailComponent } from './period-type-detail.component';
 import { PeriodTypeUpdateComponent } from './period-type-update.component';
-import { PeriodTypeDeletePopupComponent, PeriodTypeDeleteDialogComponent } from './period-type-delete-dialog.component';
-import { periodTypeRoute, periodTypePopupRoute } from './period-type.route';
+import { PeriodTypeDeleteDialogComponent, PeriodTypeDeletePopupComponent } from './period-type-delete-dialog.component';
+import { periodTypePopupRoute, periodTypeRoute } from './period-type.route';
 
 const ENTITY_STATES = [...periodTypeRoute, ...periodTypePopupRoute];
 

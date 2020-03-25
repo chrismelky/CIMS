@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
-import { JhiResolvePagingParams } from 'ng-jhipster';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { MemberRite } from 'app/shared/model/member-rite.model';
+import { IMemberRite, MemberRite } from 'app/shared/model/member-rite.model';
 import { MemberRiteService } from './member-rite.service';
-import { MemberRiteComponent } from './member-rite.component';
 import { MemberRiteDetailComponent } from './member-rite-detail.component';
 import { MemberRiteUpdateComponent } from './member-rite-update.component';
-import { MemberRiteDeletePopupComponent } from './member-rite-delete-dialog.component';
-import { IMemberRite } from 'app/shared/model/member-rite.model';
 import { IMember, Member } from 'app/shared/model/member.model';
 import { MemberService } from 'app/entities/member/member.service';
 
@@ -55,7 +51,7 @@ export const memberRiteRoute: Routes = [
       memberRite: MemberRiteResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRite.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -68,7 +64,7 @@ export const memberRiteRoute: Routes = [
       member: MemberRelativeMemberResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRite.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -81,7 +77,7 @@ export const memberRiteRoute: Routes = [
       member: MemberRelativeMemberResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.memberRite.home.title'
     },
     canActivate: [UserRouteAccessService]

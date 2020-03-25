@@ -7,7 +7,6 @@ import { filter, map } from 'rxjs/operators';
 import { IPeriodContributionType, PeriodContributionType } from 'app/shared/model/period-contribution-type.model';
 import { PeriodContributionTypeService } from './period-contribution-type.service';
 import { PeriodContributionTypeUpdateComponent } from './period-contribution-type-update.component';
-import { PeriodContributionTypeDeletePopupComponent } from './period-contribution-type-delete-dialog.component';
 import { ChurchResolve } from 'app/entities/chuch-service/chuch-service.route';
 
 @Injectable({ providedIn: 'root' })
@@ -35,7 +34,7 @@ export const periodContributionTypeRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -48,7 +47,7 @@ export const periodContributionTypeRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionType.home.title'
     },
     canActivate: [UserRouteAccessService]

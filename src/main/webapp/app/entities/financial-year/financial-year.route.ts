@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, Routes, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, Router, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
-import { Observable, of, EMPTY } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IFinancialYear, FinancialYear } from 'app/shared/model/financial-year.model';
+import { FinancialYear, IFinancialYear } from 'app/shared/model/financial-year.model';
 import { FinancialYearService } from './financial-year.service';
 import { FinancialYearComponent } from './financial-year.component';
 import { FinancialYearDetailComponent } from './financial-year-detail.component';
@@ -43,7 +43,7 @@ export const financialYearRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.financialYear.home.title'
     },
@@ -56,7 +56,7 @@ export const financialYearRoute: Routes = [
       financialYear: FinancialYearResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'churchApp.financialYear.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -68,7 +68,7 @@ export const financialYearRoute: Routes = [
       financialYear: FinancialYearResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'churchApp.financialYear.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -80,7 +80,7 @@ export const financialYearRoute: Routes = [
       financialYear: FinancialYearResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN],
       pageTitle: 'churchApp.financialYear.home.title'
     },
     canActivate: [UserRouteAccessService]

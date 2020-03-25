@@ -5,8 +5,8 @@ import { ChurchSharedModule } from 'app/shared/shared.module';
 import { PaymentMethodComponent } from './payment-method.component';
 import { PaymentMethodDetailComponent } from './payment-method-detail.component';
 import { PaymentMethodUpdateComponent } from './payment-method-update.component';
-import { PaymentMethodDeletePopupComponent, PaymentMethodDeleteDialogComponent } from './payment-method-delete-dialog.component';
-import { paymentMethodRoute, paymentMethodPopupRoute } from './payment-method.route';
+import { PaymentMethodDeleteDialogComponent, PaymentMethodDeletePopupComponent } from './payment-method-delete-dialog.component';
+import { paymentMethodPopupRoute, paymentMethodRoute } from './payment-method.route';
 
 const ENTITY_STATES = [...paymentMethodRoute, ...paymentMethodPopupRoute];
 

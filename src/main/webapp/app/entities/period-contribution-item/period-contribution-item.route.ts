@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes } from '@angular/router';
 import { JhiResolvePagingParams } from 'ng-jhipster';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { PeriodContributionItem } from 'app/shared/model/period-contribution-item.model';
+import { IPeriodContributionItem, PeriodContributionItem } from 'app/shared/model/period-contribution-item.model';
 import { PeriodContributionItemService } from './period-contribution-item.service';
 import { PeriodContributionItemComponent } from './period-contribution-item.component';
 import { PeriodContributionItemDetailComponent } from './period-contribution-item-detail.component';
 import { PeriodContributionItemUpdateComponent } from './period-contribution-item-update.component';
 import { PeriodContributionItemDeletePopupComponent } from './period-contribution-item-delete-dialog.component';
-import { IPeriodContributionItem } from 'app/shared/model/period-contribution-item.model';
 
 @Injectable({ providedIn: 'root' })
 export class PeriodContributionItemResolve implements Resolve<IPeriodContributionItem> {
@@ -37,7 +36,7 @@ export const periodContributionItemRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.periodContributionItem.home.title'
     },
@@ -50,7 +49,7 @@ export const periodContributionItemRoute: Routes = [
       periodContributionItem: PeriodContributionItemResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionItem.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -62,7 +61,7 @@ export const periodContributionItemRoute: Routes = [
       periodContributionItem: PeriodContributionItemResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionItem.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -74,7 +73,7 @@ export const periodContributionItemRoute: Routes = [
       periodContributionItem: PeriodContributionItemResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionItem.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -89,7 +88,7 @@ export const periodContributionItemPopupRoute: Routes = [
       periodContributionItem: PeriodContributionItemResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.periodContributionItem.home.title'
     },
     canActivate: [UserRouteAccessService],

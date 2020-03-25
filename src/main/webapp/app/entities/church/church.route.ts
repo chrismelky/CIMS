@@ -53,7 +53,7 @@ export const churchRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       defaultSort: 'id,asc',
       pageTitle: 'churchApp.church.home.title'
     },
@@ -66,7 +66,7 @@ export const churchRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.church.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -78,7 +78,7 @@ export const churchRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.church.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -90,7 +90,7 @@ export const churchRoute: Routes = [
       church: ChurchResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.church.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -103,7 +103,7 @@ export const churchRoute: Routes = [
       user: UserManagementResolve
     },
     data: {
-      authorities: ['ROLE_ADMIN'],
+      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'churchApp.church.home.title'
     },
     canActivate: [UserRouteAccessService]

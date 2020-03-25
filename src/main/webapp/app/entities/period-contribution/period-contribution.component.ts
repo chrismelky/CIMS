@@ -2,8 +2,6 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line
-// @typescript-eslint/no-unused-vars
 import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
 
 import { IPeriodContribution } from 'app/shared/model/period-contribution.model';
@@ -46,6 +44,8 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   fys: IFinancialYear[] = [];
   fy;
 
+  maxdate = {};
+
   constructor(
     protected periodContributionService: PeriodContributionService,
     protected parseLinks: JhiParseLinks,
@@ -57,6 +57,8 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     private fyService: FinancialYearService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
+    const today = new Date();
+    this.maxdate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
   }
 
   loadAll() {
@@ -76,7 +78,6 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
-      //  this.transition();
     }
   }
 
@@ -205,5 +206,9 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     this.periodContributions = [];
 
     this.loadPeriods();
+  }
+
+  onDateSelect($event) {
+    console.error($event);
   }
 }

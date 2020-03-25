@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { ChurchSharedModule } from 'app/shared/shared.module';
 import { ChurchCommunityDetailComponent } from './church-community-detail.component';
 import { ChurchCommunityUpdateComponent } from './church-community-update.component';
-import { ChurchCommunityDeletePopupComponent, ChurchCommunityDeleteDialogComponent } from './church-community-delete-dialog.component';
-import { churchCommunityRoute, churchCommunityPopupRoute } from './church-community.route';
+import { ChurchCommunityDeleteDialogComponent, ChurchCommunityDeletePopupComponent } from './church-community-delete-dialog.component';
+import { churchCommunityPopupRoute, churchCommunityRoute } from './church-community.route';
 
 const ENTITY_STATES = [...churchCommunityRoute, ...churchCommunityPopupRoute];
 
