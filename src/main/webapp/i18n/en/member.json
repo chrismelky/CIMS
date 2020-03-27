@@ -19,6 +19,7 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "middleName": "Middle Name",
+      "churchRn": "Registration Number",
       "gender": "Gender",
       "phoneNumber": "Phone Number",
       "email": "Email",

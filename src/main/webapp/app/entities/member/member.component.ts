@@ -30,6 +30,7 @@ export class MemberComponent implements OnInit, OnDestroy {
   previousPage: any;
   reverse: any;
   churchId: number;
+  searchText: string;
 
   constructor(
     protected memberService: MemberService,
@@ -49,15 +50,29 @@ export class MemberComponent implements OnInit, OnDestroy {
   }
 
   loadAll() {
+    const search = this.searchText ? { 'firstName.contains': this.searchText } : {};
     const churchFilter = this.churchId === undefined ? {} : { 'churchId.equals': this.churchId };
     this.memberService
       .query({
         ...churchFilter,
+        ...search,
         page: this.page - 1,
         size: this.itemsPerPage,
         sort: this.sort()
       })
       .subscribe((res: HttpResponse<IMember[]>) => this.paginateMembers(res.body, res.headers));
+  }
+
+  search(s) {
+    this.searchText = s;
+    this.loadAll();
+  }
+
+  clearSearch(inp) {
+    if (inp === '') {
+      this.searchText = undefined;
+      this.loadAll();
+    }
   }
 
   loadPage(page: number) {

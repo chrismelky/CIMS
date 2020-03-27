@@ -40,6 +40,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
   editForm = this.fb.group({
     id: [],
     memberRn: [{ value: null, disabled: true }],
+    churchRn: [{ value: null }],
     firstName: [null, [Validators.required, Validators.maxLength(100)]],
     lastName: [null, [Validators.required, Validators.maxLength(100)]],
     middleName: [null, [Validators.maxLength(100)]],
@@ -147,6 +148,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     this.editForm.patchValue({
       id: member.id,
       memberRn: member.memberRn,
+      churchRn: member.churchRn,
       firstName: member.firstName,
       lastName: member.lastName,
       middleName: member.middleName,
@@ -187,6 +189,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
       ...new Member(),
       id: this.editForm.get(['id']).value,
       memberRn: this.editForm.get(['memberRn']).value,
+      churchRn: this.editForm.get(['churchRn']).value,
       firstName: this.editForm.get(['firstName']).value,
       lastName: this.editForm.get(['lastName']).value,
       middleName: this.editForm.get(['middleName']).value,

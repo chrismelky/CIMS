@@ -33,6 +33,10 @@ public class Member implements Serializable {
     @Column(name = "member_rn")
     private String memberRn;
 
+    @Column(name = "church_rn")
+    @Size(max = 20)
+    private String churchRn;
+
     @NotNull
     @Size(max = 100)
     @Column(name = "first_name", length = 100, nullable = false)
@@ -416,6 +420,14 @@ public class Member implements Serializable {
         this.memberRites.remove(memberRite);
         memberRite.setMember(null);
         return this;
+    }
+
+    public String getChurchRn() {
+        return churchRn;
+    }
+
+    public void setChurchRn(String churchRn) {
+        this.churchRn = churchRn;
     }
 
     public void setMemberRites(Set<MemberRite> memberRites) {

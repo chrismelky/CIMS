@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { JhiAlertService } from 'ng-jhipster';
 import { IPeriodContributionItem, PeriodContributionItem } from 'app/shared/model/period-contribution-item.model';
 import { PeriodContributionItemService } from './period-contribution-item.service';
+import { SessionStorageService } from 'ngx-webstorage';
+import * as moment from 'moment';
 
 @Component({
   selector: 'church-period-contribution-item-update',
@@ -21,7 +23,7 @@ export class PeriodContributionItemUpdateComponent implements OnInit {
     id: [],
     amount: [null, [Validators.required]],
     description: [],
-    dateReceived: [null, [Validators.required]],
+    dateReceived: ['2020-03-20', [Validators.required]],
     receivedBy: [null, [Validators.required]],
     periodContribution: [null, Validators.required]
   });
@@ -30,7 +32,8 @@ export class PeriodContributionItemUpdateComponent implements OnInit {
     protected jhiAlertService: JhiAlertService,
     protected periodContributionItemService: PeriodContributionItemService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected sessionStorage: SessionStorageService
   ) {}
 
   ngOnInit() {
@@ -38,13 +41,23 @@ export class PeriodContributionItemUpdateComponent implements OnInit {
     this.contributionId = this.activatedRoute.snapshot.params['periodContributionId'];
     this.activatedRoute.data.subscribe(({ periodContributionItem }) => {
       this.updateForm(periodContributionItem);
-      this.editForm.patchValue({
-        periodContribution: { id: this.contributionId }
-      });
+      const date = this.sessionStorage.retrieve('piDate');
+      if (date) {
+        this.editForm.patchValue({
+          dateReceived: moment(new Date(date))
+        });
+      }
+      if (!periodContributionItem.id) {
+        console.error(this.contributionId);
+        this.editForm.patchValue({
+          periodContribution: { id: this.contributionId }
+        });
+      }
     });
   }
 
   updateForm(periodContributionItem: IPeriodContributionItem) {
+    console.error(periodContributionItem);
     this.editForm.patchValue({
       id: periodContributionItem.id,
       amount: periodContributionItem.amount,

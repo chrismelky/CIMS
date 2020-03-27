@@ -80,7 +80,7 @@
                     <fa-icon icon="church" fixedWidth="true"></fa-icon>
                     <span class="menu-item">{{user.church.name}} Church</span>
                 </a>
-            </li>
+            </li> 
             <li *ngIf="user?.church">
                 <a [routerLink]="['/member', 'byChurch',user.church.id]"
                    routerLinkActive="active"

@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     data: {
-      authorities: ['ROLE_ADMIN', 'ROLE_USER'],
+      authorities: ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_CHURCH_ADMIN'],
       pageTitle: 'home.title'
     },
     canActivate: [UserRouteAccessService]

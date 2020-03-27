@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity Member.
     -->
@@ -67,6 +67,14 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20191103090731-4" author="chris">
+        <addColumn tableName="member">
+            <column name="church_rn" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+
     <changeSet id="00000000000002" author="chris">
         <addColumn tableName="church_user">
             <column name="member_id" type="bigint">
@@ -92,7 +100,7 @@
         </createTable>
 
         <addPrimaryKey columnNames="member_id, church_communities_id" tableName="member_church_communities"/>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 

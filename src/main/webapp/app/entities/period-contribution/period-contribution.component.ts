@@ -57,8 +57,6 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     private fyService: FinancialYearService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
-    const today = new Date();
-    this.maxdate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
   }
 
   loadAll() {
@@ -206,9 +204,5 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     this.periodContributions = [];
 
     this.loadPeriods();
-  }
-
-  onDateSelect($event) {
-    console.error($event);
   }
 }

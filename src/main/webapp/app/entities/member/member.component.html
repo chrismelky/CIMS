@@ -16,6 +16,13 @@
     <div class="alert alert-warning" *ngIf="members?.length === 0">
         <span jhiTranslate="churchApp.member.home.notFound">No members found</span>
     </div>
+    <div class="input-group">
+        <input class="form-control" #si (input)="clearSearch(si.value)"  name="search" placeholder="Search by First Name.." />
+        <div class="input-group-append">
+            <button class="btn btn-primary" (click)="search(si.value)" type="button">Search</button>
+          </div>
+    </div>
+    <br/>
     <div class="table-responsive" *ngIf="members?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
@@ -26,7 +33,7 @@
             <th scope="col"  jhiSortBy="middleName"><span jhiTranslate="churchApp.member.middleName">Middle Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="gender"><span jhiTranslate="churchApp.member.gender">Gender</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="phoneNumber"><span jhiTranslate="churchApp.member.phoneNumber">Phone Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th scope="col"  jhiSortBy="maritalStatus"><span jhiTranslate="churchApp.member.maritalStatus">Marital Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th scope="col"  jhiSortBy="maritalStatus"><span jhiTranslate="churchApp.member.churchRn">Registration Number</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="isActive"><span jhiTranslate="churchApp.member.isActive">Is Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
             </tr>
@@ -39,7 +46,7 @@
                 <td>{{member.middleName}}</td>
                 <td jhiTranslate="{{'churchApp.Gender.' + member.gender}}">{{member.gender}}</td>
                 <td>{{member.phoneNumber}}</td>
-                <td jhiTranslate="{{'churchApp.MaritalStatus.' + member.maritalStatus}}">{{member.maritalStatus}}</td>
+                <td >{{member.churchRn}}</td>
                 <td>{{member.isActive}}</td>
                 <td class="text-right">
                     <div class="btn-group">

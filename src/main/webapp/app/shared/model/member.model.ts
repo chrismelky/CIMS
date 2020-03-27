@@ -13,6 +13,7 @@ export interface IMember {
   lastName?: string;
   middleName?: string;
   memberRn?: string;
+  churchRn?: string;
   gender?: Gender;
   phoneNumber?: string;
   email?: string;
@@ -35,6 +36,7 @@ export class Member implements IMember {
   constructor(
     public id?: number,
     public memberRn?: string,
+    public churchRn?: string,
     public firstName?: string,
     public lastName?: string,
     public middleName?: string,

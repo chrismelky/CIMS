@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
 
   getContributionTypes() {
     this.contributionTypes = [];
-    if (this.church === undefined) {
+    if (this.church === null) {
       return;
     }
     this.contributionTypeService
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
 
   getPeriods() {
     this.periods = [];
-    if (this.contributionType === undefined || this.fy === undefined) {
+    if (this.contributionType === null || this.fy === null) {
       return;
     }
     this.periodService

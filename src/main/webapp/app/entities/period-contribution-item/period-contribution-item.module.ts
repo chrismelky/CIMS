@@ -9,11 +9,12 @@ import {
   PeriodContributionItemDeletePopupComponent
 } from './period-contribution-item-delete-dialog.component';
 import { periodContributionItemPopupRoute, periodContributionItemRoute } from './period-contribution-item.route';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ENTITY_STATES = [...periodContributionItemRoute, ...periodContributionItemPopupRoute];
 
 @NgModule({
-  imports: [ChurchSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [ChurchSharedModule, NgbDatepickerModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     PeriodContributionItemDetailComponent,
     PeriodContributionItemUpdateComponent,

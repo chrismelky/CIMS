@@ -1,64 +1,79 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="churchApp.periodContributionItem.home.title">Add Payment</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-period-contribution-item"
-                [routerLink]="['/period-contribution-item/byContribution', periodContributionId, 'new' ]">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="churchApp.periodContributionItem.home.createLabel">
-            Create a new Period Contribution Item
-            </span>
-        </button>
-    </h2>
-    <br/>
-    <div class="alert alert-warning" *ngIf="periodContributionItems?.length === 0">
-        <span jhiTranslate="churchApp.periodContributionItem.home.notFound">No periodContributionItems found</span>
+<div class="row">
+    <div class="col-md-2" style="padding: 8px">
+        <ul class="list-group list-group-horizontal-sm datep">
+            <button type="button" [ngClass]="{'active': !byDate}" (click)="setPicker(false)" class="list-group-item list-group-item-action">All Dates</button>
+            <button type="button" [ngClass]="{'active': byDate}" (click)="setPicker(true)" class="list-group-item list-group-item-action">Selected</button>
+        </ul>
+        <br/>
+        <ngb-datepicker *ngIf="showDatePicker" 
+                        [maxDate]="maxdate"
+                        [markDisabled]="isDisabled"
+                        (select)="onDateSelect($event)"></ngb-datepicker>
     </div>
-    <div class="table-responsive" *ngIf="periodContributionItems?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="amount"><span jhiTranslate="churchApp.periodContributionItem.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="description"><span jhiTranslate="churchApp.periodContributionItem.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="dateReceived"><span jhiTranslate="churchApp.periodContributionItem.dateReceived">Date Received</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="receivedBy"><span jhiTranslate="churchApp.periodContributionItem.receivedBy">Received By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let periodContributionItem of periodContributionItems ;trackBy: trackId">
-                <td><a [routerLink]="['/period-contribution-item', periodContributionItem.id, 'view' ]">{{periodContributionItem.id}}</a></td>
-                <td>{{periodContributionItem.amount}}</td>
-                <td>{{periodContributionItem.description}}</td>
-                <td>{{periodContributionItem.dateReceived | date:'mediumDate'}}</td>
-                <td>{{periodContributionItem.receivedBy}}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/period-contribution-item', periodContributionItem.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                (click)="openDeleteDialog(confirmDelete, periodContributionItem.id)"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div [hidden]="periodContributionItems?.length === 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
+    <div class="col-md-10 card" style="padding: 16px;">
+            <h2 id="page-heading">
+                <span jhiTranslate="churchApp.periodContributionItem.home.title">Payments</span>
+                <strong *ngIf="!byDate">[ All Dates ]</strong>
+                <strong *ngIf="byDate">[ {{selectedDate | date:'mediumDate'}} ]</strong>
+                <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-period-contribution-item"
+                        [routerLink]="['/period-contribution-item/byContribution', periodContributionId, 'new' ]">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span  jhiTranslate="churchApp.periodContributionItem.home.createLabel">
+                    Create a new Period Contribution Item
+                    </span>
+                </button>
+            </h2>
+            <br/>
+            <div class="alert alert-warning" *ngIf="periodContributionItems?.length === 0">
+                <span jhiTranslate="churchApp.periodContributionItem.home.notFound">No periodContributionItems found</span>
+            </div>
+            <div class="table-responsive" *ngIf="periodContributionItems?.length > 0">
+                <table class="table table-striped" aria-describedby="page-heading">
+                    <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="amount"><span jhiTranslate="churchApp.periodContributionItem.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="churchApp.periodContributionItem.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateReceived"><span jhiTranslate="churchApp.periodContributionItem.dateReceived">Date Received</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="receivedBy"><span jhiTranslate="churchApp.periodContributionItem.receivedBy">Received By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let periodContributionItem of periodContributionItems ;trackBy: trackId">
+                        <td><a [routerLink]="['/period-contribution-item', periodContributionItem.id, 'view' ]">{{periodContributionItem.id}}</a></td>
+                        <td>{{periodContributionItem.amount}}</td>
+                        <td>{{periodContributionItem.description}}</td>
+                        <td>{{periodContributionItem.dateReceived | date:'mediumDate'}}</td>
+                        <td>{{periodContributionItem.receivedBy}}</td>
+                        <td class="text-right">
+                            <div class="btn-group">
+                                <button type="submit"
+                                        [routerLink]="['/period-contribution-item', periodContributionItem.id, 'edit']"
+                                        class="btn btn-primary btn-sm">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                </button>
+                                <button type="submit"
+                                        (click)="openDeleteDialog(confirmDelete, periodContributionItem.id)"
+                                        class="btn btn-danger btn-sm">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div [hidden]="periodContributionItems?.length === 0">
+                <div class="row justify-content-center">
+                    <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                </div>
+                <div class="row justify-content-center">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+                </div>
+            </div>
     </div>
 </div>
 <ng-template #confirmDelete let-modal>

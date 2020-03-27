@@ -9,7 +9,8 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PeriodContributionItemService } from './period-contribution-item.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbDateStruct, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'church-period-contribution-item',
@@ -32,6 +33,10 @@ export class PeriodContributionItemComponent implements OnInit, OnDestroy {
   previousPage: any;
   reverse: any;
   @Output() itemChange: EventEmitter<boolean> = new EventEmitter();
+  maxdate = {};
+  byDate: boolean;
+  selectedDate;
+  showDatePicker = true;
 
   constructor(
     protected periodContributionItemService: PeriodContributionItemService,
@@ -40,15 +45,24 @@ export class PeriodContributionItemComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected deleteModal: NgbModal
+    protected deleteModal: NgbModal,
+    protected sessionStorage: SessionStorageService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
+    const today = new Date();
+    this.maxdate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    this.selectedDate = sessionStorage.retrieve('piDate');
+    this.byDate = sessionStorage.retrieve('piByDate');
   }
 
+  isDisabled = (date: NgbDate, current: { month: number }) => !this.byDate;
+
   loadAll() {
+    const dateFilter = this.selectedDate ? { 'dateReceived.equals': this.selectedDate } : {};
     this.periodContributionItemService
       .query({
-        'periodContributionId.equals': this.periodContributionId
+        'periodContributionId.equals': this.periodContributionId,
+        ...dateFilter
       })
       .subscribe((res: HttpResponse<IPeriodContributionItem[]>) => this.paginatePeriodContributionItems(res.body, res.headers));
   }
@@ -108,6 +122,29 @@ export class PeriodContributionItemComponent implements OnInit, OnDestroy {
       result.push('id');
     }
     return result;
+  }
+
+  onDateSelect(date: NgbDateStruct) {
+    const m = date.month < 10 ? '0' + date.month : date.month;
+    const d = date.day < 10 ? '0' + date.day : date.day;
+    this.selectedDate = date.year + '-' + m + '-' + d;
+    this.loadAll();
+    this.sessionStorage.store('piDate', this.selectedDate);
+  }
+
+  setPicker(byDate: boolean) {
+    this.byDate = byDate;
+    this.sessionStorage.store('piByDate', byDate);
+    this.isDisabled = (date: NgbDate, current: { month: number }) => !this.byDate;
+    if (!byDate) {
+      this.selectedDate = undefined;
+      this.loadAll();
+      this.showDatePicker = false;
+      this.sessionStorage.clear('piDate');
+      setTimeout(() => {
+        this.showDatePicker = true;
+      }, 100);
+    }
   }
 
   protected paginatePeriodContributionItems(data: IPeriodContributionItem[], headers: HttpHeaders) {

@@ -5,7 +5,6 @@ import { JhiLanguageHelper } from 'app/core/language/language.helper';
 import { AccountService } from 'app/core/auth/account.service';
 import { VERSION } from 'app/app.constants';
 import { LocalStorageService } from 'ngx-webstorage';
-import { User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'church-main',
@@ -13,7 +12,7 @@ import { User } from 'app/core/user/user.model';
 })
 export class ChurchMainComponent implements OnInit {
   version: string;
-  user: User;
+  user = this.$localStorage.retrieve('user');
 
   constructor(
     private jhiLanguageHelper: JhiLanguageHelper,
@@ -22,7 +21,6 @@ export class ChurchMainComponent implements OnInit {
     private $localStorage: LocalStorageService
   ) {
     this.version = VERSION ? (VERSION.toLowerCase().startsWith('v') ? VERSION : 'v' + VERSION) : '';
-    this.user = this.$localStorage.retrieve('user');
   }
 
   private getPageTitle(routeSnapshot: ActivatedRouteSnapshot) {
