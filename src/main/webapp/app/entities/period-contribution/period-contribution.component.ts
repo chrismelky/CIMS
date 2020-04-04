@@ -13,6 +13,7 @@ import { PeriodService } from 'app/entities/period/period.service';
 import { IPeriod, Period } from 'app/shared/model/period.model';
 import { IFinancialYear } from 'app/shared/model/financial-year.model';
 import { FinancialYearService } from 'app/entities/financial-year/financial-year.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'church-period-contribution',
@@ -54,7 +55,8 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected periodService: PeriodService,
-    private fyService: FinancialYearService
+    private fyService: FinancialYearService,
+    protected deleteModal: NgbModal
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
   }
@@ -204,5 +206,16 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
     this.periodContributions = [];
 
     this.loadPeriods();
+  }
+
+  openDeleteDialog(content, id: number) {
+    this.deleteModal.open(content, { backdrop: false }).result.then(
+      r => {
+        this.periodContributionService.delete(id).subscribe(resp => {
+          this.loadAll();
+        });
+      },
+      d => {}
+    );
   }
 }

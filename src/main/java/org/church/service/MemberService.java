@@ -44,6 +44,30 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public Integer countByChurchFirstAndLastNames(Long churchId, String firstName, String lastName) {
+        return memberRepository.countByChurch_IdAndFirstNameAndLastNameAndMiddleNameIsNull(churchId, firstName, lastName);
+    }
+
+    public Integer countByChurchFirstAndLastNamesIdNot(Long churchId, String firstName, String lastName, Long id) {
+        return memberRepository.countByChurch_IdAndFirstNameAndLastNameAndIdNotAndMiddleNameIsNull(churchId, firstName, lastName, id);
+    }
+
+    public Integer countByChurchFirstNameMiddleNameLastName(Long churchId, String firstName, String middleName, String lastName) {
+        return memberRepository.countByChurch_IdAndFirstNameAndMiddleNameAndLastName(churchId,firstName,middleName,lastName);
+    }
+    public Integer countByChurchFirstNameMiddleNameLastNameIdNot(Long churchId, String firstName, String middleName, String lastName, Long id) {
+        return memberRepository.countByChurch_IdAndFirstNameAndMiddleNameAndLastNameAndIdNot(
+            churchId,firstName,middleName,lastName,id);
+    }
+
+    public Member findByChurchRegistrationNumber(Long churchId, String regNumber, Long id) {
+        if (id == null) {
+            return memberRepository.findFirstByChurch_IdAndChurchRn(churchId, regNumber);
+        } else {
+            return memberRepository.findFirstByChurch_IdAndChurchRnAndIdNot(churchId, regNumber, id);
+        }
+    }
+
     /**
      * Get all the members.
      *
@@ -64,7 +88,7 @@ public class MemberService {
     public Page<Member> findAllWithEagerRelationships(Pageable pageable) {
         return memberRepository.findAllWithEagerRelationships(pageable);
     }
-    
+
 
     /**
      * Get one member by id.

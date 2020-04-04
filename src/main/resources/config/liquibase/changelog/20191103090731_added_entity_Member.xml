@@ -75,6 +75,11 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="20191103090731-6" author="chris">
+        <addUniqueConstraint tableName="member"
+                             columnNames="church_id,first_name,middle_name,last_name"/>
+    </changeSet>
+
     <changeSet id="00000000000002" author="chris">
         <addColumn tableName="church_user">
             <column name="member_id" type="bigint">

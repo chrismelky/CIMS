@@ -4,10 +4,7 @@ import org.church.domain.ContributionDashboard;
 import org.church.domain.MemberContributionDashboard;
 import org.church.repository.DashboardRepository;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +29,10 @@ public class DashboardResource {
     public List<MemberContributionDashboard> getMemberContr(@PathVariable Long churchId,
                                                             @PathVariable Long periodId,
                                                             @PathVariable Long typeId,
+                                                            @RequestParam(defaultValue = "false") Boolean overDue,
                                                             Pageable pageable) {
         int pageNumber = pageable.getPageNumber() + 1;
         return dashboardRepository.getMemberContr(churchId,
-            periodId,typeId, pageNumber, pageable.getPageSize());
+            periodId,typeId, pageNumber, pageable.getPageSize(), overDue);
     }
 }

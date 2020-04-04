@@ -150,6 +150,9 @@
     "userexists": "Login name already used!",
     "emailexists": "Email is already in use!",
     "idexists": "A new {{ entityName }} cannot already have an ID",
+    "churchrnexist": "Nambari ya uadnikishaji (Registration Number) inatumika na {{ entityName }} badilisha ua chagua nyingine",
+    "firstlastexists": "Member mwenye Jina la kwanza na la mwisho uliyoweka tayari yupo jaribu kuongeza jina la katikati kuwatofautisha",
+    "firstmiddlelastexists": "Member mwenye Jina la kwanza, la katikati na la mwisho uliyoweka tayari yupo",
     "idnull": "Invalid ID"
   },
   "footer": "This is your footer"

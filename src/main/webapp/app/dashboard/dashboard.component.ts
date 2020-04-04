@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
   periods: IPeriod[] = [];
   fys: IFinancialYear[] = [];
   fy;
+  overDue = false;
 
   constructor(
     private service: DashboardService,
@@ -136,7 +137,8 @@ export class DashboardComponent implements OnInit {
     }
     const params = {
       size: this.itemsPerPage,
-      page: this.page - 1
+      page: this.page - 1,
+      overDue: this.overDue
     };
     this.service.getMemberContribution(this.church.id, this.period.id, this.contributionType.id, params).subscribe(resp => {
       this.memberContr = resp.body;

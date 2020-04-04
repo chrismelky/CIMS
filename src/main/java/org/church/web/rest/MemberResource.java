@@ -63,6 +63,34 @@ public class MemberResource {
         if (member.getId() != null) {
             throw new BadRequestAlertException("A new member cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (member.getMiddleName() == null || member.getMiddleName().isEmpty()) {
+            if (memberService.countByChurchFirstAndLastNames(
+                member.getChurch().getId(),
+                member.getFirstName(),
+                member.getLastName()) > 0) {
+                throw new BadRequestAlertException("Member already exist", ENTITY_NAME, "firstlastexists");
+            }
+        } else {
+            if (memberService.countByChurchFirstNameMiddleNameLastName(
+                member.getChurch().getId(),
+                member.getFirstName(),
+                member.getMiddleName(),
+                member.getLastName()
+            ) > 0) {
+                throw new BadRequestAlertException("Member already exist", ENTITY_NAME, "firstmiddlelastexists");
+            }
+        }
+        if (member.getChurchRn() != null) {
+            Member byNumber = memberService.findByChurchRegistrationNumber(
+                member.getChurch().getId(),
+                member.getChurchRn(),
+                null);
+            if (byNumber != null) {
+                throw new BadRequestAlertException("Member rn already exist",
+                    byNumber.getFirstName()+' '+ byNumber.getLastName(),
+                    "churchrnexist");
+            }
+        }
         member.setMemberRn(memberService.getMemberRn(member.getChurch()));
         Member result = memberService.save(member);
         return ResponseEntity.created(new URI("/api/members/" + result.getId()))
@@ -87,6 +115,36 @@ public class MemberResource {
         }
         if (member.getMemberRn() == null) {
             member.setMemberRn(memberService.getMemberRn(member.getChurch()));
+        }
+        if (member.getMiddleName() == null || member.getMiddleName().isEmpty()) {
+            if (memberService.countByChurchFirstAndLastNamesIdNot(
+                member.getChurch().getId(),
+                member.getFirstName(),
+                member.getLastName(),
+                member.getId()) > 0) {
+                throw new BadRequestAlertException("Member already exist", ENTITY_NAME, "firstlastexists");
+            }
+        } else {
+            if (memberService.countByChurchFirstNameMiddleNameLastNameIdNot(
+                member.getChurch().getId(),
+                member.getFirstName(),
+                member.getMiddleName(),
+                member.getLastName(),
+                member.getId()
+            ) > 0) {
+                throw new BadRequestAlertException("Member already exist", ENTITY_NAME, "firstmiddlelastexists");
+            }
+        }
+        if (member.getChurchRn() != null) {
+            Member byNumber = memberService.findByChurchRegistrationNumber(
+                member.getChurch().getId(),
+                member.getChurchRn(),
+                member.getId());
+            if (byNumber != null) {
+                throw new BadRequestAlertException("Member rn already exist",
+                    byNumber.getFirstName()+' '+ byNumber.getLastName(),
+                    "churchrnexist");
+            }
         }
         Member result = memberService.save(member);
         return ResponseEntity.ok()

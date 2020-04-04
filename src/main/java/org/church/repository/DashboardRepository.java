@@ -40,10 +40,11 @@ public class DashboardRepository {
         Long periodId,
         Long typeId,
         int pageNumber,
-        int perPage) {
+        int perPage,
+        boolean overDue) {
 
-        return em.createNativeQuery("select " +
-            "       m.first_name || ' ' || m.last_name as name, " +
+        String q = "select " +
+            "       m.first_name || ' ' || coalesce(m.middle_name, '') || ' ' || m.last_name as name, " +
             "       m.phone_number, " +
             "       coalesce(pc.amount_promised,0) as promise, " +
             "       coalesce(pc.amount_contributed,0) as contribution, " +
@@ -53,9 +54,14 @@ public class DashboardRepository {
             "left join period_contribution pc on m.id = pc.member_id " +
             "and pc.period_contribution_type_id =:typeId and pc.church_id=:churchId and " +
             " pc.period_id=:periodId " +
-            "where m.church_id =:churchId " +
-            "group by m.id, pc.id " +
-            "order by m.first_name, m.last_name ", MemberContributionDashboard.class)
+            "where m.church_id =:churchId ";
+            if (overDue) {
+                q = q + " and pc.due_date <= now()";
+            }
+            q =q + "group by m.id, pc.id " +
+            "order by m.first_name, m.last_name ";
+
+        return em.createNativeQuery(q, MemberContributionDashboard.class)
             .setParameter("churchId", churchId)
             .setParameter("periodId", periodId)
             .setParameter("typeId", typeId)

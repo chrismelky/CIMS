@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,5 +31,22 @@ public interface MemberRepository extends JpaRepository<Member, Long>, JpaSpecif
     Long countAllByChurch(@NotNull Church church);
 
     Optional<Member> findByMemberRn(String memberRn);
+
+    Integer countByChurch_IdAndFirstNameAndLastNameAndMiddleNameIsNull(Long church_id, String firstName, String lastName);
+
+    Integer countByChurch_IdAndFirstNameAndLastNameAndIdNotAndMiddleNameIsNull(Long church_id, String firstName, String lastName, Long id);
+
+    Integer countByChurch_IdAndFirstNameAndMiddleNameAndLastName(
+        Long church_id,
+        String firstName,
+        String middleName,
+        String lastName);
+
+    Integer countByChurch_IdAndFirstNameAndMiddleNameAndLastNameAndIdNot(
+        Long church_id, String firstName, String middleName, String lastName, Long id);
+
+    Member findFirstByChurch_IdAndChurchRn(Long church_id, String churchRn);
+
+    Member findFirstByChurch_IdAndChurchRnAndIdNot(Long church_id, String churchRn, Long id);
 
 }

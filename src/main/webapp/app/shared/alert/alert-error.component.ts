@@ -98,7 +98,7 @@ export class ChurchAlertErrorComponent implements OnDestroy {
       type: 'danger',
       msg: message,
       params: data,
-      timeout: 5000,
+      timeout: 8000,
       toast: this.alertService.isToast(),
       scoped: true
     };

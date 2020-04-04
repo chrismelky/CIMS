@@ -29,7 +29,7 @@ export class PeriodContributionUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     amountPromised: [null, [Validators.required]],
-    amountContributed: [0],
+    amountContributed: [{ value: 0, disabled: true }],
     description: [],
     dueDate: [null, [Validators.required]],
     period: [null, Validators.required],

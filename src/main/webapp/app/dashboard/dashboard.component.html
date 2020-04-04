@@ -28,6 +28,10 @@
                 <option  *ngFor="let p of periods" [ngValue]="p">{{p.type?.name}}-{{p.name}}</option>
             </select>
         </div>
+        <div class="col-md-3 form-group">
+            <input id="o" type="checkbox" [checked]="overDue === true" [(ngModel)]="overDue" (ngModelChange)="getMemberContribution()"/>
+            <label for="o" class="form-control-label">Over Due</label>
+        </div>
     </div>
     <div class="row" style="margin-top: 8px">
         <div class="col-md-12">
@@ -51,7 +55,7 @@
                     <td>{{c.contribution}}</td>
                     <td>{{c.promise - c.contribution}}</td>
                     <td>{{c.due_date}}</td>
-                    <td>{{c.over_due}}</td>
+                    <td [ngClass]="{'over-due': c.over_due}" >{{c.over_due ? 'Is OverDue': ''}}</td>
                 </tr>
                 </tbody>
             </table>

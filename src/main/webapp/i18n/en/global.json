@@ -150,6 +150,9 @@
     "userexists": "Login name already used!",
     "emailexists": "Email is already in use!",
     "idexists": "A new {{ entityName }} cannot already have an ID",
+    "churchrnexist": "Member {{ entityName }} has the same registration number",
+    "firstlastexists": "Member with the same 'first name' and 'last name' exist in this church; consider add 'middle name'",
+    "firstmiddlelastexists": "Member with the same 'first name', 'middle name' and 'last name' exist in this church",
     "idnull": "Invalid ID"
   },
   "footer": "This is your footer"
