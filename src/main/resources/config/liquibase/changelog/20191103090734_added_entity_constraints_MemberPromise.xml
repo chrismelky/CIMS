@@ -7,7 +7,7 @@
         Added the constraints for entity MemberPromise.
     -->
     <changeSet id="20191103090734-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="member_id"
                                  baseTableName="member_promise"
                                  constraintName="fk_member_promise_member_id"
@@ -20,5 +20,24 @@
                                  referencedColumnNames="id"
                                  referencedTableName="church_activity"/>
 
+    </changeSet>
+    <changeSet id="20191103090734-5" author="chris">
+        <addForeignKeyConstraint baseColumnNames="financial_year_id"
+                                 baseTableName="member_promise"
+                                 constraintName="fk_member_promise_financial_year_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="financial_year"/>
+
+        <addForeignKeyConstraint baseColumnNames="church_id"
+                                 baseTableName="member_promise"
+                                 constraintName="fk_member_promise_church_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="church"/>
+
+        <addForeignKeyConstraint baseColumnNames="period_contribution_type_id"
+                                 baseTableName="member_promise"
+                                 constraintName="fk_member_promise_period_contribution_type_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="period_contribution_type"/>
     </changeSet>
 </databaseChangeLog>

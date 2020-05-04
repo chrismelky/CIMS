@@ -19,6 +19,7 @@ import { HomeChurchCommunityComponent } from 'app/entities/home-church-community
 import { UserManagementUpdateComponent } from 'app/admin/user-management/user-management-update.component';
 import { PeriodContributionTypeComponent } from 'app/entities/period-contribution-type/period-contribution-type.component';
 import { WeekPickComponent } from './week-pick/week-pick.component';
+import { MemberPromiseComponent } from 'app/entities/member-promise/member-promise.component';
 
 @NgModule({
   imports: [ChurchSharedLibsModule, RouterModule],
@@ -33,6 +34,7 @@ import { WeekPickComponent } from './week-pick/week-pick.component';
     MemberRiteComponent,
     MemberContributionComponent,
     PeriodContributionComponent,
+    MemberPromiseComponent,
     PeriodContributionItemComponent,
     ChuchServiceComponent,
     ChurchActivityComponent,
@@ -55,6 +57,7 @@ import { WeekPickComponent } from './week-pick/week-pick.component';
     MemberRiteComponent,
     MemberContributionComponent,
     PeriodContributionComponent,
+    MemberPromiseComponent,
     PeriodContributionItemComponent,
     ChuchServiceComponent,
     ChurchActivityComponent,

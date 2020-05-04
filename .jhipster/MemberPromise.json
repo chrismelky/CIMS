@@ -23,6 +23,10 @@
         {
             "fieldName": "isFulfilled",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "totatlContribution",
+            "fieldType": "BigDecimal"
         }
     ],
     "relationships": [
@@ -41,6 +45,36 @@
             "relationshipValidateRules": "required",
             "relationshipName": "churchActivity",
             "otherEntityField": "name"
+        },
+        {
+            "relationshipName": "financialYear",
+            "otherEntityName": "financialYear",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "memberPromise"
+        },
+        {
+            "relationshipName": "church",
+            "otherEntityName": "church",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "memberPromise"
+        },
+        {
+            "relationshipName": "periodContributionType",
+            "otherEntityName": "periodContributionType",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "name",
+            "otherEntityRelationshipName": "memberPromise"
         }
     ],
     "changelogDate": "20191103090734",
@@ -52,5 +86,7 @@
     "fluentMethods": true,
     "readOnly": false,
     "clientRootFolder": "",
-    "applications": "*"
+    "applications": "*",
+    "searchEngine": false,
+    "databaseType": "sql"
 }

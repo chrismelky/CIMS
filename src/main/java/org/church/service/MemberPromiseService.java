@@ -50,7 +50,6 @@ public class MemberPromiseService {
         return memberPromiseRepository.findAll(pageable);
     }
 
-
     /**
      * Get one memberPromise by id.
      *
@@ -61,6 +60,12 @@ public class MemberPromiseService {
     public Optional<MemberPromise> findOne(Long id) {
         log.debug("Request to get MemberPromise : {}", id);
         return memberPromiseRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<MemberPromise> findOne(Long churchId, Long memberId, Long typeId, Long fyId) {
+        log.debug("Request to get MemberPromise : {}", fyId);
+        return memberPromiseRepository.findFirstByChurch_IdAndMember_IdAndPeriodContributionType_IdAndFinancialYear_Id(churchId, memberId, typeId, fyId);
     }
 
     /**

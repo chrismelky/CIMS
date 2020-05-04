@@ -38,22 +38,34 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
 
     private BooleanFilter isFulfilled;
 
+    private BigDecimalFilter totatlContribution;
+
     private LongFilter memberId;
 
     private LongFilter churchActivityId;
 
-    public MemberPromiseCriteria(){
+    private LongFilter financialYearId;
+
+    private LongFilter churchId;
+
+    private LongFilter periodContributionTypeId;
+
+    public MemberPromiseCriteria() {
     }
 
-    public MemberPromiseCriteria(MemberPromiseCriteria other){
+    public MemberPromiseCriteria(MemberPromiseCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.promiseDate = other.promiseDate == null ? null : other.promiseDate.copy();
         this.amount = other.amount == null ? null : other.amount.copy();
         this.otherPromise = other.otherPromise == null ? null : other.otherPromise.copy();
         this.fulfillmentDate = other.fulfillmentDate == null ? null : other.fulfillmentDate.copy();
         this.isFulfilled = other.isFulfilled == null ? null : other.isFulfilled.copy();
+        this.totatlContribution = other.totatlContribution == null ? null : other.totatlContribution.copy();
         this.memberId = other.memberId == null ? null : other.memberId.copy();
         this.churchActivityId = other.churchActivityId == null ? null : other.churchActivityId.copy();
+        this.financialYearId = other.financialYearId == null ? null : other.financialYearId.copy();
+        this.churchId = other.churchId == null ? null : other.churchId.copy();
+        this.periodContributionTypeId = other.periodContributionTypeId == null ? null : other.periodContributionTypeId.copy();
     }
 
     @Override
@@ -109,6 +121,14 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
         this.isFulfilled = isFulfilled;
     }
 
+    public BigDecimalFilter getTotatlContribution() {
+        return totatlContribution;
+    }
+
+    public void setTotatlContribution(BigDecimalFilter totatlContribution) {
+        this.totatlContribution = totatlContribution;
+    }
+
     public LongFilter getMemberId() {
         return memberId;
     }
@@ -123,6 +143,30 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
 
     public void setChurchActivityId(LongFilter churchActivityId) {
         this.churchActivityId = churchActivityId;
+    }
+
+    public LongFilter getFinancialYearId() {
+        return financialYearId;
+    }
+
+    public void setFinancialYearId(LongFilter financialYearId) {
+        this.financialYearId = financialYearId;
+    }
+
+    public LongFilter getChurchId() {
+        return churchId;
+    }
+
+    public void setChurchId(LongFilter churchId) {
+        this.churchId = churchId;
+    }
+
+    public LongFilter getPeriodContributionTypeId() {
+        return periodContributionTypeId;
+    }
+
+    public void setPeriodContributionTypeId(LongFilter periodContributionTypeId) {
+        this.periodContributionTypeId = periodContributionTypeId;
     }
 
 
@@ -142,8 +186,12 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
             Objects.equals(otherPromise, that.otherPromise) &&
             Objects.equals(fulfillmentDate, that.fulfillmentDate) &&
             Objects.equals(isFulfilled, that.isFulfilled) &&
+            Objects.equals(totatlContribution, that.totatlContribution) &&
             Objects.equals(memberId, that.memberId) &&
-            Objects.equals(churchActivityId, that.churchActivityId);
+            Objects.equals(churchActivityId, that.churchActivityId) &&
+            Objects.equals(financialYearId, that.financialYearId) &&
+            Objects.equals(churchId, that.churchId) &&
+            Objects.equals(periodContributionTypeId, that.periodContributionTypeId);
     }
 
     @Override
@@ -155,8 +203,12 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
         otherPromise,
         fulfillmentDate,
         isFulfilled,
+        totatlContribution,
         memberId,
-        churchActivityId
+        churchActivityId,
+        financialYearId,
+        churchId,
+        periodContributionTypeId
         );
     }
 
@@ -169,8 +221,12 @@ public class MemberPromiseCriteria implements Serializable, Criteria {
                 (otherPromise != null ? "otherPromise=" + otherPromise + ", " : "") +
                 (fulfillmentDate != null ? "fulfillmentDate=" + fulfillmentDate + ", " : "") +
                 (isFulfilled != null ? "isFulfilled=" + isFulfilled + ", " : "") +
+                (totatlContribution != null ? "totatlContribution=" + totatlContribution + ", " : "") +
                 (memberId != null ? "memberId=" + memberId + ", " : "") +
                 (churchActivityId != null ? "churchActivityId=" + churchActivityId + ", " : "") +
+                (financialYearId != null ? "financialYearId=" + financialYearId + ", " : "") +
+                (churchId != null ? "churchId=" + churchId + ", " : "") +
+                (periodContributionTypeId != null ? "periodContributionTypeId=" + periodContributionTypeId + ", " : "") +
             "}";
     }
 

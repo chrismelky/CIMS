@@ -1,11 +1,11 @@
-id;promise_date;amount;other_promise;fulfillment_date;is_fulfilled;member_id;church_activity_id
-1;2019-11-02;77188;Baby Credit Card Account Nevada;2019-11-02;false;1;1
-2;2019-11-02;34569;Chips National Idaho;2019-11-02;false;2;2
-3;2019-11-02;28792;Savings Account Customer Granite;2019-11-03;true;3;3
-4;2019-11-03;1811;HDD Security Virginia;2019-11-02;true;4;4
-5;2019-11-02;2302;deposit quantify maximize;2019-11-03;false;5;5
-6;2019-11-03;73644;Configuration;2019-11-02;true;6;6
-7;2019-11-02;12281;Visionary;2019-11-03;true;7;7
-8;2019-11-03;12466;National FTP Czech Republic;2019-11-02;true;8;8
-9;2019-11-02;37930;navigate;2019-11-03;true;9;9
-10;2019-11-02;463;leading-edge synergize;2019-11-02;true;10;10
+id;promise_date;amount;other_promise;fulfillment_date;is_fulfilled;totatl_contribution;member_id;church_activity_id;financial_year_id;church_id;period_contribution_type_id
+1;2019-11-03;50799;SSL seamless Shirt;2019-11-03;false;16997;1;1;1;1;1
+2;2019-11-02;40901;Research Israel Cambridgeshire;2019-11-03;true;71506;2;2;2;2;2
+3;2019-11-02;80075;Movies Coordinator payment;2019-11-02;false;94979;3;3;3;3;3
+4;2019-11-03;84549;Stand-alone web-enabled;2019-11-02;true;40435;4;4;4;4;4
+5;2019-11-03;46119;Central Checking Account;2019-11-03;true;66681;5;5;5;5;5
+6;2019-11-02;34112;orchid Summit;2019-11-03;false;75844;6;6;6;6;6
+7;2019-11-03;43050;Directives Hat Fresh;2019-11-03;false;15170;7;7;7;7;7
+8;2019-11-03;97026;Incredible Granite Chair ubiquitous Graphic Interface;2019-11-02;true;23281;8;8;8;8;8
+9;2019-11-02;19112;Cambridgeshire;2019-11-02;true;56111;9;9;9;9;9
+10;2019-11-02;95421;Egyptian Pound Squares Netherlands Antilles;2019-11-02;true;41770;10;10;10;10;10

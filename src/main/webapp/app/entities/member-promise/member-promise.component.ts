@@ -1,123 +1,114 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Component, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { JhiEventManager, JhiParseLinks } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IMemberPromise } from 'app/shared/model/member-promise.model';
-import { AccountService } from 'app/core/auth/account.service';
 
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { MemberPromiseService } from './member-promise.service';
+import { MemberPromiseDeleteDialogComponent } from './member-promise-delete-dialog.component';
+import { IFinancialYear } from 'app/shared/model/financial-year.model';
+import { FinancialYearService } from '../financial-year/financial-year.service';
 
 @Component({
   selector: 'church-member-promise',
   templateUrl: './member-promise.component.html'
 })
 export class MemberPromiseComponent implements OnInit, OnDestroy {
-  currentAccount: any;
-  memberPromises: IMemberPromise[];
-  error: any;
-  success: any;
-  eventSubscriber: Subscription;
-  routeData: any;
-  links: any;
-  totalItems: any;
-  itemsPerPage: any;
-  page: any;
-  predicate: any;
-  previousPage: any;
-  reverse: any;
+  @Input() typeId: number;
+  @Input() periodTypeId: number;
+  memberId: number;
+  churchId: number;
+
+  memberPromise?: IMemberPromise;
+  eventSubscriber?: Subscription;
+
+  fys: IFinancialYear[] = [];
+  fy: IFinancialYear;
 
   constructor(
     protected memberPromiseService: MemberPromiseService,
-    protected parseLinks: JhiParseLinks,
-    protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
-  ) {
-    this.itemsPerPage = ITEMS_PER_PAGE;
-    this.routeData = this.activatedRoute.data.subscribe(data => {
-      this.page = data.pagingParams.page;
-      this.previousPage = data.pagingParams.page;
-      this.reverse = data.pagingParams.ascending;
-      this.predicate = data.pagingParams.predicate;
-    });
-  }
+    protected eventManager: JhiEventManager,
+    protected modalService: NgbModal,
+    protected fyService: FinancialYearService
+  ) {}
 
-  loadAll() {
-    this.memberPromiseService
-      .query({
-        page: this.page - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe((res: HttpResponse<IMemberPromise[]>) => this.paginateMemberPromises(res.body, res.headers));
-  }
-
-  loadPage(page: number) {
-    if (page !== this.previousPage) {
-      this.previousPage = page;
-      this.transition();
+  loadPromise(): void {
+    if (this.churchId === undefined || this.memberId === undefined || this.fy === undefined || this.typeId === undefined) {
+      return;
     }
+    this.memberPromiseService
+      .getOne(this.churchId, this.memberId, this.typeId, this.fy.id)
+      .subscribe((res: HttpResponse<IMemberPromise>) => (this.memberPromise = res.body), () => this.onError());
   }
 
-  transition() {
-    this.router.navigate(['/member-promise'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
-    this.loadAll();
+  loadFy() {
+    this.fyService
+      .query({
+        'startDate.lessOrEqualThan': this.formatDate(new Date()),
+        sort: ['startDate,desc']
+      })
+      .subscribe(resp => {
+        const all = resp.body;
+        if (all.length > 2) {
+          this.fys = [all[0], all[1]];
+        } else {
+          this.fys = all;
+        }
+        if (this.fys.length) {
+          this.fy = this.fys[0];
+        }
+        this.loadPromise();
+        // this.loadPeriods();
+      });
   }
 
-  clear() {
-    this.page = 0;
-    this.router.navigate([
-      '/member-promise',
-      {
-        page: this.page,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    ]);
-    this.loadAll();
+  setFy() {
+    this.loadPromise();
   }
 
-  ngOnInit() {
-    this.loadAll();
-    this.accountService.identity().subscribe(account => {
-      this.currentAccount = account;
-    });
+  ngOnInit(): void {
+    this.churchId = this.activatedRoute.snapshot.params['churchId'];
+    this.memberId = this.activatedRoute.snapshot.params['id'];
+    this.loadFy();
     this.registerChangeInMemberPromises();
   }
 
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
-  }
-
-  trackId(index: number, item: IMemberPromise) {
-    return item.id;
-  }
-
-  registerChangeInMemberPromises() {
-    this.eventSubscriber = this.eventManager.subscribe('memberPromiseListModification', response => this.loadAll());
-  }
-
-  sort() {
-    const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
+  ngOnDestroy(): void {
+    if (this.eventSubscriber) {
+      this.eventManager.destroy(this.eventSubscriber);
     }
-    return result;
   }
 
-  protected paginateMemberPromises(data: IMemberPromise[], headers: HttpHeaders) {
-    this.links = this.parseLinks.parse(headers.get('link'));
-    this.totalItems = parseInt(headers.get('X-Total-Count'), 10);
-    this.memberPromises = data;
+  trackId(index: number, item: IMemberPromise): number {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    return item.id!;
+  }
+
+  registerChangeInMemberPromises(): void {
+    this.eventSubscriber = this.eventManager.subscribe('memberPromiseListModification', () => this.loadPromise());
+  }
+
+  delete(memberPromise: IMemberPromise): void {
+    const modalRef = this.modalService.open(MemberPromiseDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.memberPromise = memberPromise;
+  }
+
+  protected onError(): void {}
+
+  formatDate(date) {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 }

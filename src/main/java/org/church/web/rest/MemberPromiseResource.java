@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,9 +92,7 @@ public class MemberPromiseResource {
     /**
      * {@code GET  /member-promises} : get all the memberPromises.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of memberPromises in body.
      */
@@ -107,16 +104,16 @@ public class MemberPromiseResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-    /**
-    * {@code GET  /member-promises/count} : count all the memberPromises.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
-    @GetMapping("/member-promises/count")
-    public ResponseEntity<Long> countMemberPromises(MemberPromiseCriteria criteria) {
-        log.debug("REST request to count MemberPromises by criteria: {}", criteria);
-        return ResponseEntity.ok().body(memberPromiseQueryService.countByCriteria(criteria));
+
+    @GetMapping("/member-promises/{churchId}/{memberId}/{typeId}/{fyId}")
+    public ResponseEntity<MemberPromise> getOne(
+        @PathVariable Long churchId,
+        @PathVariable Long memberId,
+        @PathVariable Long typeId,
+        @PathVariable Long fyId
+    ) {
+        log.debug("REST request to count MemberPromises by criteria: {}", fyId);
+        return ResponseUtil.wrapOrNotFound(memberPromiseService.findOne(churchId, memberId, typeId, fyId));
     }
 
     /**

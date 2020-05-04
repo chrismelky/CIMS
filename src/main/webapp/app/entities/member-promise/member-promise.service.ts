@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IMemberPromise } from 'app/shared/model/member-promise.model';
@@ -39,6 +38,12 @@ export class MemberPromiseService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  getOne(churchId: number, memberId: number, typeId: number, fyId: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IMemberPromise>(`${this.resourceUrl}/${churchId}/${memberId}/${typeId}/${fyId}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http
@@ -46,26 +51,26 @@ export class MemberPromiseService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(memberPromise: IMemberPromise): IMemberPromise {
     const copy: IMemberPromise = Object.assign({}, memberPromise, {
       promiseDate:
-        memberPromise.promiseDate != null && memberPromise.promiseDate.isValid() ? memberPromise.promiseDate.format(DATE_FORMAT) : null,
+        memberPromise.promiseDate && memberPromise.promiseDate.isValid() ? memberPromise.promiseDate.format(DATE_FORMAT) : undefined,
       fulfillmentDate:
-        memberPromise.fulfillmentDate != null && memberPromise.fulfillmentDate.isValid()
+        memberPromise.fulfillmentDate && memberPromise.fulfillmentDate.isValid()
           ? memberPromise.fulfillmentDate.format(DATE_FORMAT)
-          : null
+          : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.promiseDate = res.body.promiseDate != null ? moment(res.body.promiseDate) : null;
-      res.body.fulfillmentDate = res.body.fulfillmentDate != null ? moment(res.body.fulfillmentDate) : null;
+      res.body.promiseDate = res.body.promiseDate ? moment(res.body.promiseDate) : undefined;
+      res.body.fulfillmentDate = res.body.fulfillmentDate ? moment(res.body.fulfillmentDate) : undefined;
     }
     return res;
   }
@@ -73,8 +78,8 @@ export class MemberPromiseService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((memberPromise: IMemberPromise) => {
-        memberPromise.promiseDate = memberPromise.promiseDate != null ? moment(memberPromise.promiseDate) : null;
-        memberPromise.fulfillmentDate = memberPromise.fulfillmentDate != null ? moment(memberPromise.fulfillmentDate) : null;
+        memberPromise.promiseDate = memberPromise.promiseDate ? moment(memberPromise.promiseDate) : undefined;
+        memberPromise.fulfillmentDate = memberPromise.fulfillmentDate ? moment(memberPromise.fulfillmentDate) : undefined;
       });
     }
     return res;

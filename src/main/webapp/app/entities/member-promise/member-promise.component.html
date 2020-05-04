@@ -1,86 +1,100 @@
 <div>
-    <h2 id="page-heading">
-        <span jhiTranslate="churchApp.memberPromise.home.title">Member Promises</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-member-promise" [routerLink]="['/member-promise/new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
+    <church-alert-error></church-alert-error>
+    <church-alert></church-alert>
+    <div class="row">
+        <div class="col-md-2" style="padding: 8px">
+            <div class="form-group">
+                <label for="fy" class="form-control-label">Year</label>
+                <select id="fy" class="form-control col-md-12" [(ngModel)]="fy" (ngModelChange)="setFy()" >
+                    <option  *ngFor="let f of fys" [ngValue]="f">{{f.name}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-10 card" style="padding: 8px">
+            <h2 id="page-heading" style="margin: 8px; text-align: center">
+                <span jhiTranslate="churchApp.periodContribution.home.title">Period Contributions</span>
+             </h2>
+             <div *ngIf="memberPromise === undefined" style="text-align:center; margin-top:20px">
+                </div>
+
+        </div>
+    </div>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="memberPromise === undefined">
+        <span jhiTranslate="churchApp.memberPromise.home.notFound">No memberPromises found</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-member-promise" 
+        [routerLink]="['/member-promise', churchId, memberId, fy?.id, 'new']">
+            <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="churchApp.memberPromise.home.createLabel">
             Create a new Member Promise
             </span>
         </button>
-    </h2>
-    <church-alert-error></church-alert-error>
-    <church-alert></church-alert>
-    <br/>
-    <div class="alert alert-warning" *ngIf="memberPromises?.length === 0">
-        <span jhiTranslate="churchApp.memberPromise.home.notFound">No memberPromises found</span>
     </div>
-    <div class="table-responsive" *ngIf="memberPromises?.length > 0">
+
+    <div class="table-responsive" id="entities" *ngIf="memberPromise">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="promiseDate"><span jhiTranslate="churchApp.memberPromise.promiseDate">Promise Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="amount"><span jhiTranslate="churchApp.memberPromise.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="otherPromise"><span jhiTranslate="churchApp.memberPromise.otherPromise">Other Promise</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="fulfillmentDate"><span jhiTranslate="churchApp.memberPromise.fulfillmentDate">Fulfillment Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="isFulfilled"><span jhiTranslate="churchApp.memberPromise.isFulfilled">Is Fulfilled</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="member.firstName"><span jhiTranslate="churchApp.memberPromise.member">Member</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="churchActivity.name"><span jhiTranslate="churchApp.memberPromise.churchActivity">Church Activity</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
-            </tr>
+                <tr>
+                    <th ><span jhiTranslate="churchApp.memberPromise.promiseDate">Promise Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.amount">Amount</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.otherPromise">Other Promise</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.fulfillmentDate">Fulfillment Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.isFulfilled">Is Fulfilled</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.totalContribution">Totatl Contribution</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th><span jhiTranslate="churchApp.memberPromise.member">Member</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.financialYear">Financial Year</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.church">Church</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th ><span jhiTranslate="churchApp.memberPromise.periodContributionType">Period Contribution Type</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let memberPromise of memberPromises ;trackBy: trackId">
-                <td><a [routerLink]="['/member-promise', memberPromise.id, 'view' ]">{{memberPromise.id}}</a></td>
-                <td>{{memberPromise.promiseDate | date:'mediumDate'}}</td>
-                <td>{{memberPromise.amount}}</td>
-                <td>{{memberPromise.otherPromise}}</td>
-                <td>{{memberPromise.fulfillmentDate | date:'mediumDate'}}</td>
-                <td>{{memberPromise.isFulfilled}}</td>
-                <td>
-                    <div *ngIf="memberPromise.member">
-                        <a [routerLink]="['/member', memberPromise.member?.id, 'view' ]" >{{memberPromise.member?.firstName}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="memberPromise.churchActivity">
-                        <a [routerLink]="['/church-activity', memberPromise.churchActivity?.id, 'view' ]" >{{memberPromise.churchActivity?.name}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/member-promise', memberPromise.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/member-promise', memberPromise.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/member-promise', { outlets: { popup: memberPromise.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                <tr >
+                    <td>{{ memberPromise.promiseDate | date:'mediumDate' }}</td>
+                    <td>{{ memberPromise.amount }}</td>
+                    <td>{{ memberPromise.otherPromise }}</td>
+                    <td>{{ memberPromise.fulfillmentDate | date:'mediumDate' }}</td>
+                    <td>{{ memberPromise.isFulfilled }}</td>
+                    <td>{{ memberPromise.totalContribution }}</td>
+                    <td>
+                        <div *ngIf="memberPromise.member">
+                            <a [routerLink]="['/member', memberPromise.member?.id, 'view']" >{{ memberPromise.member?.firstName }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="memberPromise.financialYear">
+                            <a [routerLink]="['/financial-year', memberPromise.financialYear?.id, 'view']" >{{ memberPromise.financialYear?.name }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="memberPromise.church">
+                            <a [routerLink]="['/church', memberPromise.church?.id, 'view']" >{{ memberPromise.church?.name }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="memberPromise.periodContributionType">
+                            <a [routerLink]="['/period-contribution-type', memberPromise.periodContributionType?.id, 'view']" >{{ memberPromise.periodContributionType?.name }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                           
+                            <button type="submit"
+                                    [routerLink]="['/member-promise', memberPromise.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(memberPromise)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
-    </div>
-    <div [hidden]="memberPromises?.length === 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
-        </div>
     </div>
 </div>

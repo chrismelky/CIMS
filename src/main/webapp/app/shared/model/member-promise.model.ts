@@ -1,6 +1,8 @@
 import { Moment } from 'moment';
 import { IMember } from 'app/shared/model/member.model';
-import { IChurchActivity } from 'app/shared/model/church-activity.model';
+import { IFinancialYear } from 'app/shared/model/financial-year.model';
+import { IChurch } from 'app/shared/model/church.model';
+import { IPeriodContributionType } from 'app/shared/model/period-contribution-type.model';
 
 export interface IMemberPromise {
   id?: number;
@@ -9,8 +11,11 @@ export interface IMemberPromise {
   otherPromise?: string;
   fulfillmentDate?: Moment;
   isFulfilled?: boolean;
+  totalContribution?: number;
   member?: IMember;
-  churchActivity?: IChurchActivity;
+  financialYear?: IFinancialYear;
+  church?: IChurch;
+  periodContributionType?: IPeriodContributionType;
 }
 
 export class MemberPromise implements IMemberPromise {
@@ -21,8 +26,11 @@ export class MemberPromise implements IMemberPromise {
     public otherPromise?: string,
     public fulfillmentDate?: Moment,
     public isFulfilled?: boolean,
+    public totalContribution?: number,
     public member?: IMember,
-    public churchActivity?: IChurchActivity
+    public financialYear?: IFinancialYear,
+    public church?: IChurch,
+    public periodContributionType?: IPeriodContributionType
   ) {
     this.isFulfilled = this.isFulfilled || false;
   }

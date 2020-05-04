@@ -1,29 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IMemberPromise, MemberPromise } from 'app/shared/model/member-promise.model';
 import { MemberPromiseService } from './member-promise.service';
 import { IMember } from 'app/shared/model/member.model';
 import { MemberService } from 'app/entities/member/member.service';
 import { IChurchActivity } from 'app/shared/model/church-activity.model';
 import { ChurchActivityService } from 'app/entities/church-activity/church-activity.service';
+import { IFinancialYear } from 'app/shared/model/financial-year.model';
+import { FinancialYearService } from 'app/entities/financial-year/financial-year.service';
+import { IChurch } from 'app/shared/model/church.model';
+import { ChurchService } from 'app/entities/church/church.service';
+import { IPeriodContributionType } from 'app/shared/model/period-contribution-type.model';
+import { PeriodContributionTypeService } from 'app/entities/period-contribution-type/period-contribution-type.service';
+
+type SelectableEntity = IMember | IChurchActivity | IFinancialYear | IChurch | IPeriodContributionType;
 
 @Component({
   selector: 'church-member-promise-update',
   templateUrl: './member-promise-update.component.html'
 })
 export class MemberPromiseUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  members: IMember[];
-
-  churchactivities: IChurchActivity[];
+  isSaving = false;
+  members: IMember[] = [];
+  churchactivities: IChurchActivity[] = [];
+  financialyears: IFinancialYear[] = [];
+  churches: IChurch[] = [];
+  periodcontributiontypes: IPeriodContributionType[] = [];
   promiseDateDp: any;
   fulfillmentDateDp: any;
 
@@ -34,41 +41,43 @@ export class MemberPromiseUpdateComponent implements OnInit {
     otherPromise: [],
     fulfillmentDate: [],
     isFulfilled: [],
+    totalContribution: [],
     member: [null, Validators.required],
-    churchActivity: [null, Validators.required]
+    financialYear: [null, Validators.required],
+    church: [null, Validators.required],
+    periodContributionType: [null, Validators.required]
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected memberPromiseService: MemberPromiseService,
     protected memberService: MemberService,
     protected churchActivityService: ChurchActivityService,
+    protected financialYearService: FinancialYearService,
+    protected churchService: ChurchService,
+    protected periodContributionTypeService: PeriodContributionTypeService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ memberPromise }) => {
       this.updateForm(memberPromise);
+
+      this.memberService.query().subscribe((res: HttpResponse<IMember[]>) => (this.members = res.body || []));
+
+      this.churchActivityService.query().subscribe((res: HttpResponse<IChurchActivity[]>) => (this.churchactivities = res.body || []));
+
+      this.financialYearService.query().subscribe((res: HttpResponse<IFinancialYear[]>) => (this.financialyears = res.body || []));
+
+      this.churchService.query().subscribe((res: HttpResponse<IChurch[]>) => (this.churches = res.body || []));
+
+      this.periodContributionTypeService
+        .query()
+        .subscribe((res: HttpResponse<IPeriodContributionType[]>) => (this.periodcontributiontypes = res.body || []));
     });
-    this.memberService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IMember[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IMember[]>) => response.body)
-      )
-      .subscribe((res: IMember[]) => (this.members = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.churchActivityService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IChurchActivity[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IChurchActivity[]>) => response.body)
-      )
-      .subscribe((res: IChurchActivity[]) => (this.churchactivities = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
-  updateForm(memberPromise: IMemberPromise) {
+  updateForm(memberPromise: IMemberPromise): void {
     this.editForm.patchValue({
       id: memberPromise.id,
       promiseDate: memberPromise.promiseDate,
@@ -76,16 +85,19 @@ export class MemberPromiseUpdateComponent implements OnInit {
       otherPromise: memberPromise.otherPromise,
       fulfillmentDate: memberPromise.fulfillmentDate,
       isFulfilled: memberPromise.isFulfilled,
+      totalContribution: memberPromise.totalContribution,
       member: memberPromise.member,
-      churchActivity: memberPromise.churchActivity
+      financialYear: memberPromise.financialYear,
+      church: memberPromise.church,
+      periodContributionType: memberPromise.periodContributionType
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const memberPromise = this.createFromForm();
     if (memberPromise.id !== undefined) {
@@ -98,38 +110,34 @@ export class MemberPromiseUpdateComponent implements OnInit {
   private createFromForm(): IMemberPromise {
     return {
       ...new MemberPromise(),
-      id: this.editForm.get(['id']).value,
-      promiseDate: this.editForm.get(['promiseDate']).value,
-      amount: this.editForm.get(['amount']).value,
-      otherPromise: this.editForm.get(['otherPromise']).value,
-      fulfillmentDate: this.editForm.get(['fulfillmentDate']).value,
-      isFulfilled: this.editForm.get(['isFulfilled']).value,
-      member: this.editForm.get(['member']).value,
-      churchActivity: this.editForm.get(['churchActivity']).value
+      id: this.editForm.get(['id'])!.value,
+      promiseDate: this.editForm.get(['promiseDate'])!.value,
+      amount: this.editForm.get(['amount'])!.value,
+      otherPromise: this.editForm.get(['otherPromise'])!.value,
+      fulfillmentDate: this.editForm.get(['fulfillmentDate'])!.value,
+      isFulfilled: this.editForm.get(['isFulfilled'])!.value,
+      totalContribution: this.editForm.get(['totalContribution'])!.value,
+      member: this.editForm.get(['member'])!.value,
+      financialYear: this.editForm.get(['financialYear'])!.value,
+      church: this.editForm.get(['church'])!.value,
+      periodContributionType: this.editForm.get(['periodContributionType'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IMemberPromise>>) {
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IMemberPromise>>): void {
     result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackMemberById(index: number, item: IMember) {
-    return item.id;
-  }
-
-  trackChurchActivityById(index: number, item: IChurchActivity) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

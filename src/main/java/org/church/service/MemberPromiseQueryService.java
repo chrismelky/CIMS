@@ -83,7 +83,7 @@ public class MemberPromiseQueryService extends QueryService<MemberPromise> {
         Specification<MemberPromise> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), MemberPromise_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), MemberPromise_.id));
             }
             if (criteria.getPromiseDate() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getPromiseDate(), MemberPromise_.promiseDate));
@@ -100,13 +100,24 @@ public class MemberPromiseQueryService extends QueryService<MemberPromise> {
             if (criteria.getIsFulfilled() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsFulfilled(), MemberPromise_.isFulfilled));
             }
+            if (criteria.getTotatlContribution() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getTotatlContribution(), MemberPromise_.totalContribution));
+            }
             if (criteria.getMemberId() != null) {
                 specification = specification.and(buildSpecification(criteria.getMemberId(),
                     root -> root.join(MemberPromise_.member, JoinType.LEFT).get(Member_.id)));
             }
-            if (criteria.getChurchActivityId() != null) {
-                specification = specification.and(buildSpecification(criteria.getChurchActivityId(),
-                    root -> root.join(MemberPromise_.churchActivity, JoinType.LEFT).get(ChurchActivity_.id)));
+            if (criteria.getFinancialYearId() != null) {
+                specification = specification.and(buildSpecification(criteria.getFinancialYearId(),
+                    root -> root.join(MemberPromise_.financialYear, JoinType.LEFT).get(FinancialYear_.id)));
+            }
+            if (criteria.getChurchId() != null) {
+                specification = specification.and(buildSpecification(criteria.getChurchId(),
+                    root -> root.join(MemberPromise_.church, JoinType.LEFT).get(Church_.id)));
+            }
+            if (criteria.getPeriodContributionTypeId() != null) {
+                specification = specification.and(buildSpecification(criteria.getPeriodContributionTypeId(),
+                    root -> root.join(MemberPromise_.periodContributionType, JoinType.LEFT).get(PeriodContributionType_.id)));
             }
         }
         return specification;

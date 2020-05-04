@@ -217,21 +217,11 @@
         <ngb-tab *ngFor="let c of periodContributionTypes"
                  [title]="c.name"  [id]="c.id.toString()">
             <ng-template ngbTabContent>
-                <church-period-contribution
-                  [churchId]="churchId"
-                  [memberId]="memberId"
-                  [periodContributionTypeId]="c.id"
-                  [periodTypeId]="c.periodType.id"
-                ></church-period-contribution>
+                <church-member-promise 
+                    [typeId]="c.id"
+                    [periodTypeId]="c.periodType.id">
+                </church-member-promise>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Michango Mengeneyo" id="contribution">
-            <ng-template ngbTabContent>
-                <church-member-contribution></church-member-contribution>
-            </ng-template>
-        </ngb-tab>
-        <!--<ngb-tab title="Promises" id="promises">-->
-
-        <!--</ngb-tab>-->
     </ngb-tabset>
 </div>

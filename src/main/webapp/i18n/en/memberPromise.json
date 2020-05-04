@@ -21,8 +21,12 @@
       "otherPromise": "Other Promise",
       "fulfillmentDate": "Fulfillment Date",
       "isFulfilled": "Is Fulfilled",
+      "totalContribution": "Totatl Contribution",
       "member": "Member",
-      "churchActivity": "Church Activity"
+      "churchActivity": "Church Activity",
+      "financialYear": "Financial Year",
+      "church": "Church",
+      "periodContributionType": "Period Contribution Type"
     }
   }
 }

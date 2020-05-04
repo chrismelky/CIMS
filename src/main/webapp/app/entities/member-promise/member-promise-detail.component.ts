@@ -8,17 +8,15 @@ import { IMemberPromise } from 'app/shared/model/member-promise.model';
   templateUrl: './member-promise-detail.component.html'
 })
 export class MemberPromiseDetailComponent implements OnInit {
-  memberPromise: IMemberPromise;
+  memberPromise: IMemberPromise | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ memberPromise }) => {
-      this.memberPromise = memberPromise;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ memberPromise }) => (this.memberPromise = memberPromise));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

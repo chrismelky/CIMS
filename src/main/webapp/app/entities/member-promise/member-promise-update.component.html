@@ -2,47 +2,53 @@
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
             <h2 id="church-member-promise-heading" jhiTranslate="churchApp.memberPromise.home.createOrEditLabel">Create or edit a Member Promise</h2>
+
             <div>
                 <church-alert-error></church-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.promiseDate" for="field_promiseDate">Promise Date</label>
                     <div class="input-group">
-                        <input id="field_promiseDate" type="text" class="form-control" name="promiseDate" ngbDatepicker  #promiseDateDp="ngbDatepicker" formControlName="promiseDate"/>
+                        <input id="field_promiseDate" type="text" class="form-control" name="promiseDate" ngbDatepicker #promiseDateDp="ngbDatepicker" formControlName="promiseDate"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="promiseDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="promiseDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
-                    <div *ngIf="editForm.get('promiseDate').invalid && (editForm.get('promiseDate').dirty || editForm.get('promiseDate').touched)">
+                    <div *ngIf="editForm.get('promiseDate')!.invalid && (editForm.get('promiseDate')!.dirty || editForm.get('promiseDate')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('promiseDate').errors.required" jhiTranslate="entity.validation.required">
+                               *ngIf="editForm.get('promiseDate')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                         </small>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.amount" for="field_amount">Amount</label>
                     <input type="number" class="form-control" name="amount" id="field_amount"
                            formControlName="amount"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.otherPromise" for="field_otherPromise">Other Promise</label>
                     <input type="text" class="form-control" name="otherPromise" id="field_otherPromise"
                            formControlName="otherPromise"/>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.fulfillmentDate" for="field_fulfillmentDate">Fulfillment Date</label>
                     <div class="input-group">
-                        <input id="field_fulfillmentDate" type="text" class="form-control" name="fulfillmentDate" ngbDatepicker  #fulfillmentDateDp="ngbDatepicker" formControlName="fulfillmentDate"/>
+                        <input id="field_fulfillmentDate" type="text" class="form-control" name="fulfillmentDate" ngbDatepicker #fulfillmentDateDp="ngbDatepicker" formControlName="fulfillmentDate"/>
                         <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="fulfillmentDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                            <button type="button" class="btn btn-secondary" (click)="fulfillmentDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
                         </span>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.isFulfilled" for="field_isFulfilled">Is Fulfilled</label>
                     <input type="checkbox" class="form-control" name="isFulfilled" id="field_isFulfilled"
@@ -50,38 +56,75 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.memberPromise.totalContribution" for="field_totalContribution">Totatl Contribution</label>
+                    <input type="number" class="form-control" name="totalContribution" id="field_totalContribution"
+                           formControlName="totalContribution"/>
+                </div>
+
+                <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.memberPromise.member" for="field_member">Member</label>
                     <select class="form-control" id="field_member" name="member" formControlName="member">
-                        <option *ngIf="!editForm.get('member').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="memberOption.id === editForm.get('member').value?.id ? editForm.get('member').value : memberOption" *ngFor="let memberOption of members; trackBy: trackMemberById">{{memberOption.firstName}}</option>
+                        <option *ngIf="!editForm.get('member')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="memberOption.id === editForm.get('member')!.value?.id ? editForm.get('member')!.value : memberOption" *ngFor="let memberOption of members; trackBy: trackById">{{ memberOption.firstName }}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('member').invalid && (editForm.get('member').dirty || editForm.get('member').touched)">
+                <div *ngIf="editForm.get('member')!.invalid && (editForm.get('member')!.dirty || editForm.get('member')!.touched)">
                     <small class="form-text text-danger"
-                           *ngIf="editForm.get('member').errors.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('member')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>
+
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.memberPromise.churchActivity" for="field_churchActivity">Church Activity</label>
-                    <select class="form-control" id="field_churchActivity" name="churchActivity" formControlName="churchActivity">
-                        <option *ngIf="!editForm.get('churchActivity').value" [ngValue]="null" selected></option>
-                        <option [ngValue]="churchActivityOption.id === editForm.get('churchActivity').value?.id ? editForm.get('churchActivity').value : churchActivityOption" *ngFor="let churchActivityOption of churchactivities; trackBy: trackChurchActivityById">{{churchActivityOption.name}}</option>
+                    <label class="form-control-label" jhiTranslate="churchApp.memberPromise.financialYear" for="field_financialYear">Financial Year</label>
+                    <select class="form-control" id="field_financialYear" name="financialYear" formControlName="financialYear">
+                        <option *ngIf="!editForm.get('financialYear')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="financialYearOption.id === editForm.get('financialYear')!.value?.id ? editForm.get('financialYear')!.value : financialYearOption" *ngFor="let financialYearOption of financialyears; trackBy: trackById">{{ financialYearOption.name }}</option>
                     </select>
                 </div>
-                <div *ngIf="editForm.get('churchActivity').invalid && (editForm.get('churchActivity').dirty || editForm.get('churchActivity').touched)">
+                <div *ngIf="editForm.get('financialYear')!.invalid && (editForm.get('financialYear')!.dirty || editForm.get('financialYear')!.touched)">
                     <small class="form-text text-danger"
-                           *ngIf="editForm.get('churchActivity').errors.required" jhiTranslate="entity.validation.required">
+                           *ngIf="editForm.get('financialYear')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.memberPromise.church" for="field_church">Church</label>
+                    <select class="form-control" id="field_church" name="church" formControlName="church">
+                        <option *ngIf="!editForm.get('church')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="churchOption.id === editForm.get('church')!.value?.id ? editForm.get('church')!.value : churchOption" *ngFor="let churchOption of churches; trackBy: trackById">{{ churchOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('church')!.invalid && (editForm.get('church')!.dirty || editForm.get('church')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('church')?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="churchApp.memberPromise.periodContributionType" for="field_periodContributionType">Period Contribution Type</label>
+                    <select class="form-control" id="field_periodContributionType" name="periodContributionType" formControlName="periodContributionType">
+                        <option *ngIf="!editForm.get('periodContributionType')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="periodContributionTypeOption.id === editForm.get('periodContributionType')!.value?.id ? editForm.get('periodContributionType')!.value : periodContributionTypeOption" *ngFor="let periodContributionTypeOption of periodcontributiontypes; trackBy: trackById">{{ periodContributionTypeOption.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('periodContributionType')!.invalid && (editForm.get('periodContributionType')!.dirty || editForm.get('periodContributionType')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('periodContributionType')?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                 </div>
             </div>
+
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
+
                 <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
         </form>

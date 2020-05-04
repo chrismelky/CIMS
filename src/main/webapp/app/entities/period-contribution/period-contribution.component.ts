@@ -204,7 +204,6 @@ export class PeriodContributionComponent implements OnInit, OnDestroy {
 
   setFy() {
     this.periodContributions = [];
-
     this.loadPeriods();
   }
 

@@ -1,40 +1,59 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="memberPromise">
-            <h2><span jhiTranslate="churchApp.memberPromise.detail.title">Member Promise</span> {{memberPromise.id}}</h2>
+            <h2><span jhiTranslate="churchApp.memberPromise.detail.title">Member Promise</span> {{ memberPromise.id }}</h2>
+
             <hr>
+
             <church-alert-error></church-alert-error>
+
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="churchApp.memberPromise.promiseDate">Promise Date</span></dt>
                 <dd>
-                    <span>{{memberPromise.promiseDate}}</span>
+                    <span>{{ memberPromise.promiseDate }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.amount">Amount</span></dt>
                 <dd>
-                    <span>{{memberPromise.amount}}</span>
+                    <span>{{ memberPromise.amount }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.otherPromise">Other Promise</span></dt>
                 <dd>
-                    <span>{{memberPromise.otherPromise}}</span>
+                    <span>{{ memberPromise.otherPromise }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.fulfillmentDate">Fulfillment Date</span></dt>
                 <dd>
-                    <span>{{memberPromise.fulfillmentDate}}</span>
+                    <span>{{ memberPromise.fulfillmentDate }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.isFulfilled">Is Fulfilled</span></dt>
                 <dd>
-                    <span>{{memberPromise.isFulfilled}}</span>
+                    <span>{{ memberPromise.isFulfilled }}</span>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.totalContribution">Totatl Contribution</span></dt>
+                <dd>
+                    <span>{{ memberPromise.totalContribution }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.member">Member</span></dt>
                 <dd>
                     <div *ngIf="memberPromise.member">
-                        <a [routerLink]="['/member', memberPromise.member?.id, 'view']">{{memberPromise.member?.firstName}}</a>
+                        <a [routerLink]="['/member', memberPromise.member?.id, 'view']">{{ memberPromise.member?.firstName }}</a>
                     </div>
                 </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.churchActivity">Church Activity</span></dt>
+                <dt><span jhiTranslate="churchApp.memberPromise.financialYear">Financial Year</span></dt>
                 <dd>
-                    <div *ngIf="memberPromise.churchActivity">
-                        <a [routerLink]="['/church-activity', memberPromise.churchActivity?.id, 'view']">{{memberPromise.churchActivity?.name}}</a>
+                    <div *ngIf="memberPromise.financialYear">
+                        <a [routerLink]="['/financial-year', memberPromise.financialYear?.id, 'view']">{{ memberPromise.financialYear?.name }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.church">Church</span></dt>
+                <dd>
+                    <div *ngIf="memberPromise.church">
+                        <a [routerLink]="['/church', memberPromise.church?.id, 'view']">{{ memberPromise.church?.name }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="churchApp.memberPromise.periodContributionType">Period Contribution Type</span></dt>
+                <dd>
+                    <div *ngIf="memberPromise.periodContributionType">
+                        <a [routerLink]="['/period-contribution-type', memberPromise.periodContributionType?.id, 'view']">{{ memberPromise.periodContributionType?.name }}</a>
                     </div>
                 </dd>
             </dl>
@@ -42,13 +61,13 @@
             <button type="submit"
                     (click)="previousState()"
                     class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
             </button>
 
             <button type="button"
                     [routerLink]="['/member-promise', memberPromise.id, 'edit']"
                     class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
             </button>
         </div>
     </div>

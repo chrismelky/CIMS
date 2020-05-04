@@ -1,4 +1,5 @@
 package org.church.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -41,6 +43,9 @@ public class MemberPromise implements Serializable {
     @Column(name = "is_fulfilled")
     private Boolean isFulfilled;
 
+    @Column(name = "total_contribution", precision = 21, scale = 2)
+    private BigDecimal totalContribution;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("memberPromises")
@@ -49,7 +54,17 @@ public class MemberPromise implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("memberPromises")
-    private ChurchActivity churchActivity;
+    private FinancialYear financialYear;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("memberPromises")
+    private Church church;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("memberPromises")
+    private PeriodContributionType periodContributionType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -64,22 +79,12 @@ public class MemberPromise implements Serializable {
         return promiseDate;
     }
 
-    public MemberPromise promiseDate(LocalDate promiseDate) {
-        this.promiseDate = promiseDate;
-        return this;
-    }
-
     public void setPromiseDate(LocalDate promiseDate) {
         this.promiseDate = promiseDate;
     }
 
     public BigDecimal getAmount() {
         return amount;
-    }
-
-    public MemberPromise amount(BigDecimal amount) {
-        this.amount = amount;
-        return this;
     }
 
     public void setAmount(BigDecimal amount) {
@@ -90,22 +95,12 @@ public class MemberPromise implements Serializable {
         return otherPromise;
     }
 
-    public MemberPromise otherPromise(String otherPromise) {
-        this.otherPromise = otherPromise;
-        return this;
-    }
-
     public void setOtherPromise(String otherPromise) {
         this.otherPromise = otherPromise;
     }
 
     public LocalDate getFulfillmentDate() {
         return fulfillmentDate;
-    }
-
-    public MemberPromise fulfillmentDate(LocalDate fulfillmentDate) {
-        this.fulfillmentDate = fulfillmentDate;
-        return this;
     }
 
     public void setFulfillmentDate(LocalDate fulfillmentDate) {
@@ -116,39 +111,48 @@ public class MemberPromise implements Serializable {
         return isFulfilled;
     }
 
-    public MemberPromise isFulfilled(Boolean isFulfilled) {
-        this.isFulfilled = isFulfilled;
-        return this;
-    }
-
     public void setIsFulfilled(Boolean isFulfilled) {
         this.isFulfilled = isFulfilled;
+    }
+
+    public BigDecimal getTotalContribution() {
+        return totalContribution;
+    }
+
+    public void setTotalContribution(BigDecimal totalContribution) {
+        this.totalContribution = totalContribution;
     }
 
     public Member getMember() {
         return member;
     }
 
-    public MemberPromise member(Member member) {
-        this.member = member;
-        return this;
-    }
-
     public void setMember(Member member) {
         this.member = member;
     }
 
-    public ChurchActivity getChurchActivity() {
-        return churchActivity;
+    public FinancialYear getFinancialYear() {
+        return financialYear;
     }
 
-    public MemberPromise churchActivity(ChurchActivity churchActivity) {
-        this.churchActivity = churchActivity;
-        return this;
+    public void setFinancialYear(FinancialYear financialYear) {
+        this.financialYear = financialYear;
     }
 
-    public void setChurchActivity(ChurchActivity churchActivity) {
-        this.churchActivity = churchActivity;
+    public Church getChurch() {
+        return church;
+    }
+
+    public void setChurch(Church church) {
+        this.church = church;
+    }
+
+    public PeriodContributionType getPeriodContributionType() {
+        return periodContributionType;
+    }
+
+    public void setPeriodContributionType(PeriodContributionType periodContributionType) {
+        this.periodContributionType = periodContributionType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -177,6 +181,7 @@ public class MemberPromise implements Serializable {
             ", otherPromise='" + getOtherPromise() + "'" +
             ", fulfillmentDate='" + getFulfillmentDate() + "'" +
             ", isFulfilled='" + isIsFulfilled() + "'" +
+            ", totalContribution=" + getTotalContribution() +
             "}";
     }
 }
