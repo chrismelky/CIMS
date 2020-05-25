@@ -10,37 +10,11 @@
                     <span>{{memberContribution.paymentDate}}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberContribution.amount">Amount</span></dt>
-                <dd>
-                    <span>{{memberContribution.amount}}</span>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberContribution.member">Member</span></dt>
-                <dd>
-                    <div *ngIf="memberContribution.member">
-                        <a [routerLink]="['/member', memberContribution.member?.id, 'view']">{{memberContribution.member?.firstName}}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberContribution.church">Church</span></dt>
-                <dd>
-                    <div *ngIf="memberContribution.church">
-                        <a [routerLink]="['/church', memberContribution.church?.id, 'view']">{{memberContribution.church?.name}}</a>
-                    </div>
-                </dd>
+            
                 <dt><span jhiTranslate="churchApp.memberContribution.paymentMethod">Payment Method</span></dt>
                 <dd>
                     <div *ngIf="memberContribution.paymentMethod">
                         <a [routerLink]="['/payment-method', memberContribution.paymentMethod?.id, 'view']">{{memberContribution.paymentMethod?.name}}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberContribution.promise">Promise</span></dt>
-                <!--<dd>-->
-                    <!--<div *ngIf="memberContribution.promise">-->
-                        <!--<a [routerLink]="['/member-promise', memberContribution.promise?.id, 'view']">{{memberContribution.promise?.name}}</a>-->
-                    <!--</div>-->
-                <!--</dd>-->
-                <dt><span jhiTranslate="churchApp.memberContribution.type">Type</span></dt>
-                <dd>
-                    <div *ngIf="memberContribution.type">
-                        <a [routerLink]="['/contribution-type', memberContribution.type?.id, 'view']">{{memberContribution.type?.name}}</a>
                     </div>
                 </dd>
             </dl>
