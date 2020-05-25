@@ -16,7 +16,6 @@
                 <dd>
                     <span>{{ memberPromise.amount }}</span>
                 </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.otherPromise">Other Promise</span></dt>
                 <dd>
                     <span>{{ memberPromise.otherPromise }}</span>
                 </dd>
@@ -29,34 +28,7 @@
                     <span>{{ memberPromise.isFulfilled }}</span>
                 </dd>
                 <dt><span jhiTranslate="churchApp.memberPromise.totalContribution">Totatl Contribution</span></dt>
-                <dd>
-                    <span>{{ memberPromise.totalContribution }}</span>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.member">Member</span></dt>
-                <dd>
-                    <div *ngIf="memberPromise.member">
-                        <a [routerLink]="['/member', memberPromise.member?.id, 'view']">{{ memberPromise.member?.firstName }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.financialYear">Financial Year</span></dt>
-                <dd>
-                    <div *ngIf="memberPromise.financialYear">
-                        <a [routerLink]="['/financial-year', memberPromise.financialYear?.id, 'view']">{{ memberPromise.financialYear?.name }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.church">Church</span></dt>
-                <dd>
-                    <div *ngIf="memberPromise.church">
-                        <a [routerLink]="['/church', memberPromise.church?.id, 'view']">{{ memberPromise.church?.name }}</a>
-                    </div>
-                </dd>
-                <dt><span jhiTranslate="churchApp.memberPromise.periodContributionType">Period Contribution Type</span></dt>
-                <dd>
-                    <div *ngIf="memberPromise.periodContributionType">
-                        <a [routerLink]="['/period-contribution-type', memberPromise.periodContributionType?.id, 'view']">{{ memberPromise.periodContributionType?.name }}</a>
-                    </div>
-                </dd>
-            </dl>
+                          </dl>
 
             <button type="submit"
                     (click)="previousState()"
