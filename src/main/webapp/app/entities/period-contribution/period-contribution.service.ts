@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import * as moment from 'moment';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
+import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IPeriodContribution } from 'app/shared/model/period-contribution.model';
@@ -46,21 +45,21 @@ export class PeriodContributionService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
-  delete(id: number): Observable<HttpResponse<any>> {
-    return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  delete(id: number): Observable<HttpResponse<{}>> {
+    return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(periodContribution: IPeriodContribution): IPeriodContribution {
     const copy: IPeriodContribution = Object.assign({}, periodContribution, {
       dueDate:
-        periodContribution.dueDate != null && periodContribution.dueDate.isValid() ? periodContribution.dueDate.format(DATE_FORMAT) : null
+        periodContribution.dueDate && periodContribution.dueDate.isValid() ? periodContribution.dueDate.format(DATE_FORMAT) : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.dueDate = res.body.dueDate != null ? moment(res.body.dueDate) : null;
+      res.body.dueDate = res.body.dueDate ? moment(res.body.dueDate) : undefined;
     }
     return res;
   }
@@ -68,7 +67,7 @@ export class PeriodContributionService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((periodContribution: IPeriodContribution) => {
-        periodContribution.dueDate = periodContribution.dueDate != null ? moment(periodContribution.dueDate) : null;
+        periodContribution.dueDate = periodContribution.dueDate ? moment(periodContribution.dueDate) : undefined;
       });
     }
     return res;

@@ -13,4 +13,5 @@ public interface HomeChurchCommunityRepository
     extends JpaRepository<HomeChurchCommunity, Long>,
     JpaSpecificationExecutor<HomeChurchCommunity> {
 
+    HomeChurchCommunity findFirstByNameIgnoreCaseAndChurch_Id(String name, Long churchId);
 }

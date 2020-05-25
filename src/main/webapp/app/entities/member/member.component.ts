@@ -10,6 +10,8 @@ import { AccountService } from 'app/core/auth/account.service';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { MemberService } from './member.service';
+import { FinancialYearService } from '../financial-year/financial-year.service';
+import { FinancialYear } from 'app/shared/model/financial-year.model';
 
 @Component({
   selector: 'church-member',
@@ -31,6 +33,11 @@ export class MemberComponent implements OnInit, OnDestroy {
   reverse: any;
   churchId: number;
   searchText: string;
+  filterBy = 'firstName';
+  fyId: string;
+  isUploading = false;
+  fileToUpload: File;
+  fys: FinancialYear[] = [];
 
   constructor(
     protected memberService: MemberService,
@@ -38,7 +45,8 @@ export class MemberComponent implements OnInit, OnDestroy {
     protected accountService: AccountService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
-    protected eventManager: JhiEventManager
+    protected eventManager: JhiEventManager,
+    protected fyService: FinancialYearService
   ) {
     this.itemsPerPage = ITEMS_PER_PAGE;
     this.routeData = this.activatedRoute.data.subscribe(data => {
@@ -49,8 +57,30 @@ export class MemberComponent implements OnInit, OnDestroy {
     });
   }
 
+  private getSearchKey() {
+    let searchKey = {};
+    switch (this.filterBy) {
+      case 'firstName':
+        searchKey = { 'firstName.contains': this.searchText };
+        break;
+      case 'lastName':
+        searchKey = { 'lastName.contains': this.searchText };
+        break;
+      case 'middleName':
+        searchKey = { 'middleName.contains': this.searchText };
+        break;
+      case 'churchRn':
+        searchKey = { 'churchRn.equals': this.searchText };
+        break;
+      case 'phoneNumber':
+        searchKey = { 'phoneNumber.contains': this.searchText };
+        break;
+    }
+    return searchKey;
+  }
+
   loadAll() {
-    const search = this.searchText ? { 'firstName.contains': this.searchText } : {};
+    const search = this.searchText ? this.getSearchKey() : {};
     const churchFilter = this.churchId === undefined ? {} : { 'churchId.equals': this.churchId };
     this.memberService
       .query({
@@ -75,6 +105,29 @@ export class MemberComponent implements OnInit, OnDestroy {
     }
   }
 
+  onFileChange(files: FileList) {
+    console.error(files);
+    this.fileToUpload = files.item(0);
+  }
+
+  upload() {
+    if (this.fileToUpload === undefined) {
+      console.error('File not selected');
+      return;
+    }
+    this.isUploading = true;
+    this.memberService.upload(this.fileToUpload, this.churchId, this.fyId).subscribe(
+      res => {
+        this.isUploading = false;
+        this.loadAll();
+      },
+      err => {
+        console.error(err);
+        this.isUploading = false;
+      }
+    );
+  }
+
   loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
@@ -83,14 +136,6 @@ export class MemberComponent implements OnInit, OnDestroy {
   }
 
   transition() {
-    const command = this.churchId ? ['/member', this.churchId] : ['/member'];
-    this.router.navigate(command, {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-      }
-    });
     this.loadAll();
   }
 
@@ -106,8 +151,15 @@ export class MemberComponent implements OnInit, OnDestroy {
     this.loadAll();
   }
 
+  loadFys() {
+    this.fyService.query().subscribe(res => {
+      this.fys = res.body;
+    });
+  }
+
   ngOnInit() {
     this.churchId = this.activatedRoute.snapshot.params['churchId'];
+    this.loadFys();
     this.loadAll();
     this.accountService.identity().subscribe(account => {
       this.currentAccount = account;

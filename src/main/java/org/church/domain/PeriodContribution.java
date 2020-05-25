@@ -1,4 +1,5 @@
 package org.church.domain;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -20,6 +22,15 @@ public class PeriodContribution implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public PeriodContribution() {}
+
+    public PeriodContribution(BigDecimal amount, LocalDate endDate, Period p, MemberPromise promise) {
+        this.amountPromised = amount;
+        this.dueDate = endDate;
+        this.period = p;
+        this.memberPromise = promise;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -30,7 +41,7 @@ public class PeriodContribution implements Serializable {
     private BigDecimal amountPromised;
 
     @Column(name = "amount_contributed", precision = 21, scale = 2)
-    private BigDecimal amountContributed;
+    private BigDecimal amountContributed = BigDecimal.valueOf(0);
 
     @Column(name = "description")
     private String description;
@@ -44,20 +55,11 @@ public class PeriodContribution implements Serializable {
     @JsonIgnoreProperties("periodContributions")
     private Period period;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties("periodContributions")
-    private Member member;
+    @JoinColumn(name = "member_promise_id")
+    private MemberPromise memberPromise;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("periodContributions")
-    private Church church;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("periodContributions")
-    private PeriodContributionType periodContributionType;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -133,43 +135,17 @@ public class PeriodContribution implements Serializable {
         this.period = period;
     }
 
-    public Member getMember() {
-        return member;
+    public MemberPromise getMemberPromise() {
+        return memberPromise;
     }
 
-    public PeriodContribution member(Member member) {
-        this.member = member;
+    public PeriodContribution memberPromise(MemberPromise memberPromise) {
+        this.memberPromise = memberPromise;
         return this;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Church getChurch() {
-        return church;
-    }
-
-    public PeriodContribution church(Church church) {
-        this.church = church;
-        return this;
-    }
-
-    public void setChurch(Church church) {
-        this.church = church;
-    }
-
-    public PeriodContributionType getPeriodContributionType() {
-        return periodContributionType;
-    }
-
-    public PeriodContribution periodContributionType(PeriodContributionType periodContributionType) {
-        this.periodContributionType = periodContributionType;
-        return this;
-    }
-
-    public void setPeriodContributionType(PeriodContributionType periodContributionType) {
-        this.periodContributionType = periodContributionType;
+    public void setMemberPromise(MemberPromise memberPromise) {
+        this.memberPromise = memberPromise;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

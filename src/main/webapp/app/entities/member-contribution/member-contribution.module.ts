@@ -9,11 +9,12 @@ import {
   MemberContributionDeletePopupComponent
 } from './member-contribution-delete-dialog.component';
 import { memberContributionPopupRoute, memberContributionRoute } from './member-contribution.route';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 const ENTITY_STATES = [...memberContributionRoute, ...memberContributionPopupRoute];
 
 @NgModule({
-  imports: [ChurchSharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [ChurchSharedModule, NgbDatepickerModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [
     MemberContributionDetailComponent,
     MemberContributionUpdateComponent,

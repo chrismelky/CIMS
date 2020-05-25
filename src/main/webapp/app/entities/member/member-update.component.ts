@@ -3,7 +3,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
@@ -28,6 +28,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
   churchId: number;
   memberId: number;
   churches: IChurch[];
+  member: IMember;
 
   @ViewChild('memberTab', { static: false }) tab: NgbTabset;
 
@@ -44,7 +45,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     firstName: [null, [Validators.required, Validators.maxLength(100)]],
     lastName: [null, [Validators.required, Validators.maxLength(100)]],
     middleName: [null, [Validators.maxLength(100)]],
-    gender: [],
+    gender: [null, [Validators.required]],
     phoneNumber: [],
     email: [],
     dateOfBirth: [],
@@ -68,7 +69,8 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     protected activatedRoute: ActivatedRoute,
     protected homeChurchCommunityService: HomeChurchCommunityService,
     protected periodContribTypeService: PeriodContributionTypeService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected router: Router
   ) {}
 
   ngOnInit() {
@@ -76,6 +78,7 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     this.churchId = this.activatedRoute.snapshot.params['churchId'];
     this.memberId = this.activatedRoute.snapshot.params['id'];
     this.activatedRoute.data.subscribe(({ member }) => {
+      this.member = member;
       this.updateForm(member);
     });
 
@@ -180,7 +183,9 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
     if (member.id !== undefined) {
       this.subscribeToSaveResponse(this.memberService.update(member));
     } else {
-      this.subscribeToSaveResponse(this.memberService.create(member));
+      this.memberService.create(member).subscribe(res => {
+        this.router.navigate(['/member', res.body.id, 'edit', 'byChurch', this.churchId]);
+      });
     }
   }
 
@@ -211,7 +216,14 @@ export class MemberUpdateComponent implements OnInit, AfterViewInit {
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IMember>>) {
-    result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
+    result.subscribe(
+      res => {
+        this.member = res.body;
+        this.updateForm(this.member);
+        this.onSaveSuccess();
+      },
+      () => this.onSaveError()
+    );
   }
 
   protected onSaveSuccess() {

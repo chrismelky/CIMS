@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -57,12 +58,14 @@ public class MemberPromiseResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/member-promises")
+    @Transactional
     public ResponseEntity<MemberPromise> createMemberPromise(@Valid @RequestBody MemberPromise memberPromise) throws URISyntaxException {
         log.debug("REST request to save MemberPromise : {}", memberPromise);
         if (memberPromise.getId() != null) {
             throw new BadRequestAlertException("A new memberPromise cannot already have an ID", ENTITY_NAME, "idexists");
         }
         MemberPromise result = memberPromiseService.save(memberPromise);
+        memberPromiseService.savePeriodPromises(result);
         return ResponseEntity.created(new URI("/api/member-promises/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);

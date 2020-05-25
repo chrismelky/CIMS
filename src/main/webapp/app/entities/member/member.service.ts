@@ -33,6 +33,13 @@ export class MemberService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  upload(file: File, churchId: number, fyId?: string): Observable<EntityResponseType> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('fyId', fyId);
+    return this.http.post(`${this.resourceUrl}/${churchId}/upload`, formData, { observe: 'response' });
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IMember>(`${this.resourceUrl}/${id}`, { observe: 'response' })

@@ -35,6 +35,27 @@ export class FinancialYearResolve implements Resolve<IFinancialYear> {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class FinancialYearIdResolve implements Resolve<IFinancialYear> {
+  constructor(private service: FinancialYearService, private router: Router) {}
+
+  resolve(route: ActivatedRouteSnapshot): Observable<IFinancialYear> | Observable<never> {
+    const id = route.params['financialYearId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        flatMap((financialYear: HttpResponse<FinancialYear>) => {
+          if (financialYear.body) {
+            return of(financialYear.body);
+          } else {
+            return of(undefined);
+          }
+        })
+      );
+    }
+    return of(undefined);
+  }
+}
+
 export const financialYearRoute: Routes = [
   {
     path: '',

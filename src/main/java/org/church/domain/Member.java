@@ -1,5 +1,6 @@
 package org.church.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.church.domain.enumeration.MarriageType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -55,8 +56,21 @@ public class Member implements Serializable {
     @Column(name = "gender")
     private Gender gender;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "marriage_type")
+    private MarriageType marriageType;
+
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Column(name = "phone_number2")
+    private String phoneNumber2;
+
+    @Column(name = "church_elder")
+    private String churchElder;
+
+    @Column(name = "church_elder_phone")
+    private String churchElderPhone;
 
     @Column(name = "email")
     private String email;
@@ -78,17 +92,20 @@ public class Member implements Serializable {
     private String placeOfWork;
 
     @Column(name = "is_active")
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     @Column(name = "is_deceased")
-    private Boolean isDeceased;
+    private Boolean isDeceased = false;
 
     @Column(name = "deceased_date")
     private LocalDate deceasedDate;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<MemberRelative> relatives = new HashSet<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<MemberPromise> memberPromises = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -118,25 +135,16 @@ public class Member implements Serializable {
     })
     private HomeChurchCommunity homeChurchCommunity;
 
-    public HomeChurchCommunity getHomeChurchCommunity() {
-        return homeChurchCommunity;
-    }
-
-    public void setHomeChurchCommunity(HomeChurchCommunity homeChurchCommunity) {
-        this.homeChurchCommunity = homeChurchCommunity;
-    }
-
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.DETACH})
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "member_church_communities",
                joinColumns = @JoinColumn(name = "member_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "church_communities_id", referencedColumnName = "id"))
     private Set<ChurchCommunity> churchCommunities = new HashSet<>();
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<MemberRite> memberRites = new HashSet<>();
-
 
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -282,6 +290,14 @@ public class Member implements Serializable {
         return this;
     }
 
+    public MarriageType getMarriageType() {
+        return marriageType;
+    }
+
+    public void setMarriageType(MarriageType marriageType) {
+        this.marriageType = marriageType;
+    }
+
     public void setWork(String work) {
         this.work = work;
     }
@@ -410,6 +426,15 @@ public class Member implements Serializable {
         return this;
     }
 
+    public HomeChurchCommunity getHomeChurchCommunity() {
+        return homeChurchCommunity;
+    }
+
+    public void setHomeChurchCommunity(HomeChurchCommunity homeChurchCommunity) {
+        this.homeChurchCommunity = homeChurchCommunity;
+    }
+
+
     public Member addMemberRites(MemberRite memberRite) {
         this.memberRites.add(memberRite);
         memberRite.setMember(this);
@@ -433,6 +458,39 @@ public class Member implements Serializable {
     public void setMemberRites(Set<MemberRite> memberRites) {
         this.memberRites = memberRites;
     }
+
+    public Set<MemberPromise> getMemberPromises() {
+        return memberPromises;
+    }
+
+    public void setMemberPromises(Set<MemberPromise> memberPromises) {
+        this.memberPromises = memberPromises;
+    }
+
+    public String getPhoneNumber2() {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2) {
+        this.phoneNumber2 = phoneNumber2;
+    }
+
+    public String getChurchElder() {
+        return churchElder;
+    }
+
+    public void setChurchElder(String churchElder) {
+        this.churchElder = churchElder;
+    }
+
+    public String getChurchElderPhone() {
+        return churchElderPhone;
+    }
+
+    public void setChurchElderPhone(String churchElderPhone) {
+        this.churchElderPhone = churchElderPhone;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

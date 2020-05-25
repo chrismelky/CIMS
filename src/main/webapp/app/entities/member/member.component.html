@@ -1,4 +1,22 @@
 <div>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <select class="form-control" [(ngModel)]="fyId" >
+                <option selected>Select Financial Year</option>
+                <option *ngFor="let f of fys" selected [ngValue]="f.id">{{f.name}}</option>
+            </select>
+        </div>
+        <input class="form-control" 
+          (change)="onFileChange($event.target.files)"
+          type="file" 
+          accept=".csv"  
+          name="file" 
+          placeholder="Upload Members" />
+        <div class="input-group-append">
+            <button [disabled]="fileToUpload === undefined && fyId === undefined" class="btn btn-primary" (click)="upload(si.value)" type="button">Upload</button>
+          </div>
+    </div>
+    <br/>
     <h2 id="page-heading">
         <span jhiTranslate="churchApp.member.home.title">Members</span>
         <button *ngIf="churchId" id="jh-create-entity"
@@ -13,16 +31,26 @@
     <church-alert-error></church-alert-error>
     <church-alert></church-alert>
     <br/>
-    <div class="alert alert-warning" *ngIf="members?.length === 0">
-        <span jhiTranslate="churchApp.member.home.notFound">No members found</span>
-    </div>
+   
     <div class="input-group">
-        <input class="form-control" #si (input)="clearSearch(si.value)"  name="search" placeholder="Search by First Name.." />
+        <div class="input-group-prepend">
+            <select class="form-control" [(ngModel)]="filterBy" >
+                <option selected [ngValue]="'firstName'">First Name</option>
+                <option [ngValue]="'lastName'">Last Name</option>
+                <option [ngValue]="'middleName'">Middle Name</option>
+                <option [ngValue]="'churchRn'">Namba ya Ahadi</option>
+                <option [ngValue]="'phoneNumber'">Phone Number</option>
+            </select>
+        </div>
+        <input class="form-control" #si (input)="clearSearch(si.value)"  name="search" placeholder="Search by {{filterBy}}" />
         <div class="input-group-append">
             <button class="btn btn-primary" (click)="search(si.value)" type="button">Search</button>
           </div>
     </div>
     <br/>
+    <div class="alert alert-warning" *ngIf="members?.length === 0">
+        <span jhiTranslate="churchApp.member.home.notFound">No members found</span>
+    </div>
     <div class="table-responsive" *ngIf="members?.length > 0">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>

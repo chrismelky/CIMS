@@ -38,25 +38,19 @@ public class PeriodContributionCriteria implements Serializable, Criteria {
 
     private LongFilter periodId;
 
-    private LongFilter memberId;
+    private LongFilter memberPromiseId;
 
-    private LongFilter churchId;
-
-    private LongFilter periodContributionTypeId;
-
-    public PeriodContributionCriteria(){
+    public PeriodContributionCriteria() {
     }
 
-    public PeriodContributionCriteria(PeriodContributionCriteria other){
+    public PeriodContributionCriteria(PeriodContributionCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.amountPromised = other.amountPromised == null ? null : other.amountPromised.copy();
         this.amountContributed = other.amountContributed == null ? null : other.amountContributed.copy();
         this.description = other.description == null ? null : other.description.copy();
         this.dueDate = other.dueDate == null ? null : other.dueDate.copy();
         this.periodId = other.periodId == null ? null : other.periodId.copy();
-        this.memberId = other.memberId == null ? null : other.memberId.copy();
-        this.churchId = other.churchId == null ? null : other.churchId.copy();
-        this.periodContributionTypeId = other.periodContributionTypeId == null ? null : other.periodContributionTypeId.copy();
+        this.memberPromiseId = other.memberPromiseId == null ? null : other.memberPromiseId.copy();
     }
 
     @Override
@@ -112,28 +106,12 @@ public class PeriodContributionCriteria implements Serializable, Criteria {
         this.periodId = periodId;
     }
 
-    public LongFilter getMemberId() {
-        return memberId;
+    public LongFilter getMemberPromiseId() {
+        return memberPromiseId;
     }
 
-    public void setMemberId(LongFilter memberId) {
-        this.memberId = memberId;
-    }
-
-    public LongFilter getChurchId() {
-        return churchId;
-    }
-
-    public void setChurchId(LongFilter churchId) {
-        this.churchId = churchId;
-    }
-
-    public LongFilter getPeriodContributionTypeId() {
-        return periodContributionTypeId;
-    }
-
-    public void setPeriodContributionTypeId(LongFilter periodContributionTypeId) {
-        this.periodContributionTypeId = periodContributionTypeId;
+    public void setMemberPromiseId(LongFilter memberPromiseId) {
+        this.memberPromiseId = memberPromiseId;
     }
 
 
@@ -153,9 +131,7 @@ public class PeriodContributionCriteria implements Serializable, Criteria {
             Objects.equals(description, that.description) &&
             Objects.equals(dueDate, that.dueDate) &&
             Objects.equals(periodId, that.periodId) &&
-            Objects.equals(memberId, that.memberId) &&
-            Objects.equals(churchId, that.churchId) &&
-            Objects.equals(periodContributionTypeId, that.periodContributionTypeId);
+            Objects.equals(memberPromiseId, that.memberPromiseId);
     }
 
     @Override
@@ -167,9 +143,7 @@ public class PeriodContributionCriteria implements Serializable, Criteria {
         description,
         dueDate,
         periodId,
-        memberId,
-        churchId,
-        periodContributionTypeId
+        memberPromiseId
         );
     }
 
@@ -182,9 +156,7 @@ public class PeriodContributionCriteria implements Serializable, Criteria {
                 (description != null ? "description=" + description + ", " : "") +
                 (dueDate != null ? "dueDate=" + dueDate + ", " : "") +
                 (periodId != null ? "periodId=" + periodId + ", " : "") +
-                (memberId != null ? "memberId=" + memberId + ", " : "") +
-                (churchId != null ? "churchId=" + churchId + ", " : "") +
-                (periodContributionTypeId != null ? "periodContributionTypeId=" + periodContributionTypeId + ", " : "") +
+                (memberPromiseId != null ? "memberPromiseId=" + memberPromiseId + ", " : "") +
             "}";
     }
 

@@ -11,19 +11,28 @@ import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.*;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,9 +54,15 @@ public class MemberResource {
 
     private final MemberQueryService memberQueryService;
 
-    public MemberResource(MemberService memberService, MemberQueryService memberQueryService) {
+    private final JobLauncher jobLauncher;
+
+    private final Job memberUploadJob;
+
+    public MemberResource(MemberService memberService, MemberQueryService memberQueryService, JobLauncher jobLauncher, Job memberUploadJob) {
         this.memberService = memberService;
         this.memberQueryService = memberQueryService;
+        this.jobLauncher = jobLauncher;
+        this.memberUploadJob = memberUploadJob;
     }
 
     /**
@@ -213,5 +228,29 @@ public class MemberResource {
         log.debug("REST request to delete Member : {}", id);
         memberService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("members/{churchId}/upload")
+    public String uploadData(@RequestParam("file") MultipartFile file, @PathVariable("churchId") Long churchId, @RequestParam("fyId") Long fyId) throws IOException,
+        JobParametersInvalidException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException {
+
+        File tmpFile = File.createTempFile("cim-member",".csv");
+        Files.copy(file.getInputStream(), tmpFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        JobExecution jobExecution = jobLauncher.run(memberUploadJob, new JobParametersBuilder()
+            .addString("filePath", tmpFile.getAbsolutePath())
+            .addLong("time", System.currentTimeMillis())
+            .addLong("churchId", churchId)
+            .addLong("fyId", fyId)
+            .toJobParameters());
+
+        BatchStatus status = jobExecution.getStatus();
+        System.out.println(status);
+        if (status == BatchStatus.FAILED) {
+            return "Error at row " +String.valueOf(jobExecution.getExecutionContext().getInt("Row", 0))+"; column="+ jobExecution.getExecutionContext().getString("Column","");
+        } else {
+            return String.valueOf(BatchStatus.COMPLETED);
+        }
+
     }
 }

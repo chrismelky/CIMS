@@ -26,18 +26,13 @@ type SelectableEntity = IMember | IChurchActivity | IFinancialYear | IChurch | I
 })
 export class MemberPromiseUpdateComponent implements OnInit {
   isSaving = false;
-  members: IMember[] = [];
-  churchactivities: IChurchActivity[] = [];
-  financialyears: IFinancialYear[] = [];
-  churches: IChurch[] = [];
-  periodcontributiontypes: IPeriodContributionType[] = [];
   promiseDateDp: any;
   fulfillmentDateDp: any;
 
   editForm = this.fb.group({
     id: [],
     promiseDate: [null, [Validators.required]],
-    amount: [],
+    amount: [null, Validators.required],
     otherPromise: [],
     fulfillmentDate: [],
     isFulfilled: [],
@@ -60,20 +55,17 @@ export class MemberPromiseUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ memberPromise }) => {
+    this.activatedRoute.data.subscribe(({ memberPromise, church, member, financialYear, type }) => {
+      if (memberPromise.id === undefined) {
+        memberPromise.church = { id: church.id };
+        memberPromise.member = { id: member.id };
+        memberPromise.financialYear = { id: financialYear.id };
+        memberPromise.periodContributionType = { id: type.id };
+        memberPromise.fulfillmentDate = financialYear.endDate;
+        memberPromise.promiseDate = financialYear.startDate;
+        memberPromise.totalContribution = 0;
+      }
       this.updateForm(memberPromise);
-
-      this.memberService.query().subscribe((res: HttpResponse<IMember[]>) => (this.members = res.body || []));
-
-      this.churchActivityService.query().subscribe((res: HttpResponse<IChurchActivity[]>) => (this.churchactivities = res.body || []));
-
-      this.financialYearService.query().subscribe((res: HttpResponse<IFinancialYear[]>) => (this.financialyears = res.body || []));
-
-      this.churchService.query().subscribe((res: HttpResponse<IChurch[]>) => (this.churches = res.body || []));
-
-      this.periodContributionTypeService
-        .query()
-        .subscribe((res: HttpResponse<IPeriodContributionType[]>) => (this.periodcontributiontypes = res.body || []));
     });
   }
 

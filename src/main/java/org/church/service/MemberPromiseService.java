@@ -1,7 +1,13 @@
 package org.church.service;
 
 import org.church.domain.MemberPromise;
+import org.church.domain.Period;
+import org.church.domain.PeriodContribution;
+import org.church.domain.PeriodContributionType;
 import org.church.repository.MemberPromiseRepository;
+import org.church.repository.PeriodContributionRepository;
+import org.church.repository.PeriodContributionTypeRepository;
+import org.church.repository.PeriodRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +16,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,8 +31,17 @@ public class MemberPromiseService {
 
     private final MemberPromiseRepository memberPromiseRepository;
 
-    public MemberPromiseService(MemberPromiseRepository memberPromiseRepository) {
+    private final PeriodRepository periodRepository;
+
+    private final PeriodContributionTypeRepository contributionTypeRepository;
+
+    private final PeriodContributionRepository contributionRepository;
+
+    public MemberPromiseService(MemberPromiseRepository memberPromiseRepository, PeriodRepository periodRepository, PeriodContributionTypeRepository contributionTypeRepository, PeriodContributionRepository contributionRepository) {
         this.memberPromiseRepository = memberPromiseRepository;
+        this.periodRepository = periodRepository;
+        this.contributionTypeRepository = contributionTypeRepository;
+        this.contributionRepository = contributionRepository;
     }
 
     /**
@@ -36,6 +53,25 @@ public class MemberPromiseService {
     public MemberPromise save(MemberPromise memberPromise) {
         log.debug("Request to save MemberPromise : {}", memberPromise);
         return memberPromiseRepository.save(memberPromise);
+    }
+
+    public MemberPromise savePeriodPromises(MemberPromise promise) {
+        PeriodContributionType contributionType = contributionTypeRepository.getOne(promise.getPeriodContributionType().getId());
+        List<Period> periods = periodRepository
+            .findByFinancialYear_IdAndType_Id(promise.getFinancialYear().getId(), contributionType.getPeriodType().getId());
+
+        BigDecimal amount = BigDecimal.valueOf(0);
+        if (periods.size() > 0) {
+            amount = promise.getAmount().divide(BigDecimal.valueOf(periods.size()), 2);
+        }
+        final BigDecimal  finalAmount = amount;
+        periods.forEach(p -> {
+            PeriodContribution periodContribution = new PeriodContribution(finalAmount, p.getEndDate(), p, promise);
+            contributionRepository.save(periodContribution);
+            promise.getPeriodContributions().add(periodContribution);
+        });
+
+        return promise;
     }
 
     /**

@@ -90,6 +90,8 @@ public class MemberQueryService extends QueryService<Member> {
             }
             if (criteria.getLastName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLastName(), Member_.lastName));
+            }if (criteria.getChurchRn() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getChurchRn(), Member_.churchRn));
             }
             if (criteria.getMiddleName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getMiddleName(), Member_.middleName));

@@ -20,6 +20,7 @@ import { UserManagementUpdateComponent } from 'app/admin/user-management/user-ma
 import { PeriodContributionTypeComponent } from 'app/entities/period-contribution-type/period-contribution-type.component';
 import { WeekPickComponent } from './week-pick/week-pick.component';
 import { MemberPromiseComponent } from 'app/entities/member-promise/member-promise.component';
+import { MemberPromiseDeleteDialogComponent } from 'app/entities/member-promise/member-promise-delete-dialog.component';
 
 @NgModule({
   imports: [ChurchSharedLibsModule, RouterModule],
@@ -35,6 +36,7 @@ import { MemberPromiseComponent } from 'app/entities/member-promise/member-promi
     MemberContributionComponent,
     PeriodContributionComponent,
     MemberPromiseComponent,
+    MemberPromiseDeleteDialogComponent,
     PeriodContributionItemComponent,
     ChuchServiceComponent,
     ChurchActivityComponent,
@@ -44,7 +46,7 @@ import { MemberPromiseComponent } from 'app/entities/member-promise/member-promi
     PeriodContributionTypeComponent,
     WeekPickComponent
   ],
-  entryComponents: [ChurchLoginModalComponent],
+  entryComponents: [ChurchLoginModalComponent, MemberPromiseDeleteDialogComponent],
   exports: [
     ChurchSharedLibsModule,
     FindLanguageFromKeyPipe,
@@ -58,6 +60,7 @@ import { MemberPromiseComponent } from 'app/entities/member-promise/member-promi
     MemberContributionComponent,
     PeriodContributionComponent,
     MemberPromiseComponent,
+    MemberPromiseDeleteDialogComponent,
     PeriodContributionItemComponent,
     ChuchServiceComponent,
     ChurchActivityComponent,

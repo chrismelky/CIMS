@@ -2,10 +2,10 @@
   "churchApp": {
     "periodContribution": {
       "home": {
-        "title": "Contribution Promise",
-        "createLabel": "Add Promise",
-        "createOrEditLabel": "Create or edit a Period Contribution Promise",
-        "notFound": "No Period Contributions Promise found"
+        "title": "Period Contributions",
+        "createLabel": "Create a new Period Contribution",
+        "createOrEditLabel": "Create or edit a Period Contribution",
+        "notFound": "No Period Contributions found"
       },
       "created": "A new Period Contribution is created with identifier {{ param }}",
       "updated": "A Period Contribution is updated with identifier {{ param }}",
@@ -21,9 +21,7 @@
       "description": "Description",
       "dueDate": "Due Date",
       "period": "Period",
-      "member": "Member",
-      "church": "Church",
-      "periodContributionType": "Period Contribution Type"
+      "memberPromise": "Member Promise"
     }
   }
 }

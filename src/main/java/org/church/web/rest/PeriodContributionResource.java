@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,9 +92,7 @@ public class PeriodContributionResource {
     /**
      * {@code GET  /period-contributions} : get all the periodContributions.
      *
-
      * @param pageable the pagination information.
-
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of periodContributions in body.
      */
@@ -108,11 +105,11 @@ public class PeriodContributionResource {
     }
 
     /**
-    * {@code GET  /period-contributions/count} : count all the periodContributions.
-    *
-    * @param criteria the criteria which the requested entities should match.
-    * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
-    */
+     * {@code GET  /period-contributions/count} : count all the periodContributions.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
     @GetMapping("/period-contributions/count")
     public ResponseEntity<Long> countPeriodContributions(PeriodContributionCriteria criteria) {
         log.debug("REST request to count PeriodContributions by criteria: {}", criteria);
@@ -130,6 +127,13 @@ public class PeriodContributionResource {
         log.debug("REST request to get PeriodContribution : {}", id);
         Optional<PeriodContribution> periodContribution = periodContributionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(periodContribution);
+    }
+
+    @GetMapping("/period-contributions/by-promise/{memberPromiseId}")
+    public ResponseEntity<List<PeriodContribution>> getByPromise(@PathVariable Long memberPromiseId) {
+        log.debug("REST request to get PeriodContribution : {}", memberPromiseId);
+        List<PeriodContribution> periodContribution = periodContributionService.findByPromise(memberPromiseId);
+        return ResponseEntity.ok().body(periodContribution);
     }
 
     /**

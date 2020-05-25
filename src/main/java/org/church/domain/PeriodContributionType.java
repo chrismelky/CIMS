@@ -27,6 +27,9 @@ public class PeriodContributionType implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "code")
+    private String code;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("periodContributionTypes")
@@ -77,6 +80,14 @@ public class PeriodContributionType implements Serializable {
     public PeriodContributionType periodType(PeriodType periodType) {
         this.periodType = periodType;
         return this;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public void setPeriodType(PeriodType periodType) {

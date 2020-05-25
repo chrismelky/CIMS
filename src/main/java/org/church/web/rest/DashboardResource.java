@@ -25,14 +25,14 @@ public class DashboardResource {
         return dashboardRepository.getContribution(churchId, financialYearId);
     }
 
-    @GetMapping("/member-contribution/{churchId}/{periodId}/{typeId}")
+    @GetMapping("/member-contribution/{churchId}/{financialYearId}/{typeId}")
     public List<MemberContributionDashboard> getMemberContr(@PathVariable Long churchId,
-                                                            @PathVariable Long periodId,
+                                                            @PathVariable Long financialYearId,
                                                             @PathVariable Long typeId,
                                                             @RequestParam(defaultValue = "false") Boolean overDue,
                                                             Pageable pageable) {
         int pageNumber = pageable.getPageNumber() + 1;
         return dashboardRepository.getMemberContr(churchId,
-            periodId,typeId, pageNumber, pageable.getPageSize(), overDue);
+            financialYearId,typeId, pageNumber, pageable.getPageSize(), overDue);
     }
 }

@@ -2,25 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { ChurchSharedModule } from 'app/shared/shared.module';
+import { PeriodContributionComponent } from './period-contribution.component';
 import { PeriodContributionDetailComponent } from './period-contribution-detail.component';
 import { PeriodContributionUpdateComponent } from './period-contribution-update.component';
-import {
-  PeriodContributionDeleteDialogComponent,
-  PeriodContributionDeletePopupComponent
-} from './period-contribution-delete-dialog.component';
-import { periodContributionPopupRoute, periodContributionRoute } from './period-contribution.route';
-import { ChurchPeriodContributionItemModule } from 'app/entities/period-contribution-item/period-contribution-item.module';
-import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-
-const ENTITY_STATES = [...periodContributionRoute, ...periodContributionPopupRoute];
+import { PeriodContributionDeleteDialogComponent } from './period-contribution-delete-dialog.component';
+import { periodContributionRoute } from './period-contribution.route';
 
 @NgModule({
-  imports: [ChurchSharedModule, NgbDatepickerModule, ChurchPeriodContributionItemModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [ChurchSharedModule, RouterModule.forChild(periodContributionRoute)],
   declarations: [
+    PeriodContributionComponent,
     PeriodContributionDetailComponent,
     PeriodContributionUpdateComponent,
-    PeriodContributionDeleteDialogComponent,
-    PeriodContributionDeletePopupComponent
+    PeriodContributionDeleteDialogComponent
   ],
   entryComponents: [PeriodContributionDeleteDialogComponent]
 })

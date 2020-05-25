@@ -6,9 +6,8 @@ import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { IMemberContribution, MemberContribution } from 'app/shared/model/member-contribution.model';
 import { MemberContributionService } from './member-contribution.service';
-import { MemberContributionDetailComponent } from './member-contribution-detail.component';
 import { MemberContributionUpdateComponent } from './member-contribution-update.component';
-import { MemberIdResolve } from 'app/entities/member/member.route';
+import { MemberPromiseIdResolve } from '../member-promise/member-promise.route';
 
 @Injectable({ providedIn: 'root' })
 export class MemberContributionResolve implements Resolve<IMemberContribution> {
@@ -28,10 +27,11 @@ export class MemberContributionResolve implements Resolve<IMemberContribution> {
 
 export const memberContributionRoute: Routes = [
   {
-    path: ':id/view',
-    component: MemberContributionDetailComponent,
+    path: ':memberPromiseId/new',
+    component: MemberContributionUpdateComponent,
     resolve: {
-      memberContribution: MemberContributionResolve
+      memberContribution: MemberContributionResolve,
+      memberPromise: MemberPromiseIdResolve
     },
     data: {
       authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
@@ -40,24 +40,11 @@ export const memberContributionRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':memberId/new',
+    path: ':memberPromiseId/:id/edit',
     component: MemberContributionUpdateComponent,
     resolve: {
       memberContribution: MemberContributionResolve,
-      member: MemberIdResolve
-    },
-    data: {
-      authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],
-      pageTitle: 'churchApp.memberContribution.home.title'
-    },
-    canActivate: [UserRouteAccessService]
-  },
-  {
-    path: ':memberId/:id/edit',
-    component: MemberContributionUpdateComponent,
-    resolve: {
-      memberContribution: MemberContributionResolve,
-      member: MemberIdResolve
+      memberPromise: MemberPromiseIdResolve
     },
     data: {
       authorities: ['ROLE_ADMIN', 'ROLE_CHURCH_ADMIN'],

@@ -32,15 +32,9 @@ public class MemberContributionCriteria implements Serializable, Criteria {
 
     private BigDecimalFilter amount;
 
-    private LongFilter memberId;
-
-    private LongFilter churchId;
-
     private LongFilter paymentMethodId;
 
     private LongFilter promiseId;
-
-    private LongFilter typeId;
 
     public MemberContributionCriteria(){
     }
@@ -49,11 +43,8 @@ public class MemberContributionCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.paymentDate = other.paymentDate == null ? null : other.paymentDate.copy();
         this.amount = other.amount == null ? null : other.amount.copy();
-        this.memberId = other.memberId == null ? null : other.memberId.copy();
-        this.churchId = other.churchId == null ? null : other.churchId.copy();
         this.paymentMethodId = other.paymentMethodId == null ? null : other.paymentMethodId.copy();
         this.promiseId = other.promiseId == null ? null : other.promiseId.copy();
-        this.typeId = other.typeId == null ? null : other.typeId.copy();
     }
 
     @Override
@@ -85,22 +76,6 @@ public class MemberContributionCriteria implements Serializable, Criteria {
         this.amount = amount;
     }
 
-    public LongFilter getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(LongFilter memberId) {
-        this.memberId = memberId;
-    }
-
-    public LongFilter getChurchId() {
-        return churchId;
-    }
-
-    public void setChurchId(LongFilter churchId) {
-        this.churchId = churchId;
-    }
-
     public LongFilter getPaymentMethodId() {
         return paymentMethodId;
     }
@@ -117,15 +92,6 @@ public class MemberContributionCriteria implements Serializable, Criteria {
         this.promiseId = promiseId;
     }
 
-    public LongFilter getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(LongFilter typeId) {
-        this.typeId = typeId;
-    }
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -139,11 +105,8 @@ public class MemberContributionCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(paymentDate, that.paymentDate) &&
             Objects.equals(amount, that.amount) &&
-            Objects.equals(memberId, that.memberId) &&
-            Objects.equals(churchId, that.churchId) &&
             Objects.equals(paymentMethodId, that.paymentMethodId) &&
-            Objects.equals(promiseId, that.promiseId) &&
-            Objects.equals(typeId, that.typeId);
+            Objects.equals(promiseId, that.promiseId);
     }
 
     @Override
@@ -152,11 +115,8 @@ public class MemberContributionCriteria implements Serializable, Criteria {
         id,
         paymentDate,
         amount,
-        memberId,
-        churchId,
         paymentMethodId,
-        promiseId,
-        typeId
+        promiseId
         );
     }
 
@@ -166,11 +126,8 @@ public class MemberContributionCriteria implements Serializable, Criteria {
                 (id != null ? "id=" + id + ", " : "") +
                 (paymentDate != null ? "paymentDate=" + paymentDate + ", " : "") +
                 (amount != null ? "amount=" + amount + ", " : "") +
-                (memberId != null ? "memberId=" + memberId + ", " : "") +
-                (churchId != null ? "churchId=" + churchId + ", " : "") +
                 (paymentMethodId != null ? "paymentMethodId=" + paymentMethodId + ", " : "") +
                 (promiseId != null ? "promiseId=" + promiseId + ", " : "") +
-                (typeId != null ? "typeId=" + typeId + ", " : "") +
             "}";
     }
 

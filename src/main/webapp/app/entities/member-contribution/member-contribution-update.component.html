@@ -46,20 +46,6 @@
                         This field is required.
                     </small>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.memberContribution.promise" for="field_promise">Promise</label>
-                    <select class="form-control" id="field_promise" name="promise" formControlName="promise">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="memberPromiseOption.id === editForm.get('promise').value?.id ? editForm.get('promise').value : memberPromiseOption" *ngFor="let memberPromiseOption of memberpromises; trackBy: trackMemberPromiseById">{{memberPromiseOption.name}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="churchApp.memberContribution.type" for="field_type">Type</label>
-                    <select class="form-control" id="field_type" name="type" formControlName="type">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="contributionTypeOption.id === editForm.get('type').value?.id ? editForm.get('type').value : contributionTypeOption" *ngFor="let contributionTypeOption of contributiontypes; trackBy: trackContributionTypeById">{{contributionTypeOption.name}}</option>
-                    </select>
-                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

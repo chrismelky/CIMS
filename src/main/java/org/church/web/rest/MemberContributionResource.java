@@ -24,6 +24,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,6 +107,14 @@ public class MemberContributionResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
+
+    @GetMapping("/member-contributions/by-promise/{pId}")
+        public ResponseEntity<List<MemberContribution>> getByPromise(@PathVariable("pId") Long pId, @RequestParam(name = "paymentDate", required = false) LocalDate date, Pageable pageable) {
+            log.debug("REST request to get MemberContributions by promiseId: {}", pId);
+            Page<MemberContribution> page = memberContributionQueryService.findByPromise(pId, date, pageable);
+            HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+            return ResponseEntity.ok().headers(headers).body(page.getContent());
+        }
 
     /**
     * {@code GET  /member-contributions/count} : count all the memberContributions.

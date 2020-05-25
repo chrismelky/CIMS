@@ -9,7 +9,7 @@ import { memberPromiseRoute } from './member-promise.route';
 
 @NgModule({
   imports: [ChurchSharedModule, RouterModule.forChild(memberPromiseRoute)],
-  declarations: [MemberPromiseDetailComponent, MemberPromiseUpdateComponent, MemberPromiseDeleteDialogComponent],
-  entryComponents: [MemberPromiseDeleteDialogComponent]
+  declarations: [MemberPromiseDetailComponent, MemberPromiseUpdateComponent],
+  entryComponents: []
 })
 export class ChurchMemberPromiseModule {}

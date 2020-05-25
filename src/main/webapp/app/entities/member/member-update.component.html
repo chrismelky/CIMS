@@ -1,5 +1,9 @@
 <div class="row justify-content-center">
-    <h2 id="church-member-heading" jhiTranslate="churchApp.member.home.createOrEditLabel">Create or edit a Member</h2>
+    <h2 id="church-member-heading" class="text-center" >
+        <span jhiTranslate="churchApp.member.home.createOrEditLabel">Create or edit a Member</span>
+        <br/>
+        <span *ngIf="member.id">({{member.firstName}} {{member.middleName}} {{member.lastName}})</span>
+    </h2>
     <ngb-tabset class="col-12" #memberTab="ngbTabset"
                 (tabChange)="setSelectedTab($event)">
         <ngb-tab title="Basic Info" id="basicInfo">
@@ -88,6 +92,13 @@
                                         <option value="Male">{{'churchApp.Gender.Male' | translate}}</option>
                                         <option value="Female">{{'churchApp.Gender.Female' | translate}}</option>
                                     </select>
+                                    <div *ngIf="editForm.get('gender').invalid && (editForm.get('gender').dirty || editForm.get('gender').touched)">
+                                        <small *ngIf="editForm.get('gender').errors.required"
+                                               class="form-text text-danger" jhiTranslate="entity.validation.required">
+                                            This field is required.
+                                        </small>
+                                    
+                                    </div>
                                 </div>
 
                                 <div class="form-group col-sm-12 col-md-3">
@@ -204,17 +215,18 @@
                 </div>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Relatives" id="relatives" >
+        <ngb-tab *ngIf="member.id" title="Relatives" id="relatives" >
             <ng-template ngbTabContent>
                <church-member-relative></church-member-relative>
             </ng-template>
         </ngb-tab>
-        <ngb-tab title="Rites" id="rites">
+        <ngb-tab  *ngIf="member.id" title="Rites" id="rites">
             <ng-template ngbTabContent>
               <church-member-rite></church-member-rite>
             </ng-template>
         </ngb-tab>
-        <ngb-tab *ngFor="let c of periodContributionTypes"
+        <ng-container  *ngIf="member.id">
+        <ngb-tab  *ngFor="let c of periodContributionTypes"
                  [title]="c.name"  [id]="c.id.toString()">
             <ng-template ngbTabContent>
                 <church-member-promise 
@@ -223,5 +235,6 @@
                 </church-member-promise>
             </ng-template>
         </ngb-tab>
+      </ng-container>
     </ngb-tabset>
 </div>

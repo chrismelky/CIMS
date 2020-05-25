@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -50,7 +51,6 @@ public class PeriodContributionService {
         return periodContributionRepository.findAll(pageable);
     }
 
-
     /**
      * Get one periodContribution by id.
      *
@@ -61,6 +61,12 @@ public class PeriodContributionService {
     public Optional<PeriodContribution> findOne(Long id) {
         log.debug("Request to get PeriodContribution : {}", id);
         return periodContributionRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PeriodContribution> findByPromise(Long memberPromiseId) {
+        log.debug("Request to get PeriodContribution : {}", memberPromiseId);
+        return periodContributionRepository.findByMemberPromise_Id(memberPromiseId);
     }
 
     /**

@@ -7,7 +7,7 @@
         Added the constraints for entity MemberContribution.
     -->
     <changeSet id="20191103090736-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="member_id"
                                  baseTableName="member_contribution"
                                  constraintName="fk_member_contribution_member_id"
@@ -38,5 +38,16 @@
                                  referencedColumnNames="id"
                                  referencedTableName="contribution_type"/>
 
+    </changeSet>
+
+    <changeSet id="20191103090736-4" author="chris">
+        <dropColumn tableName="member_contribution" columnName="member_id" />
+        <dropColumn tableName="member_contribution" columnName="church_id" />
+        <dropColumn tableName="member_contribution" columnName="type_id" />
+    </changeSet>
+    <changeSet id="20191103090736-5" author="chris">
+        <renameColumn tableName="member_contribution"
+                      oldColumnName="promise_id"
+                      newColumnName="member_promise_id"/>
     </changeSet>
 </databaseChangeLog>

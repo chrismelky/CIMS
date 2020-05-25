@@ -1,89 +1,83 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="churchApp.memberContribution.home.title">Member Contributions</span>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-member-contribution"
-                [routerLink]="['/member-contribution', member.id , 'new']">
-            <fa-icon [icon]="'plus'"></fa-icon>
-            <span  jhiTranslate="churchApp.memberContribution.home.createLabel">
-            Create a new Member Contribution
-            </span>
-        </button>
-    </h2>
-    <church-alert-error></church-alert-error>
-    <church-alert></church-alert>
-    <br/>
-    <div class="alert alert-warning" *ngIf="memberContributions?.length === 0">
-        <span jhiTranslate="churchApp.memberContribution.home.notFound">No memberContributions found</span>
+<div  class="row">
+    <div class="col-2">
+        <ul class="list-group list-group-horizontal-sm datep">
+            <button type="button" [ngClass]="{'active': !byDate}" (click)="setPicker(false)" class="list-group-item list-group-item-action">All Dates</button>
+            <button type="button" [ngClass]="{'active': byDate}" (click)="setPicker(true)" class="list-group-item list-group-item-action">Selected</button>
+        </ul>
+        <br/>
+        <ngb-datepicker *ngIf="showDatePicker" 
+                        [maxDate]="maxdate"
+                        [markDisabled]="isDisabled"
+                        [(ngModel)]="selectedPickerDate"
+                        (select)="onDateSelect($event)">
+        </ngb-datepicker>
     </div>
-    <div class="table-responsive" *ngIf="memberContributions?.length > 0">
-        <table class="table table-striped" aria-describedby="page-heading">
-            <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="paymentDate"><span jhiTranslate="churchApp.memberContribution.paymentDate">Payment Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="amount"><span jhiTranslate="churchApp.memberContribution.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="paymentMethod.name"><span jhiTranslate="churchApp.memberContribution.paymentMethod">Payment Method</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="promise.name"><span jhiTranslate="churchApp.memberContribution.promise">Promise</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="type.name"><span jhiTranslate="churchApp.memberContribution.type">Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let memberContribution of memberContributions ;trackBy: trackId">
-                <td><a [routerLink]="['/member-contribution', memberContribution.id, 'view' ]">{{memberContribution.id}}</a></td>
-                <td>{{memberContribution.paymentDate | date:'mediumDate'}}</td>
-                <td>{{memberContribution.amount}}</td>
-                <td>
-                    <div *ngIf="memberContribution.paymentMethod">
-                        <a [routerLink]="['/payment-method', memberContribution.paymentMethod?.id, 'view' ]" >{{memberContribution.paymentMethod?.name}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="memberContribution.promise">
-                        <a [routerLink]="['/member-promise', memberContribution.promise?.id, 'view' ]" >{{memberContribution.promise?.name}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="memberContribution.type">
-                        <a [routerLink]="['/contribution-type', memberContribution.type?.id, 'view' ]" >{{memberContribution.type?.name}}</a>
-                    </div>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit"
-                                [routerLink]="['/member-contribution', member.id, memberContribution.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/member-contribution', member.id, memberContribution.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                (click)="openDeleteDialog(confirmDelete, memberContribution.id)"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div [hidden]="memberContributions?.length === 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    <div class="col-10">
+        <h2 id="page-heading">
+            <span jhiTranslate="churchApp.memberContribution.home.title">Member Contributions</span>
+            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-member-contribution"
+                    [routerLink]="['/member-contribution', memberPromiseId , 'new']">
+                <fa-icon [icon]="'plus'"></fa-icon>
+                <span  jhiTranslate="churchApp.memberContribution.home.createLabel">
+                Create a new Member Contribution
+                </span>
+            </button>
+        </h2>
+        <church-alert-error></church-alert-error>
+        <church-alert></church-alert>
+        <br/>
+        <div class="alert alert-warning" *ngIf="memberContributions?.length === 0">
+            <span jhiTranslate="churchApp.memberContribution.home.notFound">No memberContributions found</span>
         </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        <div class="table-responsive" *ngIf="memberContributions?.length > 0">
+            <table class="table table-striped" aria-describedby="page-heading">
+                <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th scope="col"  jhiSortBy="paymentDate"><span jhiTranslate="churchApp.memberContribution.paymentDate">Payment Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="paymentMethod.name"><span jhiTranslate="churchApp.memberContribution.paymentMethod">Payment Method</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th class="text-right" scope="col"  jhiSortBy="amount"><span jhiTranslate="churchApp.memberContribution.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let memberContribution of memberContributions ;trackBy: trackId">
+                    <td>{{memberContribution.paymentDate | date:'mediumDate'}}</td>
+                    <td>
+                        <div *ngIf="memberContribution.paymentMethod">
+                            <a [routerLink]="['/payment-method', memberContribution.paymentMethod?.id, 'view' ]" >{{memberContribution.paymentMethod?.name}}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">{{memberContribution.amount | currency:' '}}</td>        
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/member-contribution', memberPromiseId, memberContribution.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit"
+                                    (click)="openDeleteDialog(confirmDelete, memberContribution.id)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div [hidden]="memberContributions?.length === 0">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
         </div>
     </div>
 </div>
-
 <ng-template #confirmDelete let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Delete Contribution</h4>

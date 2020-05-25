@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface ChurchRepository extends JpaRepository<Church, Long>, JpaSpecificationExecutor<Church> {
-
+  // Church findFirst();
 }

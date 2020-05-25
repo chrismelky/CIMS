@@ -8,17 +8,15 @@ import { IPeriodContribution } from 'app/shared/model/period-contribution.model'
   templateUrl: './period-contribution-detail.component.html'
 })
 export class PeriodContributionDetailComponent implements OnInit {
-  periodContribution: IPeriodContribution;
+  periodContribution: IPeriodContribution | null = null;
 
   constructor(protected activatedRoute: ActivatedRoute) {}
 
-  ngOnInit() {
-    this.activatedRoute.data.subscribe(({ periodContribution }) => {
-      this.periodContribution = periodContribution;
-    });
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe(({ periodContribution }) => (this.periodContribution = periodContribution));
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 }

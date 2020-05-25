@@ -10,15 +10,13 @@ import { JhiAlertService } from 'ng-jhipster';
 import { IMemberContribution, MemberContribution } from 'app/shared/model/member-contribution.model';
 import { MemberContributionService } from './member-contribution.service';
 import { IMember } from 'app/shared/model/member.model';
-import { MemberService } from 'app/entities/member/member.service';
 import { IChurch } from 'app/shared/model/church.model';
-import { ChurchService } from 'app/entities/church/church.service';
 import { IPaymentMethod } from 'app/shared/model/payment-method.model';
 import { PaymentMethodService } from 'app/entities/payment-method/payment-method.service';
 import { IMemberPromise } from 'app/shared/model/member-promise.model';
-import { MemberPromiseService } from 'app/entities/member-promise/member-promise.service';
 import { IContributionType } from 'app/shared/model/contribution-type.model';
-import { ContributionTypeService } from 'app/entities/contribution-type/contribution-type.service';
+import * as moment from 'moment';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'church-member-contribution-update',
@@ -29,42 +27,42 @@ export class MemberContributionUpdateComponent implements OnInit {
 
   paymentmethods: IPaymentMethod[];
 
-  memberpromises: IMemberPromise[];
-
-  contributiontypes: IContributionType[];
   paymentDateDp: any;
 
-  member: IMember;
+  memberPromise: IMember;
+
+  selectedDate: any;
 
   editForm = this.fb.group({
     id: [],
     paymentDate: [],
     amount: [null, [Validators.required]],
-    member: [null, Validators.required],
-    church: [null, Validators.required],
-    paymentMethod: [null, Validators.required],
-    promise: [],
-    type: []
+    memberPromise: [null, Validators.required],
+    paymentMethod: [null, Validators.required]
   });
 
   constructor(
     protected jhiAlertService: JhiAlertService,
     protected memberContributionService: MemberContributionService,
-    protected memberService: MemberService,
-    protected churchService: ChurchService,
     protected paymentMethodService: PaymentMethodService,
-    protected memberPromiseService: MemberPromiseService,
-    protected contributionTypeService: ContributionTypeService,
     protected activatedRoute: ActivatedRoute,
+    protected sessionStorage: SessionStorageService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.selectedDate = this.sessionStorage.retrieve('piDate');
+    console.error(this.selectedDate);
+  }
 
   ngOnInit() {
+    console.error(this.selectedDate);
     this.isSaving = false;
-    this.activatedRoute.data.subscribe(({ memberContribution, member }) => {
-      this.member = member;
-      memberContribution.member = { id: this.member.id };
-      memberContribution.church = memberContribution.church ? { id: memberContribution.church.id } : { id: this.member.church.id };
+    this.activatedRoute.data.subscribe(({ memberContribution, memberPromise }) => {
+      this.memberPromise = memberPromise;
+      memberContribution.memberPromise = { id: this.memberPromise.id };
+      if (memberContribution.id === undefined) {
+        memberContribution.paymentDate = this.selectedDate !== undefined ? moment(this.selectedDate) : null;
+      }
+      console.error(memberContribution);
       this.updateForm(memberContribution);
     });
     this.paymentMethodService
@@ -74,20 +72,6 @@ export class MemberContributionUpdateComponent implements OnInit {
         map((response: HttpResponse<IPaymentMethod[]>) => response.body)
       )
       .subscribe((res: IPaymentMethod[]) => (this.paymentmethods = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.memberPromiseService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IMemberPromise[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IMemberPromise[]>) => response.body)
-      )
-      .subscribe((res: IMemberPromise[]) => (this.memberpromises = res), (res: HttpErrorResponse) => this.onError(res.message));
-    this.contributionTypeService
-      .query()
-      .pipe(
-        filter((mayBeOk: HttpResponse<IContributionType[]>) => mayBeOk.ok),
-        map((response: HttpResponse<IContributionType[]>) => response.body)
-      )
-      .subscribe((res: IContributionType[]) => (this.contributiontypes = res), (res: HttpErrorResponse) => this.onError(res.message));
   }
 
   updateForm(memberContribution: IMemberContribution) {
@@ -95,11 +79,8 @@ export class MemberContributionUpdateComponent implements OnInit {
       id: memberContribution.id,
       paymentDate: memberContribution.paymentDate,
       amount: memberContribution.amount,
-      member: memberContribution.member,
-      church: memberContribution.church,
-      paymentMethod: memberContribution.paymentMethod,
-      promise: memberContribution.promise,
-      type: memberContribution.type
+      memberPromise: memberContribution.memberPromise,
+      paymentMethod: memberContribution.paymentMethod
     });
   }
 
@@ -123,11 +104,8 @@ export class MemberContributionUpdateComponent implements OnInit {
       id: this.editForm.get(['id']).value,
       paymentDate: this.editForm.get(['paymentDate']).value,
       amount: this.editForm.get(['amount']).value,
-      member: this.editForm.get(['member']).value,
-      church: this.editForm.get(['church']).value,
-      paymentMethod: this.editForm.get(['paymentMethod']).value,
-      promise: this.editForm.get(['promise']).value,
-      type: this.editForm.get(['type']).value
+      memberPromise: this.editForm.get(['memberPromise']).value,
+      paymentMethod: this.editForm.get(['paymentMethod']).value
     };
   }
 

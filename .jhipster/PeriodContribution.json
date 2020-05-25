@@ -36,33 +36,10 @@
             "otherEntityRelationshipName": "periodContribution"
         },
         {
-            "relationshipName": "member",
-            "otherEntityName": "member",
+            "relationshipName": "memberPromise",
+            "otherEntityName": "memberPromise",
             "relationshipType": "many-to-one",
-            "relationshipValidateRules": [
-                "required"
-            ],
-            "otherEntityField": "firstName",
-            "otherEntityRelationshipName": "periodContribution"
-        },
-        {
-            "relationshipName": "church",
-            "otherEntityName": "church",
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": [
-                "required"
-            ],
-            "otherEntityField": "name",
-            "otherEntityRelationshipName": "periodContribution"
-        },
-        {
-            "relationshipName": "periodContributionType",
-            "otherEntityName": "periodContributionType",
-            "relationshipType": "many-to-one",
-            "relationshipValidateRules": [
-                "required"
-            ],
-            "otherEntityField": "name",
+            "otherEntityField": "id",
             "otherEntityRelationshipName": "periodContribution"
         }
     ],

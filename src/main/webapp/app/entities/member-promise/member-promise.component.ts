@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,6 +11,8 @@ import { MemberPromiseService } from './member-promise.service';
 import { MemberPromiseDeleteDialogComponent } from './member-promise-delete-dialog.component';
 import { IFinancialYear } from 'app/shared/model/financial-year.model';
 import { FinancialYearService } from '../financial-year/financial-year.service';
+import { PeriodContributionService } from '../period-contribution/period-contribution.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'church-member-promise',
@@ -23,6 +25,7 @@ export class MemberPromiseComponent implements OnInit, OnDestroy {
   churchId: number;
 
   memberPromise?: IMemberPromise;
+  periodContributions = [];
   eventSubscriber?: Subscription;
 
   fys: IFinancialYear[] = [];
@@ -34,17 +37,9 @@ export class MemberPromiseComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected fyService: FinancialYearService
+    protected fyService: FinancialYearService,
+    protected periodContrService: PeriodContributionService
   ) {}
-
-  loadPromise(): void {
-    if (this.churchId === undefined || this.memberId === undefined || this.fy === undefined || this.typeId === undefined) {
-      return;
-    }
-    this.memberPromiseService
-      .getOne(this.churchId, this.memberId, this.typeId, this.fy.id)
-      .subscribe((res: HttpResponse<IMemberPromise>) => (this.memberPromise = res.body), () => this.onError());
-  }
 
   loadFy() {
     this.fyService
@@ -69,6 +64,46 @@ export class MemberPromiseComponent implements OnInit, OnDestroy {
 
   setFy() {
     this.loadPromise();
+  }
+
+  loadPromise(): void {
+    if (this.churchId === undefined || this.memberId === undefined || this.fy === undefined || this.typeId === undefined) {
+      return;
+    }
+    this.memberPromiseService.getOne(this.churchId, this.memberId, this.typeId, this.fy.id).subscribe(
+      (res: HttpResponse<IMemberPromise>) => {
+        this.memberPromise = res.body;
+        if (this.memberPromise) {
+          this.periodContributions = this.memberPromise.periodContributions.map(p => {
+            return { ...p, originalAmount: p.amountPromised };
+          });
+        }
+      },
+      () => this.onError()
+    );
+  }
+
+  updatePeriodPromise(pc) {
+    if (pc.amountPromised !== pc.originalAmount) {
+      pc.isUpdating = true;
+      this.periodContrService
+        .update({
+          ...pc,
+          dueDate: moment(pc.dueDate)
+        })
+        .subscribe(
+          res => {
+            const newValue = res.body;
+            pc.originalAmount = newValue.amountPromised;
+            pc.isUpdating = false;
+          },
+          error => {
+            pc.isUpdating = false;
+            pc.hasError = true;
+            pc.amountPromised = pc.originalAmount;
+          }
+        );
+    }
   }
 
   ngOnInit(): void {

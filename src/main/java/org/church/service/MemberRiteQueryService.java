@@ -88,17 +88,9 @@ public class MemberRiteQueryService extends QueryService<MemberRite> {
             if (criteria.getDateReceived() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateReceived(), MemberRite_.dateReceived));
             }
-            if (criteria.getRiteId() != null) {
-                specification = specification.and(buildSpecification(criteria.getRiteId(),
-                    root -> root.join(MemberRite_.rite, JoinType.LEFT).get(Rite_.id)));
-            }
             if (criteria.getMemberId() != null) {
                 specification = specification.and(buildSpecification(criteria.getMemberId(),
                     root -> root.join(MemberRite_.member, JoinType.LEFT).get(Member_.id)));
-            }
-            if (criteria.getChurchId() != null) {
-                specification = specification.and(buildSpecification(criteria.getChurchId(),
-                    root -> root.join(MemberRite_.church, JoinType.LEFT).get(Church_.id)));
             }
         }
         return specification;

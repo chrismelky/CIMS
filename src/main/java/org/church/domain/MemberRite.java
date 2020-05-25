@@ -1,5 +1,6 @@
 package org.church.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.church.domain.enumeration.RiteType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,23 +25,24 @@ public class MemberRite implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @NotNull
-    @Column(name = "date_received", nullable = false)
+    @Column(name = "date_received")
     private LocalDate dateReceived;
 
-    @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties("memberRites")
-    private Rite rite;
+    @Column(name = "rite_type", nullable = false)
+    private RiteType riteType;
 
     @ManyToOne
     @JsonIgnoreProperties("memberRites")
     private Member member;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("memberRites")
-    private Church church;
+    public RiteType getRiteType() {
+        return riteType;
+    }
+
+    public void setRiteType(RiteType riteType) {
+        this.riteType = riteType;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -64,19 +66,6 @@ public class MemberRite implements Serializable {
         this.dateReceived = dateReceived;
     }
 
-    public Rite getRite() {
-        return rite;
-    }
-
-    public MemberRite rite(Rite rite) {
-        this.rite = rite;
-        return this;
-    }
-
-    public void setRite(Rite rite) {
-        this.rite = rite;
-    }
-
     public Member getMember() {
         return member;
     }
@@ -89,20 +78,6 @@ public class MemberRite implements Serializable {
     public void setMember(Member member) {
         this.member = member;
     }
-
-    public Church getChurch() {
-        return church;
-    }
-
-    public MemberRite church(Church church) {
-        this.church = church;
-        return this;
-    }
-
-    public void setChurch(Church church) {
-        this.church = church;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {

@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -44,7 +46,7 @@ public class MemberPromise implements Serializable {
     private Boolean isFulfilled;
 
     @Column(name = "total_contribution", precision = 21, scale = 2)
-    private BigDecimal totalContribution;
+    private BigDecimal totalContribution = BigDecimal.valueOf(0.0);
 
     @ManyToOne(optional = false)
     @NotNull
@@ -65,6 +67,28 @@ public class MemberPromise implements Serializable {
     @NotNull
     @JsonIgnoreProperties("memberPromises")
     private PeriodContributionType periodContributionType;
+
+    @OneToMany(mappedBy = "memberPromise", fetch = FetchType.EAGER)
+    private List<PeriodContribution> periodContributions = new ArrayList<>();
+
+    public MemberPromise() {}
+
+    public MemberPromise(LocalDate promiseDate, PeriodContributionType periodContributionType, Church church, Member member, BigDecimal amount, FinancialYear fy) {
+        this.promiseDate = promiseDate;
+        this.periodContributionType = periodContributionType;
+        this.church = church;
+        this.member = member;
+        this.amount = amount;
+        this.financialYear = fy;
+    }
+
+    public List<PeriodContribution> getPeriodContributions() {
+        return periodContributions;
+    }
+
+    public void setPeriodContributions(List<PeriodContribution> periodContributions) {
+        this.periodContributions = periodContributions;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

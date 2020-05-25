@@ -25,6 +25,22 @@ export class PeriodContributionTypeResolve implements Resolve<IPeriodContributio
   }
 }
 
+@Injectable({ providedIn: 'root' })
+export class PeriodContributionTypeIdResolve implements Resolve<IPeriodContributionType> {
+  constructor(private service: PeriodContributionTypeService) {}
+
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IPeriodContributionType> {
+    const id = route.params['typeId'];
+    if (id) {
+      return this.service.find(id).pipe(
+        filter((response: HttpResponse<PeriodContributionType>) => response.ok),
+        map((periodContributionType: HttpResponse<PeriodContributionType>) => periodContributionType.body)
+      );
+    }
+    return of(null);
+  }
+}
+
 export const periodContributionTypeRoute: Routes = [
   {
     path: ':churchId/new',

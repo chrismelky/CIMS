@@ -1,5 +1,6 @@
 package org.church.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.criteria.JoinType;
@@ -62,6 +63,15 @@ public class MemberContributionQueryService extends QueryService<MemberContribut
         return memberContributionRepository.findAll(specification, page);
     }
 
+    @Transactional(readOnly = true)
+    public Page<MemberContribution> findByPromise(Long promiseId, LocalDate date, Pageable page) {
+        log.debug("find by promiseId : {}, date: {},  page: {}", promiseId, date, page);
+        if (date != null) {
+            return memberContributionRepository.findByMemberPromise_IdAndPaymentDate(promiseId,date, page);
+        }
+        return  memberContributionRepository.findByMemberPromise_Id(promiseId, page);
+    }
+
     /**
      * Return the number of matching entities in the database.
      * @param criteria The object which holds all the filters, which the entities should match.
@@ -91,27 +101,17 @@ public class MemberContributionQueryService extends QueryService<MemberContribut
             if (criteria.getAmount() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getAmount(), MemberContribution_.amount));
             }
-            if (criteria.getMemberId() != null) {
-                specification = specification.and(buildSpecification(criteria.getMemberId(),
-                    root -> root.join(MemberContribution_.member, JoinType.LEFT).get(Member_.id)));
-            }
-            if (criteria.getChurchId() != null) {
-                specification = specification.and(buildSpecification(criteria.getChurchId(),
-                    root -> root.join(MemberContribution_.church, JoinType.LEFT).get(Church_.id)));
-            }
             if (criteria.getPaymentMethodId() != null) {
                 specification = specification.and(buildSpecification(criteria.getPaymentMethodId(),
                     root -> root.join(MemberContribution_.paymentMethod, JoinType.LEFT).get(PaymentMethod_.id)));
             }
             if (criteria.getPromiseId() != null) {
                 specification = specification.and(buildSpecification(criteria.getPromiseId(),
-                    root -> root.join(MemberContribution_.promise, JoinType.LEFT).get(MemberPromise_.id)));
-            }
-            if (criteria.getTypeId() != null) {
-                specification = specification.and(buildSpecification(criteria.getTypeId(),
-                    root -> root.join(MemberContribution_.type, JoinType.LEFT).get(ContributionType_.id)));
+                    root -> root.join(MemberContribution_.memberPromise, JoinType.LEFT).get(MemberPromise_.id)));
             }
         }
         return specification;
     }
+
+
 }

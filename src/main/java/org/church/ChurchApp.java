@@ -8,6 +8,7 @@ import io.github.jhipster.config.JHipsterConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @SpringBootApplication
+@EnableBatchProcessing
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class ChurchApp implements InitializingBean {
 

@@ -19,8 +19,8 @@ export class DashboardService {
     return this.http.get<any[]>(url, { observe: 'response' });
   }
 
-  getMemberContribution(churchId: number, periodId: number, contTypeId: number, opt?): Observable<EntityArrayResponseType> {
-    const url = this.resourceUrl + '/member-contribution/' + churchId + '/' + periodId + '/' + contTypeId;
+  getMemberContribution(churchId: number, fyId: number, contTypeId: number, opt?): Observable<EntityArrayResponseType> {
+    const url = this.resourceUrl + '/member-contribution/' + churchId + '/' + fyId + '/' + contTypeId;
     const options = createRequestOption(opt);
     return this.http.get<any[]>(url, { params: options, observe: 'response' });
   }

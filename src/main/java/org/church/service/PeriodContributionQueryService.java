@@ -83,7 +83,7 @@ public class PeriodContributionQueryService extends QueryService<PeriodContribut
         Specification<PeriodContribution> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildSpecification(criteria.getId(), PeriodContribution_.id));
+                specification = specification.and(buildRangeSpecification(criteria.getId(), PeriodContribution_.id));
             }
             if (criteria.getAmountPromised() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getAmountPromised(), PeriodContribution_.amountPromised));
@@ -101,17 +101,9 @@ public class PeriodContributionQueryService extends QueryService<PeriodContribut
                 specification = specification.and(buildSpecification(criteria.getPeriodId(),
                     root -> root.join(PeriodContribution_.period, JoinType.LEFT).get(Period_.id)));
             }
-            if (criteria.getMemberId() != null) {
-                specification = specification.and(buildSpecification(criteria.getMemberId(),
-                    root -> root.join(PeriodContribution_.member, JoinType.LEFT).get(Member_.id)));
-            }
-            if (criteria.getChurchId() != null) {
-                specification = specification.and(buildSpecification(criteria.getChurchId(),
-                    root -> root.join(PeriodContribution_.church, JoinType.LEFT).get(Church_.id)));
-            }
-            if (criteria.getPeriodContributionTypeId() != null) {
-                specification = specification.and(buildSpecification(criteria.getPeriodContributionTypeId(),
-                    root -> root.join(PeriodContribution_.periodContributionType, JoinType.LEFT).get(PeriodContributionType_.id)));
+            if (criteria.getMemberPromiseId() != null) {
+                specification = specification.and(buildSpecification(criteria.getMemberPromiseId(),
+                    root -> root.join(PeriodContribution_.memberPromise, JoinType.LEFT).get(MemberPromise_.id)));
             }
         }
         return specification;

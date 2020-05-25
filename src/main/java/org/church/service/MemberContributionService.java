@@ -1,7 +1,9 @@
 package org.church.service;
 
 import org.church.domain.MemberContribution;
+import org.church.domain.MemberPromise;
 import org.church.repository.MemberContributionRepository;
+import org.church.repository.MemberPromiseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -23,8 +26,13 @@ public class MemberContributionService {
 
     private final MemberContributionRepository memberContributionRepository;
 
-    public MemberContributionService(MemberContributionRepository memberContributionRepository) {
+    private final MemberPromiseRepository promiseRepository;
+
+
+    public MemberContributionService(MemberContributionRepository memberContributionRepository,
+                                     MemberPromiseRepository promiseRepository) {
         this.memberContributionRepository = memberContributionRepository;
+        this.promiseRepository = promiseRepository;
     }
 
     /**
@@ -33,9 +41,13 @@ public class MemberContributionService {
      * @param memberContribution the entity to save.
      * @return the persisted entity.
      */
+    @Transactional
     public MemberContribution save(MemberContribution memberContribution) {
         log.debug("Request to save MemberContribution : {}", memberContribution);
-        return memberContributionRepository.save(memberContribution);
+
+        MemberContribution contribution = memberContributionRepository.save(memberContribution);
+        updateTotal(contribution.getMemberPromise().getId());
+        return contribution;
     }
 
     /**
@@ -68,8 +80,21 @@ public class MemberContributionService {
      *
      * @param id the id of the entity.
      */
+    @Transactional
     public void delete(Long id) {
         log.debug("Request to delete MemberContribution : {}", id);
+        MemberContribution contribution = memberContributionRepository.getOne(id);
         memberContributionRepository.deleteById(id);
+        updateTotal(contribution.getMemberPromise().getId());
+    }
+
+    private void updateTotal(Long promiseId) {
+        MemberPromise promise = promiseRepository.getOne(promiseId);
+        BigDecimal amount = memberContributionRepository.getSumByPeriodContribution_Id(promise.getId());
+        promise.setTotalContribution(amount);
+        if (amount.compareTo(promise.getAmount()) >= 0) {
+            promise.setIsFulfilled(true);
+        }
+        promiseRepository.save(promise);
     }
 }

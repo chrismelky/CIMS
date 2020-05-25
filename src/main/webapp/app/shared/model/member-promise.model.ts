@@ -3,6 +3,7 @@ import { IMember } from 'app/shared/model/member.model';
 import { IFinancialYear } from 'app/shared/model/financial-year.model';
 import { IChurch } from 'app/shared/model/church.model';
 import { IPeriodContributionType } from 'app/shared/model/period-contribution-type.model';
+import { IPeriodContribution } from './period-contribution.model';
 
 export interface IMemberPromise {
   id?: number;
@@ -16,6 +17,7 @@ export interface IMemberPromise {
   financialYear?: IFinancialYear;
   church?: IChurch;
   periodContributionType?: IPeriodContributionType;
+  periodContributions?: IPeriodContribution[];
 }
 
 export class MemberPromise implements IMemberPromise {

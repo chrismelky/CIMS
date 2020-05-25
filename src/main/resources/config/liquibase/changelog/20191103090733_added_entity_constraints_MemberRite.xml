@@ -7,7 +7,7 @@
         Added the constraints for entity MemberRite.
     -->
     <changeSet id="20191103090733-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="rite_id"
                                  baseTableName="member_rite"
                                  constraintName="fk_member_rite_rite_id"
@@ -26,5 +26,15 @@
                                  referencedColumnNames="id"
                                  referencedTableName="church"/>
 
+    </changeSet>
+
+    <changeSet id="20191103090733-3" author="chris">
+        <dropColumn tableName="member_rite" columnName="church_id" />
+        <dropColumn tableName="member_rite" columnName="rite_id" />
+        <addColumn tableName="member_rite">
+            <column name="rite_type" type="varchar(20)" >
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
     </changeSet>
 </databaseChangeLog>

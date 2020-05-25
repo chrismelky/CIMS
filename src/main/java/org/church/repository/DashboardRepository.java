@@ -22,11 +22,10 @@ public class DashboardRepository {
 
        return em.createNativeQuery("select " +
            "  pct.name, " +
-           "  sum(pc.amount_promised) as promise, " +
-           "  sum(pc.amount_contributed) as collection " +
+           "  sum(mp.amount) as promise, " +
+           "  sum(mp.total_contribution) as collection " +
            " from period_contribution_type pct " +
-           " left join period_contribution pc on pc.period_contribution_type_id = pct.id " +
-           " join period as p on p.id = pc.period_id and p.financial_year_id=:financialYearId" +
+           " left join member_promise mp on mp.period_contribution_type_id = pct.id  and mp.financial_year_id=:financialYearId" +
            " where pct.church_id =:churchId " +
            "group by pct.id order by pct.name", ContributionDashboard.class)
            .setParameter("churchId", churchId)
@@ -37,7 +36,7 @@ public class DashboardRepository {
 
     public List<MemberContributionDashboard> getMemberContr(
         Long churchId,
-        Long periodId,
+        Long financialYearId,
         Long typeId,
         int pageNumber,
         int perPage,
@@ -46,24 +45,24 @@ public class DashboardRepository {
         String q = "select " +
             "       m.first_name || ' ' || coalesce(m.middle_name, '') || ' ' || m.last_name as name, " +
             "       m.phone_number, " +
-            "       coalesce(pc.amount_promised,0) as promise, " +
-            "       coalesce(pc.amount_contributed,0) as contribution, " +
-            "       pc.due_date, " +
-            "       case when pc.due_date <= now() then true else false end as over_due " +
-            "from member m " +
-            "left join period_contribution pc on m.id = pc.member_id " +
-            "and pc.period_contribution_type_id =:typeId and pc.church_id=:churchId and " +
-            " pc.period_id=:periodId " +
-            "where m.church_id =:churchId ";
+            "       coalesce(mp.amount,0) as promise, " +
+            "       coalesce(mp.total_contribution,0) as contribution, " +
+            "       mp.fulfillment_date as due_date, " +
+            "       case when mp.fulfillment_date <= now() then true else false end as over_due " +
+            " from member m " +
+            " left join member_promise mp on m.id = mp.member_id " +
+            " and mp.period_contribution_type_id =:typeId and mp.church_id=:churchId and " +
+            " mp.financial_year_id=:financialYearId " +
+            " where m.church_id =:churchId ";
             if (overDue) {
-                q = q + " and pc.due_date <= now()";
+                q = q + " and mp.fulfillment_date <= now()";
             }
-            q =q + "group by m.id, pc.id " +
+            q =q + "group by m.id, mp.id " +
             "order by m.first_name, m.last_name ";
 
         return em.createNativeQuery(q, MemberContributionDashboard.class)
             .setParameter("churchId", churchId)
-            .setParameter("periodId", periodId)
+            .setParameter("financialYearId", financialYearId)
             .setParameter("typeId", typeId)
             .setMaxResults(perPage)
             .setFirstResult((pageNumber-1)*perPage)

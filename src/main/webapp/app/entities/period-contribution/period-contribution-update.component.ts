@@ -1,71 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { JhiAlertService } from 'ng-jhipster';
+
 import { IPeriodContribution, PeriodContribution } from 'app/shared/model/period-contribution.model';
 import { PeriodContributionService } from './period-contribution.service';
 import { IPeriod } from 'app/shared/model/period.model';
-import { IMember } from 'app/shared/model/member.model';
-import { MemberService } from 'app/entities/member/member.service';
-import { IChurch } from 'app/shared/model/church.model';
-import { ChurchService } from 'app/entities/church/church.service';
+import { PeriodService } from 'app/entities/period/period.service';
+import { IMemberPromise } from 'app/shared/model/member-promise.model';
+import { MemberPromiseService } from 'app/entities/member-promise/member-promise.service';
+
+type SelectableEntity = IPeriod | IMemberPromise;
 
 @Component({
   selector: 'church-period-contribution-update',
   templateUrl: './period-contribution-update.component.html'
 })
 export class PeriodContributionUpdateComponent implements OnInit {
-  isSaving: boolean;
-
-  periods: IPeriod[];
-  periodId: number;
-  churchId: number;
-  memberId: number;
-  typeId: number;
+  isSaving = false;
+  periods: IPeriod[] = [];
+  memberpromises: IMemberPromise[] = [];
   dueDateDp: any;
 
   editForm = this.fb.group({
     id: [],
     amountPromised: [null, [Validators.required]],
-    amountContributed: [{ value: 0, disabled: true }],
+    amountContributed: [],
     description: [],
     dueDate: [null, [Validators.required]],
     period: [null, Validators.required],
-    member: [null, Validators.required],
-    church: [null, Validators.required],
-    periodContributionType: [null, Validators.required]
+    memberPromise: []
   });
 
   constructor(
-    protected jhiAlertService: JhiAlertService,
     protected periodContributionService: PeriodContributionService,
-    protected memberService: MemberService,
-    protected churchService: ChurchService,
+    protected periodService: PeriodService,
+    protected memberPromiseService: MemberPromiseService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this.isSaving = false;
-    this.periodId = this.activatedRoute.snapshot.params['periodId'];
-    this.churchId = this.activatedRoute.snapshot.params['churchId'];
-    this.memberId = this.activatedRoute.snapshot.params['memberId'];
-    this.typeId = this.activatedRoute.snapshot.params['typeId'];
-
+  ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ periodContribution }) => {
-      this.updateForm({
-        ...periodContribution,
-        period: { id: this.periodId },
-        member: { id: this.memberId },
-        church: { id: this.churchId },
-        periodContributionType: { id: this.typeId }
-      });
+      this.updateForm(periodContribution);
+
+      this.periodService.query().subscribe((res: HttpResponse<IPeriod[]>) => (this.periods = res.body || []));
+
+      this.memberPromiseService.query().subscribe((res: HttpResponse<IMemberPromise[]>) => (this.memberpromises = res.body || []));
     });
   }
 
-  updateForm(periodContribution: IPeriodContribution) {
+  updateForm(periodContribution: IPeriodContribution): void {
     this.editForm.patchValue({
       id: periodContribution.id,
       amountPromised: periodContribution.amountPromised,
@@ -73,17 +60,15 @@ export class PeriodContributionUpdateComponent implements OnInit {
       description: periodContribution.description,
       dueDate: periodContribution.dueDate,
       period: periodContribution.period,
-      member: periodContribution.member,
-      church: periodContribution.church,
-      periodContributionType: periodContribution.periodContributionType
+      memberPromise: periodContribution.memberPromise
     });
   }
 
-  previousState() {
+  previousState(): void {
     window.history.back();
   }
 
-  save() {
+  save(): void {
     this.isSaving = true;
     const periodContribution = this.createFromForm();
     if (periodContribution.id !== undefined) {
@@ -96,39 +81,30 @@ export class PeriodContributionUpdateComponent implements OnInit {
   private createFromForm(): IPeriodContribution {
     return {
       ...new PeriodContribution(),
-      id: this.editForm.get(['id']).value,
-      amountPromised: this.editForm.get(['amountPromised']).value,
-      amountContributed: this.editForm.get(['amountContributed']).value,
-      description: this.editForm.get(['description']).value,
-      dueDate: this.editForm.get(['dueDate']).value,
-      period: this.editForm.get(['period']).value,
-      member: this.editForm.get(['member']).value,
-      church: this.editForm.get(['church']).value,
-      periodContributionType: this.editForm.get(['periodContributionType']).value
+      id: this.editForm.get(['id'])!.value,
+      amountPromised: this.editForm.get(['amountPromised'])!.value,
+      amountContributed: this.editForm.get(['amountContributed'])!.value,
+      description: this.editForm.get(['description'])!.value,
+      dueDate: this.editForm.get(['dueDate'])!.value,
+      period: this.editForm.get(['period'])!.value,
+      memberPromise: this.editForm.get(['memberPromise'])!.value
     };
   }
 
-  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPeriodContribution>>) {
+  protected subscribeToSaveResponse(result: Observable<HttpResponse<IPeriodContribution>>): void {
     result.subscribe(() => this.onSaveSuccess(), () => this.onSaveError());
   }
 
-  protected onSaveSuccess() {
+  protected onSaveSuccess(): void {
     this.isSaving = false;
     this.previousState();
   }
 
-  protected onSaveError() {
+  protected onSaveError(): void {
     this.isSaving = false;
   }
-  protected onError(errorMessage: string) {
-    this.jhiAlertService.error(errorMessage, null, null);
-  }
 
-  trackMemberById(index: number, item: IMember) {
-    return item.id;
-  }
-
-  trackChurchById(index: number, item: IChurch) {
+  trackById(index: number, item: SelectableEntity): any {
     return item.id;
   }
 }

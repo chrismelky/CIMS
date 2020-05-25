@@ -67,6 +67,25 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20191103090731-9" author="chris">
+        <addColumn tableName="member">
+            <column name="phone_number2" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="church_elder" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="church_elder_phone" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20191103090731-10" author="chris">
+        <addColumn tableName="member">
+            <column name="marriage_type" type="varchar(100)"/>
+        </addColumn>
+    </changeSet>
     <changeSet id="20191103090731-4" author="chris">
         <addColumn tableName="member">
             <column name="church_rn" type="varchar(20)">

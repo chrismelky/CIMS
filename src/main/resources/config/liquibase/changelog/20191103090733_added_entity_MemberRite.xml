@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity MemberRite.
     -->
@@ -29,6 +29,10 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20191103090733-4" author="chris">
+        <dropNotNullConstraint tableName="member_rite" columnName="date_received" />
     </changeSet>
 
     <changeSet id="20191103090733-1-relations" author="jhipster">

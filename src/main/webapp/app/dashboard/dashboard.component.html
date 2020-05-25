@@ -22,12 +22,6 @@
                 <option  *ngFor="let ct of contributionTypes" [ngValue]="ct">{{ct.name}}</option>
             </select>
         </div>
-        <div  class="col-md-3 form-group">
-            <label for="p" class="form-control-label">Period</label>
-            <select id="p" class="form-control" [(ngModel)]="period" (ngModelChange)="setPeriod()">
-                <option  *ngFor="let p of periods" [ngValue]="p">{{p.type?.name}}-{{p.name}}</option>
-            </select>
-        </div>
         <div class="col-md-3 form-group">
             <input id="o" type="checkbox" [checked]="overDue === true" [(ngModel)]="overDue" (ngModelChange)="getMemberContribution()"/>
             <label for="o" class="form-control-label">Over Due</label>
@@ -40,9 +34,9 @@
                  <tr>
                      <th>Name</th>
                      <th>Phone Number</th>
-                     <th>Promise</th>
-                     <th>Contribution</th>
-                     <th>Balance</th>
+                     <th>Promise(TZS)</th>
+                     <th>Contribution(TZS)</th>
+                     <th>Balance(TZS)</th>
                      <th>Due Date</th>
                      <th>Is Overdue</th>
                  </tr>
@@ -51,9 +45,9 @@
                 <tr *ngFor="let c of memberContr">
                     <td>{{c.name}}</td>
                     <td>{{c.phone_number}}</td>
-                    <td>{{c.promise}}</td>
-                    <td>{{c.contribution}}</td>
-                    <td>{{c.promise - c.contribution}}</td>
+                    <td class="text-right">{{c.promise | currency:' '}}</td>
+                    <td class="text-right">{{c.contribution | currency:' '}}</td>
+                    <td class="text-right">{{(c.promise - c.contribution) | currency:' '}}</td>
                     <td>{{c.due_date}}</td>
                     <td [ngClass]="{'over-due': c.over_due}" >{{c.over_due ? 'Is OverDue': ''}}</td>
                 </tr>

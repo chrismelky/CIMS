@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A MemberContribution.
@@ -35,25 +37,12 @@ public class MemberContribution implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("memberContributions")
-    private Member member;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("memberContributions")
-    private Church church;
-
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties("memberContributions")
     private PaymentMethod paymentMethod;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties("memberContributions")
-    private MemberPromise promise;
-
-    @ManyToOne
-    @JsonIgnoreProperties("memberContributions")
-    private ContributionType type;
+    private MemberPromise memberPromise;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -90,32 +79,6 @@ public class MemberContribution implements Serializable {
         this.amount = amount;
     }
 
-    public Member getMember() {
-        return member;
-    }
-
-    public MemberContribution member(Member member) {
-        this.member = member;
-        return this;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
-    public Church getChurch() {
-        return church;
-    }
-
-    public MemberContribution church(Church church) {
-        this.church = church;
-        return this;
-    }
-
-    public void setChurch(Church church) {
-        this.church = church;
-    }
-
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
@@ -129,31 +92,14 @@ public class MemberContribution implements Serializable {
         this.paymentMethod = paymentMethod;
     }
 
-    public MemberPromise getPromise() {
-        return promise;
+    public MemberPromise getMemberPromise() {
+        return memberPromise;
     }
 
-    public MemberContribution promise(MemberPromise memberPromise) {
-        this.promise = memberPromise;
-        return this;
+    public void setMemberPromise(MemberPromise memberPromise) {
+        this.memberPromise = memberPromise;
     }
 
-    public void setPromise(MemberPromise memberPromise) {
-        this.promise = memberPromise;
-    }
-
-    public ContributionType getType() {
-        return type;
-    }
-
-    public MemberContribution type(ContributionType contributionType) {
-        this.type = contributionType;
-        return this;
-    }
-
-    public void setType(ContributionType contributionType) {
-        this.type = contributionType;
-    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

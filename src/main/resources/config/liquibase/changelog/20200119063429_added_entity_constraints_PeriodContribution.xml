@@ -7,7 +7,7 @@
         Added the constraints for entity PeriodContribution.
     -->
     <changeSet id="20200119063429-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="period_id"
                                  baseTableName="period_contribution"
                                  constraintName="fk_period_contribution_period_id"
@@ -27,5 +27,23 @@
                                  referencedTableName="church"/>
 
 
+    </changeSet>
+    <changeSet id="20200119063429-5" author="chris">
+        <addColumn tableName="period_contribution">
+            <column name="member_promise_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="member_promise_id"
+                                 baseTableName="period_contribution"
+                                 constraintName="fk_period_contribution_member_promise_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="member_promise"/>
+        <dropColumn tableName="period_contribution" columnName="member_id"/>
+        <dropColumn tableName="period_contribution" columnName="church_id"/>
+    </changeSet>
+    <changeSet id="20200119063429-6" author="chris">
+        <dropColumn tableName="period_contribution" columnName="period_contribution_type_id"/>
     </changeSet>
 </databaseChangeLog>

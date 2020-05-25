@@ -132,7 +132,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getMemberContribution() {
-    if (this.church === undefined || this.contributionType === undefined || this.period === undefined) {
+    if (this.church === undefined || this.contributionType === undefined || this.fy === undefined) {
       return;
     }
     const params = {
@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
       page: this.page - 1,
       overDue: this.overDue
     };
-    this.service.getMemberContribution(this.church.id, this.period.id, this.contributionType.id, params).subscribe(resp => {
+    this.service.getMemberContribution(this.church.id, this.fy.id, this.contributionType.id, params).subscribe(resp => {
       this.memberContr = resp.body;
     });
   }

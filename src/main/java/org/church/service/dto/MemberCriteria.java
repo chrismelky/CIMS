@@ -69,6 +69,8 @@ public class MemberCriteria implements Serializable, Criteria {
 
     private StringFilter lastName;
 
+    private StringFilter churchRn;
+
     private StringFilter middleName;
 
     private GenderFilter gender;
@@ -110,6 +112,7 @@ public class MemberCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.firstName = other.firstName == null ? null : other.firstName.copy();
         this.lastName = other.lastName == null ? null : other.lastName.copy();
+        this.churchRn = other.churchRn == null ? null : other.churchRn.copy();
         this.middleName = other.middleName == null ? null : other.middleName.copy();
         this.gender = other.gender == null ? null : other.gender.copy();
         this.phoneNumber = other.phoneNumber == null ? null : other.phoneNumber.copy();
@@ -156,6 +159,14 @@ public class MemberCriteria implements Serializable, Criteria {
 
     public void setLastName(StringFilter lastName) {
         this.lastName = lastName;
+    }
+
+    public StringFilter getChurchRn() {
+        return churchRn;
+    }
+
+    public void setChurchRn(StringFilter churchRn) {
+        this.churchRn = churchRn;
     }
 
     public StringFilter getMiddleName() {
@@ -308,6 +319,7 @@ public class MemberCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(firstName, that.firstName) &&
             Objects.equals(lastName, that.lastName) &&
+            Objects.equals(churchRn, that.churchRn) &&
             Objects.equals(middleName, that.middleName) &&
             Objects.equals(gender, that.gender) &&
             Objects.equals(phoneNumber, that.phoneNumber) &&
@@ -332,6 +344,7 @@ public class MemberCriteria implements Serializable, Criteria {
         id,
         firstName,
         lastName,
+        churchRn,
         middleName,
         gender,
         phoneNumber,

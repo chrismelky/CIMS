@@ -93,6 +93,12 @@ public class HomeChurchCommunity implements Serializable {
         "deceasedDate"})
     private Member treasurer;
 
+    public  HomeChurchCommunity() {}
+    public HomeChurchCommunity(String name, Church church) {
+        this.name = name;
+        this.church = church;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
