@@ -4,10 +4,11 @@ import { IChurch } from 'app/shared/model/church.model';
 export interface IPeriodContributionType {
   id?: number;
   name?: string;
+  code?: string;
   periodType?: IPeriodType;
   church?: IChurch;
 }
 
 export class PeriodContributionType implements IPeriodContributionType {
-  constructor(public id?: number, public name?: string, public periodType?: IPeriodType, public church?: IChurch) {}
+  constructor(public id?: number, public name?: string, public cpde?: string, public periodType?: IPeriodType, public church?: IChurch) {}
 }

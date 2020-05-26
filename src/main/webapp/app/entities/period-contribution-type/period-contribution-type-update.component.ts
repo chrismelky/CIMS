@@ -29,6 +29,7 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
+    code: [],
     periodType: [null, Validators.required],
     church: [null, Validators.required]
   });
@@ -61,6 +62,7 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: periodContributionType.id,
       name: periodContributionType.name,
+      code: periodContributionType.code,
       periodType: periodContributionType.periodType,
       church: { id: this.church.id }
     });
@@ -85,6 +87,7 @@ export class PeriodContributionTypeUpdateComponent implements OnInit {
       ...new PeriodContributionType(),
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
+      code: this.editForm.get(['code']).value,
       periodType: this.editForm.get(['periodType']).value,
       church: this.editForm.get(['church']).value
     };

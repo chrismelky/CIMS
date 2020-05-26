@@ -21,6 +21,7 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="name"><span jhiTranslate="churchApp.periodContributionType.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th scope="col"  jhiSortBy="code"><span>Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="periodType.name"><span jhiTranslate="churchApp.periodContributionType.periodType">Period Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="church.name"><span jhiTranslate="churchApp.periodContributionType.church">Church</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"></th>
@@ -30,6 +31,7 @@
             <tr *ngFor="let periodContributionType of periodContributionTypes ;trackBy: trackId">
                 <td><a [routerLink]="['/period-contribution-type', periodContributionType.id, 'view' ]">{{periodContributionType.id}}</a></td>
                 <td>{{periodContributionType.name}}</td>
+                <td>{{periodContributionType.code}}</td>
                 <td>
                     <div *ngIf="periodContributionType.periodType">
                         <a [routerLink]="['/period-type', periodContributionType.periodType?.id, 'view' ]" >{{periodContributionType.periodType?.name}}</a>
