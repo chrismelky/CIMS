@@ -10,12 +10,7 @@ import { periodContributionRoute } from './period-contribution.route';
 
 @NgModule({
   imports: [ChurchSharedModule, RouterModule.forChild(periodContributionRoute)],
-  declarations: [
-    PeriodContributionComponent,
-    PeriodContributionDetailComponent,
-    PeriodContributionUpdateComponent,
-    PeriodContributionDeleteDialogComponent
-  ],
+  declarations: [PeriodContributionDetailComponent, PeriodContributionUpdateComponent, PeriodContributionDeleteDialogComponent],
   entryComponents: [PeriodContributionDeleteDialogComponent]
 })
 export class ChurchPeriodContributionModule {}
