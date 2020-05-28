@@ -20,7 +20,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th scope="col"  jhiSortBy="name"><span jhiTranslate="churchApp.chuchService.name">Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th scope="col"  jhiSortBy="description"><span jhiTranslate="churchApp.chuchService.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="day"><span jhiTranslate="churchApp.chuchService.day">Day</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="startTime"><span jhiTranslate="churchApp.chuchService.startTime">Start Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th scope="col"  jhiSortBy="endTime"><span jhiTranslate="churchApp.chuchService.endTime">End Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -30,8 +29,7 @@
             <tbody>
             <tr *ngFor="let chuchService of chuchServices ;trackBy: trackId">
                 <td>{{chuchService.name}}</td>
-                <td>{{chuchService.description}}</td>
-                <td jhiTranslate="{{'churchApp.WeekDay.' + chuchService.day}}">{{chuchService.day}}</td>
+                <td>{{chuchService.day}}</td>
                 <td>{{chuchService.startTime}}</td>
                 <td>{{chuchService.endTime}}</td>
                 <td class="text-right">

@@ -5,7 +5,7 @@ export interface IChuchService {
   id?: number;
   name?: string;
   description?: any;
-  day?: WeekDay;
+  day?: string;
   startTime?: string;
   endTime?: string;
   church?: IChurch;
@@ -16,7 +16,7 @@ export class ChuchService implements IChuchService {
     public id?: number,
     public name?: string,
     public description?: any,
-    public day?: WeekDay,
+    public day?: string,
     public startTime?: string,
     public endTime?: string,
     public church?: IChurch

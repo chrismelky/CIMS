@@ -23,6 +23,8 @@ export class ChurchUpdateComponent implements OnInit {
 
   churchtypes: IChurchType[];
 
+  church: IChurch;
+
   editForm = this.fb.group({
     id: [],
     name: [null, [Validators.required]],
@@ -49,6 +51,7 @@ export class ChurchUpdateComponent implements OnInit {
   ngOnInit() {
     this.isSaving = false;
     this.activatedRoute.data.subscribe(({ church }) => {
+      this.church = church;
       this.updateForm(church);
     });
     this.churchService

@@ -1,9 +1,14 @@
-<ngb-tabset class="col-12" #churchTab="ngbTabset">
+<div class="row justify-content-center">
+    <h2 id="church-church-heading" class="text-center">
+    <span jhiTranslate="churchApp.church.home.createOrEditLabel">Create or edit a Church</span>
+        <br/>
+        <span  *ngIf="church.id">({{church.name}})</span>
+    </h2>
+   <ngb-tabset class="col-12" #churchTab="ngbTabset">
     <ngb-tab title="Taarifa za Kanisa">
         <ng-template ngbTabContent>
             <div class="col-8">
                 <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-                    <h2 id="church-church-heading" jhiTranslate="churchApp.church.home.createOrEditLabel">Create or edit a Church</h2>
                     <div>
                         <church-alert></church-alert>
                         <church-alert-error></church-alert-error>
@@ -118,4 +123,5 @@
         </ng-template>
     </ngb-tab>
 </ngb-tabset>
+</div>
 

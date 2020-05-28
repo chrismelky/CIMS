@@ -50,7 +50,7 @@ export class ChuchServiceUpdateComponent implements OnInit {
       id: chuchService.id,
       name: chuchService.name,
       description: chuchService.description,
-      day: chuchService.day,
+      day: chuchService.day !== undefined ? chuchService.day.split(',') : [],
       startTime: chuchService.startTime,
       endTime: chuchService.endTime,
       church: { id: this.church.id, name: this.church.name }
@@ -72,12 +72,13 @@ export class ChuchServiceUpdateComponent implements OnInit {
   }
 
   private createFromForm(): IChuchService {
+    const days = this.editForm.get(['day']).value;
     return {
       ...new ChuchService(),
       id: this.editForm.get(['id']).value,
       name: this.editForm.get(['name']).value,
       description: this.editForm.get(['description']).value,
-      day: this.editForm.get(['day']).value,
+      day: days.join(','),
       startTime: this.editForm.get(['startTime']).value,
       endTime: this.editForm.get(['endTime']).value,
       church: this.editForm.get(['church']).value

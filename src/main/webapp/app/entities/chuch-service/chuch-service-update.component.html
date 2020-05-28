@@ -4,12 +4,6 @@
             <h2 id="church-chuch-service-heading" jhiTranslate="churchApp.chuchService.home.createOrEditLabel">Create or edit a Chuch Service</h2>
             <div>
                 <church-alert-error></church-alert-error>
-                <div class="form-group" [hidden]="!editForm.get('id').value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id"
-                        readonly />
-                </div>
-
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.chuchService.name" for="field_name">Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
@@ -28,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="churchApp.chuchService.day" for="field_day">Day</label>
-                    <select class="form-control" name="day" formControlName="day" id="field_day">
+                    <select multiple class="form-control" name="day" formControlName="day" id="field_day">
                         <option value="Monday">{{'churchApp.WeekDay.Monday' | translate}}</option>
                         <option value="Tuesday">{{'churchApp.WeekDay.Tuesday' | translate}}</option>
                         <option value="Wednesday">{{'churchApp.WeekDay.Wednesday' | translate}}</option>

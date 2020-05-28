@@ -24,6 +24,14 @@ h2,
 .h2 {
   font-size: 1.5rem;
 }
+label {
+  color: #4a5568 !important;
+  font-weight: 500 !important;
+}
+.card-title {
+  color: #4a5568;
+  font-weight: bold;
+}
 div.amounts {
   font-size: 18px;
   font-weight: 700 !important;
@@ -56,27 +64,58 @@ a:hover {
   min-height: 100%;
   align-items: stretch;
 }
+.banner {
+  background: transparent;
+}
+.landing {
+  margin-top: 60px;
+  padding-left: 80px;
+  display: flex;
+  justify-content: center;
+}
+.landing h2 {
+  color: #4c51bf;
+  margin-top: 10px;
+  font-size: 60px;
+  font-weight: 700;
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.landing p {
+  margin-top: 10px;
+  color: #161e2e;
+}
+
+.landing div.btn-group {
+  margin-top: 10px;
+}
 
 .side-nav {
   width: 300px;
   min-height: 100%;
-  background-color: #6d7fcc;
+  background-color: #4c51bf;
   color: white;
   border-right: none;
 }
-.side-nav h3.title {
+.side-nav .title {
   color: white;
   text-align: center;
 }
 
 .side-nav .sidenav-header {
   padding: 20px;
-  background: #6d7fcc;
+  background: #4c51bf;
 }
 
 .side-nav ul.components {
-  padding: 20px 0;
-  border-bottom: 1px solid #47748b;
+  padding: 10px 0;
+  // border-bottom: 1px solid #C3DAFE;
 }
 
 .side-nav ul p {
@@ -86,23 +125,25 @@ a:hover {
 
 .side-nav ul li a {
   padding: 10px 10px 10px 20px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   display: block;
   text-decoration: none;
+  color: #c3dafe !important;
+  margin-top: 6px;
+  margin-left: 8px;
+  margin-right: 10px;
+  border-radius: 8px;
 }
 .side-nav ul li a .menu-item {
   margin-left: 10px;
 }
-.side-nav ul li a:hover {
-  color: #7386d5 !important;
-  background: #fff;
+.side-nav ul li a:hover,
+.side-nav ul li a.active {
+  color: #fff !important;
+  background: #434190;
+  font-weight: 500;
 }
 
-.side-nav ul li.active > a,
-a[aria-expanded='true'] {
-  color: #fff;
-  background: #6d7fcc;
-}
 .tab-pane {
   padding-top: 20px;
 }
@@ -180,6 +221,7 @@ Generic styles
   padding: 1.5%;
   margin-top: 20px;
   border: none;
+  background-color: none;
 }
 
 .error {

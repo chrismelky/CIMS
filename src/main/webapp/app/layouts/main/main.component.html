@@ -1,7 +1,10 @@
-<div class="wrapper">
+<div class="wrapper" style="background-image: linear-gradient(#F9FAFB, #EEF1F8)">
     <nav class="side-nav"  *ngIf="isAuthenticated()">
         <div class="sidenav-header">
-            <h3 class="title"> CIMS </h3>
+            <h4 class="title" > 
+                <fa-icon icon="church" fixedWidth="true"></fa-icon>
+                <span>Wazo Hill Parish </span>
+            </h4>
         </div>
         <ul class="list-unstyled components" *ngIf="user?.church">
             <li>
@@ -26,13 +29,14 @@
                     <span class="menu-item">Church Types</span></a>
             </li>
             <li>
-                <a routerLink="church" routerLinkActive="active">
+                <a routerLink="church" routerLinkActive="active"
+                   [routerLinkActiveOptions]="{ exact: true }">
                     <fa-icon icon="church" fixedWidth="true"></fa-icon>
                     <span class="menu-item"> Manage Churches</span></a>
             </li>
             <li>
-                <a class="dropdown-item" routerLink="financial-year"
-                   routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <a routerLink="financial-year"
+                   routerLinkActive="active" >
                     <fa-icon icon="calendar" fixedWidth="true"></fa-icon>
                     <span class="menu-item" jhiTranslate="global.menu.entities.financialYear">Financial Year</span>
                 </a>
@@ -73,7 +77,7 @@
                 </a>
             </li>
         </ul>
-        <ul  class="list-unstyled components"  *churchHasAnyAuthority="'ROLE_CHURCH_ADMIN'">
+        <ul  class="list-unstyled components"  *churchHasAnyAuthority="['ROLE_CHURCH_ADMIN','ROLE_ADMIN']">
             <li *ngIf="user?.church">
                 <a  [routerLink]="['/church', user.church.id, 'edit' ]"
                    routerLinkActive="active" >
@@ -94,8 +98,8 @@
         <div>
             <router-outlet name="navbar"></router-outlet>
         </div>
-        <div class="container-fluid">
-            <div class="card jh-card">
+        <div [ngClass]="{'container-fluid':isAuthenticated(), 'banner': !isAuthenticated()}">
+            <div [ngClass]="{'jh-card card': isAuthenticated()}">
                 <router-outlet></router-outlet>
                 <ng-http-loader [backdrop]="false"
                                 [backgroundColor]="'#6d7fcc'"></ng-http-loader>

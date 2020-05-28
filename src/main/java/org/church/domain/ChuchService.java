@@ -35,9 +35,8 @@ public class ChuchService implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "day")
-    private WeekDay day;
+    private String day;
 
     @Column(name = "start_time")
     private String startTime;
@@ -85,16 +84,16 @@ public class ChuchService implements Serializable {
         this.description = description;
     }
 
-    public WeekDay getDay() {
+    public String getDay() {
         return day;
     }
 
-    public ChuchService day(WeekDay day) {
+    public ChuchService day(String day) {
         this.day = day;
         return this;
     }
 
-    public void setDay(WeekDay day) {
+    public void setDay(String day) {
         this.day = day;
     }
 

@@ -2,7 +2,56 @@
     <div *ngSwitchCase="true" class="row d-flex justify-content-around">
 
     </div>
-    <div  *ngSwitchCase="false">
+    <div  *ngSwitchCase="false"  >
+        <div class="landing">
+           <div class="col-8">
+               <div class="vertical-center">
+                    <h2>Wazo Hill Parish</h2>
+                    <p></p>
+                    <div class="btn-group">
+                        <button (click)="login()" class="btn btn-info">Login</button>
+                    </div>
+                </div>
+           </div>
+           <div class="col-4" 
+                style="background-image: url(/content/images/home.svg);
+                background-position: right center; 
+                 background-repeat: no-repeat; background-size: 500px; height: 500px; text-align: center">
+           </div>
+        </div>
+        <div class="d-flex justify-content-between" style="padding-left: 80px;padding-right: 80px; ">
+            <div class="card shadow-sm flex-fill" 
+                style="background-color: #fff;border-radius: 8px;border: none;">
+                <!-- <img class="card-img-top" src="/content/images/contact.jpg" alt="Contact"> -->
+                <div class="card-body">
+                    <h5 class="card-title">Contact</h5>
+                    <ul>
+                        <li>Address:</li>
+                        <li>P.O.Box:</li>
+                        <li>Phone:</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="width: 40px;"></div>
+            <div class="card shadow-sm flex-fill" 
+                style="background-color: #fff;border-radius: 8px;border: none;">
+                <!-- <img class="card-img-top" src="/content/images/timetable.jpg" alt="Contact"> -->
+                <div class="card-body">
+                    <h5 class="card-title">Time Table</h5>
+                </div>
+            </div>
+            <div style="width: 40px;"></div>
+            <div class="card shadow-sm flex-fill" 
+                style="background-color:#fff;border-radius: 8px;border: none;">
+                <!-- <img class="card-img-top" src="/content/images/event.jpg" alt="Contact"> -->
+                <div class="card-body">
+                    <h5 class="card-title">News</h5>
+                    <p>
 
+                    </p>
+                </div>                    
+            </div>
+        </div>        
     </div>
+   
 </div>

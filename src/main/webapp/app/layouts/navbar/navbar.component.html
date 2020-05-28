@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light navbar-expand-md bg-light">
+<nav class="navbar navbar-light navbar-expand-md " [ngClass]="{'bg-white shadow-sm':isAuthenticated() }">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()" *ngIf="!isAuthenticated()">
         <span jhiTranslate="global.title" class="navbar-title">Church</span> <span class="navbar-version">{{version}}</span>
     </a>

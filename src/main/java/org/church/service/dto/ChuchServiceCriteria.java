@@ -22,24 +22,6 @@ import io.github.jhipster.service.filter.StringFilter;
  * fix type specific filters.
  */
 public class ChuchServiceCriteria implements Serializable, Criteria {
-    /**
-     * Class for filtering WeekDay
-     */
-    public static class WeekDayFilter extends Filter<WeekDay> {
-
-        public WeekDayFilter() {
-        }
-
-        public WeekDayFilter(WeekDayFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public WeekDayFilter copy() {
-            return new WeekDayFilter(this);
-        }
-
-    }
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +29,7 @@ public class ChuchServiceCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private WeekDayFilter day;
+    private StringFilter day;
 
     private StringFilter startTime;
 
@@ -88,11 +70,11 @@ public class ChuchServiceCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public WeekDayFilter getDay() {
+    public StringFilter getDay() {
         return day;
     }
 
-    public void setDay(WeekDayFilter day) {
+    public void setDay(StringFilter day) {
         this.day = day;
     }
 
